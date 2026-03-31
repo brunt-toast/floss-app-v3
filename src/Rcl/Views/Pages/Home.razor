@@ -1,0 +1,20 @@
+﻿@page "/"
+@using Rcl.Resources.Languages;
+
+<MudPaper Class="pa-6 d-flex flex-column gap-4" Elevation="1">
+	<MudStack Spacing="1">
+		<MudText Typo="Typo.h4">@HomeResources.WelcomeMessage</MudText>
+		<MudText Typo="Typo.body1" Class="mud-secondary-text">
+			@HomeResources.OpenBetaMessage
+		</MudText>
+	</MudStack>
+
+	<MudButton
+		Href="/image-workbench"
+		Variant="Variant.Filled"
+		Color="Color.Primary"
+		StartIcon="@Icons.Material.Filled.AutoFixHigh"
+		Size="Size.Large">
+		@HomeResources.OpenImageWorkbenchMessage
+	</MudButton>
+</MudPaper>

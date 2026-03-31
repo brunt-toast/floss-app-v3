@@ -1,0 +1,1794 @@
+{
+  "FFE2E2": {
+    "name": "Salmon Very Light",
+    "floss": "3713"
+  },
+  "FFC9C9": {
+    "name": "Salmon Light",
+    "floss": "761"
+  },
+  "F5ADAD": {
+    "name": "Salmon",
+    "floss": "760"
+  },
+  "F18787": {
+    "name": "Salmon Medium",
+    "floss": "3712"
+  },
+  "E36D6D": {
+    "name": "Salmon Dark",
+    "floss": "3328"
+  },
+  "BF2D2D": {
+    "name": "Salmon Very Dark",
+    "floss": "347"
+  },
+  "FED7CC": {
+    "name": "Peach",
+    "floss": "353"
+  },
+  "FD9C97": {
+    "name": "Coral Light",
+    "floss": "352"
+  },
+  "E96A67": {
+    "name": "Coral",
+    "floss": "351"
+  },
+  "E04848": {
+    "name": "Coral Medium",
+    "floss": "350"
+  },
+  "D21035": {
+    "name": "Coral Dark",
+    "floss": "349"
+  },
+  "BB051F": {
+    "name": "Coral Red Very Dark",
+    "floss": "817"
+  },
+  "FFCBD5": {
+    "name": "Melon Light",
+    "floss": "3708"
+  },
+  "FFADBC": {
+    "name": "Melon Medium",
+    "floss": "3706"
+  },
+  "FF7992": {
+    "name": "Melon Dark",
+    "floss": "3705"
+  },
+  "E74967": {
+    "name": "Melon Very Dark",
+    "floss": "3801"
+  },
+  "E31D42": {
+    "name": "Bright Red",
+    "floss": "666"
+  },
+  "C72B3B": {
+    "name": "Red",
+    "floss": "321"
+  },
+  "B71F33": {
+    "name": "Red Medium",
+    "floss": "304"
+  },
+  "A7132B": {
+    "name": "Red Dark",
+    "floss": "498"
+  },
+  "970B23": {
+    "name": "Garnet",
+    "floss": "816"
+  },
+  "87071F": {
+    "name": "Garnet Medium",
+    "floss": "815"
+  },
+  "7B001B": {
+    "name": "Garnet Dark",
+    "floss": "814"
+  },
+  "FFB2BB": {
+    "name": "Carnation Very Light",
+    "floss": "894"
+  },
+  "FC90A2": {
+    "name": "Carnation Light",
+    "floss": "893"
+  },
+  "FF798C": {
+    "name": "Carnation Medium",
+    "floss": "892"
+  },
+  "FF5773": {
+    "name": "Carnation Dark",
+    "floss": "891"
+  },
+  "FFDFD9": {
+    "name": "Baby Pink",
+    "floss": "818"
+  },
+  "FDB5B5": {
+    "name": "Geranium Pale",
+    "floss": "957"
+  },
+  "FF9191": {
+    "name": "Geranium",
+    "floss": "956"
+  },
+  "BA4A4A": {
+    "name": "Rose Dark",
+    "floss": "309"
+  },
+  "FFD7D7": {
+    "name": "Dusty Rose Ult Vy Lt",
+    "floss": "963"
+  },
+  "FFBDBD": {
+    "name": "Dusty Rose Med Vy Lt",
+    "floss": "3716"
+  },
+  "E68A8A": {
+    "name": "Dusty Rose Medium",
+    "floss": "962"
+  },
+  "CF7373": {
+    "name": "Dusty Rose Dark",
+    "floss": "961"
+  },
+  "EA8699": {
+    "name": "Raspberry Light",
+    "floss": "3833"
+  },
+  "DB556E": {
+    "name": "Raspberry Medium",
+    "floss": "3832"
+  },
+  "B32F48": {
+    "name": "Raspberry Dark",
+    "floss": "3831"
+  },
+  "913546": {
+    "name": "Raspberry Very Dark",
+    "floss": "777"
+  },
+  "FFEEEB": {
+    "name": "Baby Pink Light",
+    "floss": "819"
+  },
+  "FBADB4": {
+    "name": "Rose Light",
+    "floss": "3326"
+  },
+  "FCB0B9": {
+    "name": "Pink Medium",
+    "floss": "776"
+  },
+  "F27688": {
+    "name": "Rose Medium",
+    "floss": "899"
+  },
+  "EE546E": {
+    "name": "Rose",
+    "floss": "335"
+  },
+  "B33B4B": {
+    "name": "Rose Very Dark",
+    "floss": "326"
+  },
+  "F0CED4": {
+    "name": "Dusty Rose Vry Lt",
+    "floss": "151"
+  },
+  "E4A6AC": {
+    "name": "Dusty Rose Light",
+    "floss": "3354"
+  },
+  "E8879B": {
+    "name": "Dusty Rose",
+    "floss": "3733"
+  },
+  "DA6783": {
+    "name": "Dusty Rose Very Dark",
+    "floss": "3731"
+  },
+  "BC4365": {
+    "name": "Dusty Rose Ultra Dark",
+    "floss": "3350"
+  },
+  "AB0249": {
+    "name": "Dusty Rose Ult Vy Dk",
+    "floss": "150"
+  },
+  "FBBFC2": {
+    "name": "Mauve Light",
+    "floss": "3689"
+  },
+  "E7A9AC": {
+    "name": "Mauve Medium",
+    "floss": "3688"
+  },
+  "C96B70": {
+    "name": "Mauve",
+    "floss": "3687"
+  },
+  "AB3357": {
+    "name": "Mauve Dark",
+    "floss": "3803"
+  },
+  "881531": {
+    "name": "Mauve Very Dark",
+    "floss": "3685"
+  },
+  "FFC0CD": {
+    "name": "Cranberry Very Light",
+    "floss": "605"
+  },
+  "FFB0BE": {
+    "name": "Cranberry Light",
+    "floss": "604"
+  },
+  "FFA4BE": {
+    "name": "Cranberry",
+    "floss": "603"
+  },
+  "E24874": {
+    "name": "Cranberry Medium",
+    "floss": "602"
+  },
+  "D1286A": {
+    "name": "Cranberry Dark",
+    "floss": "601"
+  },
+  "CD2F63": {
+    "name": "Cranberry Very Dark",
+    "floss": "600"
+  },
+  "FF8CAE": {
+    "name": "Cyclamen Pink Light",
+    "floss": "3806"
+  },
+  "F3478B": {
+    "name": "Cyclamen Pink",
+    "floss": "3805"
+  },
+  "E02876": {
+    "name": "Cyclamen Pink Dark",
+    "floss": "3804"
+  },
+  "F4AED7": {
+    "name": "Plum Ultra Light",
+    "floss": "3609"
+  },
+  "EA9CC4": {
+    "name": "Plum Very Light",
+    "floss": "3608"
+  },
+  "C54989": {
+    "name": "Plum Light",
+    "floss": "3607"
+  },
+  "9C2462": {
+    "name": "Plum",
+    "floss": "718"
+  },
+  "9B1359": {
+    "name": "Plum Medium",
+    "floss": "917"
+  },
+  "820043": {
+    "name": "Plum Dark",
+    "floss": "915"
+  },
+  "FFDFD7": {
+    "name": "Shell Pink Ult Vy Lt",
+    "floss": "225"
+  },
+  "EBB7AF": {
+    "name": "Shell Pink Very Light",
+    "floss": "224"
+  },
+  "E2A099": {
+    "name": "Shell Pink Med Light",
+    "floss": "152"
+  },
+  "CC847C": {
+    "name": "Shell Pink Light",
+    "floss": "223"
+  },
+  "BC6C64": {
+    "name": "Shell Pink Med",
+    "floss": "3722"
+  },
+  "A14B51": {
+    "name": "Shell Pink Dark",
+    "floss": "3721"
+  },
+  "DFB3BB": {
+    "name": "Antique Mauve Vy Lt",
+    "floss": "778"
+  },
+  "DBA9B2": {
+    "name": "Antique Mauve Light",
+    "floss": "3727"
+  },
+  "B7737F": {
+    "name": "Antique Mauve Med",
+    "floss": "316"
+  },
+  "9B5B66": {
+    "name": "Antique Mauve Dark",
+    "floss": "3726"
+  },
+  "814952": {
+    "name": "Antique Mauve Md Dk",
+    "floss": "315"
+  },
+  "714149": {
+    "name": "Antique Mauve Vy Dk",
+    "floss": "3802"
+  },
+  "822637": {
+    "name": "Garnet Very Dark",
+    "floss": "902"
+  },
+  "D7CBD3": {
+    "name": "Antique Violet Vy Lt",
+    "floss": "3743"
+  },
+  "B79DA7": {
+    "name": "Antique Violet Light",
+    "floss": "3042"
+  },
+  "956F7C": {
+    "name": "Antique Violet Medium",
+    "floss": "3041"
+  },
+  "785762": {
+    "name": "Antique Violet Dark",
+    "floss": "3740"
+  },
+  "BA91AA": {
+    "name": "Grape Light",
+    "floss": "3836"
+  },
+  "946083": {
+    "name": "Grape Medium",
+    "floss": "3835"
+  },
+  "72375D": {
+    "name": "Grape Dark",
+    "floss": "3834"
+  },
+  "572433": {
+    "name": "Grape Very Dark",
+    "floss": "154"
+  },
+  "E3CBE3": {
+    "name": "Lavender Light",
+    "floss": "211"
+  },
+  "D29FC3": {
+    "name": "Lavender Medium",
+    "floss": "210"
+  },
+  "A37BA7": {
+    "name": "Lavender Dark",
+    "floss": "209"
+  },
+  "835B8B": {
+    "name": "Lavender Very Dark",
+    "floss": "208"
+  },
+  "6C3A6E": {
+    "name": "Lavender Ultra Dark",
+    "floss": "3837"
+  },
+  "633666": {
+    "name": "Violet Dark",
+    "floss": "327"
+  },
+  "E6CCD9": {
+    "name": "Violet Very Light",
+    "floss": "153"
+  },
+  "DBB3CB": {
+    "name": "Violet Light",
+    "floss": "554"
+  },
+  "A3638B": {
+    "name": "Violet",
+    "floss": "553"
+  },
+  "803A6B": {
+    "name": "Violet  Medium",
+    "floss": "552"
+  },
+  "5C184E": {
+    "name": "Violet Very Dark",
+    "floss": "550"
+  },
+  "D3D7ED": {
+    "name": "Blue Violet Vy Lt",
+    "floss": "3747"
+  },
+  "B7BFDD": {
+    "name": "Blue Violet Light",
+    "floss": "341"
+  },
+  "A3AED1": {
+    "name": "Blue Violet Med Lt",
+    "floss": "156"
+  },
+  "ADA7C7": {
+    "name": "Blue Violet Medium",
+    "floss": "340"
+  },
+  "9891B6": {
+    "name": "Blue Violet Med Dark",
+    "floss": "155"
+  },
+  "776B98": {
+    "name": "Blue Violet Dark",
+    "floss": "3746"
+  },
+  "5C5478": {
+    "name": "Blue Violet Very Dark",
+    "floss": "333"
+  },
+  "BBC3D9": {
+    "name": "Cornflower Blue Vy Lt",
+    "floss": "157"
+  },
+  "8F9CC1": {
+    "name": "Cornflower Blue Light",
+    "floss": "794"
+  },
+  "707DA2": {
+    "name": "Cornflower Blue Med",
+    "floss": "793"
+  },
+  "60678C": {
+    "name": "Cornflower Blue",
+    "floss": "3807"
+  },
+  "555B7B": {
+    "name": "Cornflower Blue Dark",
+    "floss": "792"
+  },
+  "4C526E": {
+    "name": "Cornflower Blu M V D",
+    "floss": "158"
+  },
+  "464563": {
+    "name": "Cornflower Blue V D",
+    "floss": "791"
+  },
+  "B0C0DA": {
+    "name": "Lavender Blue Light",
+    "floss": "3840"
+  },
+  "7B8EAB": {
+    "name": "Lavender Blue Med",
+    "floss": "3839"
+  },
+  "5C7294": {
+    "name": "Lavender Blue Dark",
+    "floss": "3838"
+  },
+  "C0CCDE": {
+    "name": "Delft Blue Pale",
+    "floss": "800"
+  },
+  "94A8C6": {
+    "name": "Delft Blue",
+    "floss": "809"
+  },
+  "748EB6": {
+    "name": "Delft Blue Medium",
+    "floss": "799"
+  },
+  "466A8E": {
+    "name": "Delft Blue Dark",
+    "floss": "798"
+  },
+  "13477D": {
+    "name": "Royal Blue",
+    "floss": "797"
+  },
+  "11416D": {
+    "name": "Royal Blue Dark",
+    "floss": "796"
+  },
+  "0E365C": {
+    "name": "Royal Blue Very Dark",
+    "floss": "820"
+  },
+  "DBECF5": {
+    "name": "Blue Ultra Very Light",
+    "floss": "162"
+  },
+  "BDDDED": {
+    "name": "Blue Very Light",
+    "floss": "827"
+  },
+  "A1C2D7": {
+    "name": "Blue Light",
+    "floss": "813"
+  },
+  "6B9EBF": {
+    "name": "Blue Medium",
+    "floss": "826"
+  },
+  "4781A5": {
+    "name": "Blue Dark",
+    "floss": "825"
+  },
+  "396987": {
+    "name": "Blue Very Dark",
+    "floss": "824"
+  },
+  "30C2EC": {
+    "name": "Electric Blue Medium",
+    "floss": "996"
+  },
+  "14AAD0": {
+    "name": "Electric Blue",
+    "floss": "3843"
+  },
+  "2696B6": {
+    "name": "Electric Blue Dark",
+    "floss": "995"
+  },
+  "06E3E6": {
+    "name": "Turquoise Bright Light",
+    "floss": "3846"
+  },
+  "04C4CA": {
+    "name": "Turquoise Bright Med",
+    "floss": "3845"
+  },
+  "12AEBA": {
+    "name": "Turquoise Bright Dark",
+    "floss": "3844"
+  },
+  "C7CAD7": {
+    "name": "Blue Gray Light",
+    "floss": "159"
+  },
+  "999FB7": {
+    "name": "Blue Gray Medium",
+    "floss": "160"
+  },
+  "7880A4": {
+    "name": "Blue Gray",
+    "floss": "161"
+  },
+  "EEFCFC": {
+    "name": "Baby Blue Ult Vy Lt",
+    "floss": "3756"
+  },
+  "D9EBF1": {
+    "name": "Baby Blue Very Light",
+    "floss": "775"
+  },
+  "CDDFED": {
+    "name": "Baby Blue Pale",
+    "floss": "3841"
+  },
+  "B8D2E6": {
+    "name": "Baby Blue Light",
+    "floss": "3325"
+  },
+  "92B4CE": {
+    "name": "Baby Blue",
+    "floss": "3755"
+  },
+  "739FC1": {
+    "name": "Baby Blue Medium",
+    "floss": "334"
+  },
+  "5A8FB8": {
+    "name": "Baby Blue Dark",
+    "floss": "322"
+  },
+  "35668B": {
+    "name": "Baby Blue Very Dark",
+    "floss": "312"
+  },
+  "2C597C": {
+    "name": "Baby Blue Ult Vy Dk",
+    "floss": "803"
+  },
+  "253B73": {
+    "name": "Navy Blue",
+    "floss": "336"
+  },
+  "213063": {
+    "name": "Navy Blue Dark",
+    "floss": "823"
+  },
+  "1B2853": {
+    "name": "Navy Blue Very Dark",
+    "floss": "939"
+  },
+  "DBE2E9": {
+    "name": "Antique Blue Ult Vy Lt",
+    "floss": "3753"
+  },
+  "C7D1DB": {
+    "name": "Antique Blue Very Lt",
+    "floss": "3752"
+  },
+  "A2B5C6": {
+    "name": "Antique Blue Light",
+    "floss": "932"
+  },
+  "6A859E": {
+    "name": "Antique Blue Medium",
+    "floss": "931"
+  },
+  "455C71": {
+    "name": "Antique Blue Dark",
+    "floss": "930"
+  },
+  "384C5E": {
+    "name": "Antique Blue Very Dk",
+    "floss": "3750"
+  },
+  "C5E8ED": {
+    "name": "Sky Blue Vy Lt",
+    "floss": "828"
+  },
+  "ACD8E2": {
+    "name": "Sky Blue Light",
+    "floss": "3761"
+  },
+  "7EB1C8": {
+    "name": "Sky Blue",
+    "floss": "519"
+  },
+  "4F93A7": {
+    "name": "Wedgewood Light",
+    "floss": "518"
+  },
+  "3E85A2": {
+    "name": "Wedgewood Med",
+    "floss": "3760"
+  },
+  "3B768F": {
+    "name": "Wedgewood Dark",
+    "floss": "517"
+  },
+  "32667C": {
+    "name": "Wedgewood Vry Dk",
+    "floss": "3842"
+  },
+  "1C5066": {
+    "name": "Wedgewood Ult VyDk",
+    "floss": "311"
+  },
+  "E5FCFD": {
+    "name": "Peacock Blue Vy Lt",
+    "floss": "747"
+  },
+  "99CFD9": {
+    "name": "Peacock Blue Light",
+    "floss": "3766"
+  },
+  "64ABBA": {
+    "name": "Peacock Blue",
+    "floss": "807"
+  },
+  "3D95A5": {
+    "name": "Peacock Blue Dark",
+    "floss": "806"
+  },
+  "347F8C": {
+    "name": "Peacock Blue Vy Dk",
+    "floss": "3765"
+  },
+  "BCE3E6": {
+    "name": "Turquoise Very Light",
+    "floss": "3811"
+  },
+  "90C3CC": {
+    "name": "Turquoise Light",
+    "floss": "598"
+  },
+  "5BA3B3": {
+    "name": "Turquoise",
+    "floss": "597"
+  },
+  "488E9A": {
+    "name": "Turquoise Dark",
+    "floss": "3810"
+  },
+  "3F7C85": {
+    "name": "Turquoise Vy Dark",
+    "floss": "3809"
+  },
+  "366970": {
+    "name": "Turquoise Ult Vy Dk",
+    "floss": "3808"
+  },
+  "DDE3E3": {
+    "name": "Gray Green Vy Lt",
+    "floss": "928"
+  },
+  "BDCBCB": {
+    "name": "Gray Green Light",
+    "floss": "927"
+  },
+  "98AEAE": {
+    "name": "Gray Green Med",
+    "floss": "926"
+  },
+  "657F7F": {
+    "name": "Gray Green Dark",
+    "floss": "3768"
+  },
+  "566A6A": {
+    "name": "Gray Green Vy Dark",
+    "floss": "924"
+  },
+  "52B3AE": {
+    "name": "Teal Green Light",
+    "floss": "3849"
+  },
+  "419392": {
+    "name": "Teal Green Med",
+    "floss": "3848"
+  },
+  "347D75": {
+    "name": "Teal Green Dark",
+    "floss": "3847"
+  },
+  "A9E2D8": {
+    "name": "Sea Green Light",
+    "floss": "964"
+  },
+  "59C7B4": {
+    "name": "Sea Green Med",
+    "floss": "959"
+  },
+  "3EB6A1": {
+    "name": "Sea Green Dark",
+    "floss": "958"
+  },
+  "2F8C84": {
+    "name": "Sea Green Vy Dk",
+    "floss": "3812"
+  },
+  "49B3A1": {
+    "name": "Green Bright Lt",
+    "floss": "3851"
+  },
+  "3D9384": {
+    "name": "Green Bright Md",
+    "floss": "943"
+  },
+  "378477": {
+    "name": "Green Bright Dk",
+    "floss": "3850"
+  },
+  "90C0B4": {
+    "name": "Aquamarine Vy Lt",
+    "floss": "993"
+  },
+  "6FAE9F": {
+    "name": "Aquamarine Lt",
+    "floss": "992"
+  },
+  "508B7D": {
+    "name": "Aquamarine",
+    "floss": "3814"
+  },
+  "477B6E": {
+    "name": "Aquamarine Dk",
+    "floss": "991"
+  },
+  "B9D7C0": {
+    "name": "Jade Ultra Vy Lt",
+    "floss": "966"
+  },
+  "A7CDAF": {
+    "name": "Jade Very Light",
+    "floss": "564"
+  },
+  "8FC098": {
+    "name": "Jade Light",
+    "floss": "563"
+  },
+  "53976A": {
+    "name": "Jade Medium",
+    "floss": "562"
+  },
+  "338362": {
+    "name": "Jade Green",
+    "floss": "505"
+  },
+  "99C3AA": {
+    "name": "Celadon Green Lt",
+    "floss": "3817"
+  },
+  "65A57D": {
+    "name": "Celadon Green",
+    "floss": "3816"
+  },
+  "4D8361": {
+    "name": "Celadon Green Md",
+    "floss": "163"
+  },
+  "477759": {
+    "name": "Celadon Green Dk",
+    "floss": "3815"
+  },
+  "2C6A45": {
+    "name": "Celadon Green VD",
+    "floss": "561"
+  },
+  "C4DECC": {
+    "name": "Blue Green Vy Lt",
+    "floss": "504"
+  },
+  "B2D4BD": {
+    "name": "Blue Green Lt",
+    "floss": "3813"
+  },
+  "7BAC94": {
+    "name": "Blue Green Med",
+    "floss": "503"
+  },
+  "5B9071": {
+    "name": "Blue Green",
+    "floss": "502"
+  },
+  "396F52": {
+    "name": "Blue Green Dark",
+    "floss": "501"
+  },
+  "044D33": {
+    "name": "Blue Green Vy Dk",
+    "floss": "500"
+  },
+  "A2D6AD": {
+    "name": "Nile Green Light",
+    "floss": "955"
+  },
+  "88BA91": {
+    "name": "Nile Green",
+    "floss": "954"
+  },
+  "6DAB77": {
+    "name": "Nile Green Med",
+    "floss": "913"
+  },
+  "1B9D6B": {
+    "name": "Emerald Green Lt",
+    "floss": "912"
+  },
+  "189065": {
+    "name": "Emerald Green Med",
+    "floss": "911"
+  },
+  "156F49": {
+    "name": "Emerald Green Vy Dk",
+    "floss": "909"
+  },
+  "115A3B": {
+    "name": "Emerald Grn Ult V Dk",
+    "floss": "3818"
+  },
+  "D7EDCC": {
+    "name": "Pistachio Green Vy Lt",
+    "floss": "369"
+  },
+  "A6C298": {
+    "name": "Pistachio Green Lt",
+    "floss": "368"
+  },
+  "69885A": {
+    "name": "Pistachio Green Med",
+    "floss": "320"
+  },
+  "617A52": {
+    "name": "Pistachio Green Dk",
+    "floss": "367"
+  },
+  "205F2E": {
+    "name": "Pistachio Grn Vy Dk",
+    "floss": "319"
+  },
+  "184923": {
+    "name": "Pistachio Grn Ult V D",
+    "floss": "890"
+  },
+  "C8D8B8": {
+    "name": "Forest Green Lt",
+    "floss": "164"
+  },
+  "8DA675": {
+    "name": "Forest Green ",
+    "floss": "989"
+  },
+  "738B5B": {
+    "name": "Forest Green Med",
+    "floss": "988"
+  },
+  "587141": {
+    "name": "Forest Green Dk",
+    "floss": "987"
+  },
+  "405230": {
+    "name": "Forest Green Vy Dk",
+    "floss": "986"
+  },
+  "E4ECD4": {
+    "name": "Yellow Green Vy Lt",
+    "floss": "772"
+  },
+  "CCD9B1": {
+    "name": "Yellow Green Lt",
+    "floss": "3348"
+  },
+  "71935C": {
+    "name": "Yellow Green Med",
+    "floss": "3347"
+  },
+  "406A3A": {
+    "name": "Hunter Green",
+    "floss": "3346"
+  },
+  "1B5915": {
+    "name": "Hunter Green Dk",
+    "floss": "3345"
+  },
+  "1B5300": {
+    "name": "Hunter Green Vy Dk",
+    "floss": "895"
+  },
+  "9ECF34": {
+    "name": "Chartreuse Bright",
+    "floss": "704"
+  },
+  "7BB547": {
+    "name": "Chartreuse",
+    "floss": "703"
+  },
+  "47A72F": {
+    "name": "Kelly Green",
+    "floss": "702"
+  },
+  "3F8F29": {
+    "name": "Green Light",
+    "floss": "701"
+  },
+  "07731B": {
+    "name": "Green Bright",
+    "floss": "700"
+  },
+  "C7E666": {
+    "name": "Parrot Green Lt",
+    "floss": "907"
+  },
+  "7FB335": {
+    "name": "Parrot Green Md",
+    "floss": "906"
+  },
+  "628A28": {
+    "name": "Parrot Green Dk",
+    "floss": "905"
+  },
+  "557822": {
+    "name": "Parrot Green V Dk",
+    "floss": "904"
+  },
+  "D8E498": {
+    "name": "Avocado Grn U Lt",
+    "floss": "472"
+  },
+  "AEBF79": {
+    "name": "Avocado Grn V Lt",
+    "floss": "471"
+  },
+  "94AB4F": {
+    "name": "Avocado Grn Lt",
+    "floss": "470"
+  },
+  "72843C": {
+    "name": "Avocado Green",
+    "floss": "469"
+  },
+  "627133": {
+    "name": "Avocado Green Md",
+    "floss": "937"
+  },
+  "4C5826": {
+    "name": "Avocado Grn V Dk",
+    "floss": "936"
+  },
+  "424D21": {
+    "name": "Avocado Green Dk",
+    "floss": "935"
+  },
+  "313919": {
+    "name": "Avocado Grn Black",
+    "floss": "934"
+  },
+  "ABB197": {
+    "name": "Fern Green Lt",
+    "floss": "523"
+  },
+  "9CA482": {
+    "name": "Green Gray",
+    "floss": "3053"
+  },
+  "889268": {
+    "name": "Green Gray Md",
+    "floss": "3052"
+  },
+  "5F6648": {
+    "name": "Green Gray Dk",
+    "floss": "3051"
+  },
+  "C4CDAC": {
+    "name": "Fern Green Vy Lt",
+    "floss": "524"
+  },
+  "969E7E": {
+    "name": "Fern Green",
+    "floss": "522"
+  },
+  "666D4F": {
+    "name": "Fern Green Dark",
+    "floss": "520"
+  },
+  "83975F": {
+    "name": "Pine Green",
+    "floss": "3364"
+  },
+  "728256": {
+    "name": "Pine Green Md",
+    "floss": "3363"
+  },
+  "5E6B47": {
+    "name": "Pine Green Dk",
+    "floss": "3362"
+  },
+  "EFF4A4": {
+    "name": "Moss Green Vy Lt",
+    "floss": "165"
+  },
+  "E0E868": {
+    "name": "Moss Green Lt",
+    "floss": "3819"
+  },
+  "C0C840": {
+    "name": "Moss Green Md Lt",
+    "floss": "166"
+  },
+  "A7AE38": {
+    "name": "Moss Green",
+    "floss": "581"
+  },
+  "888D33": {
+    "name": "Moss Green Dk",
+    "floss": "580"
+  },
+  "C7C077": {
+    "name": "Olive Green Lt",
+    "floss": "734"
+  },
+  "BCB34C": {
+    "name": "Olive Green Md",
+    "floss": "733"
+  },
+  "948C36": {
+    "name": "Olive Green",
+    "floss": "732"
+  },
+  "938B37": {
+    "name": "Olive Green Dk",
+    "floss": "731"
+  },
+  "827B30": {
+    "name": "Olive Green V Dk",
+    "floss": "730"
+  },
+  "B9B982": {
+    "name": "Khaki Green Lt",
+    "floss": "3013"
+  },
+  "A6A75D": {
+    "name": "Khaki Green Md",
+    "floss": "3012"
+  },
+  "898A58": {
+    "name": "Khaki Green Dk",
+    "floss": "3011"
+  },
+  "CCB784": {
+    "name": "Mustard Lt",
+    "floss": "372"
+  },
+  "BFA671": {
+    "name": "Mustard",
+    "floss": "371"
+  },
+  "B89D64": {
+    "name": "Mustard Medium",
+    "floss": "370"
+  },
+  "DBBE7F": {
+    "name": "Golden Olive Vy Lt",
+    "floss": "834"
+  },
+  "C8AB6C": {
+    "name": "Golden Olive Lt",
+    "floss": "833"
+  },
+  "BD9B51": {
+    "name": "Golden Olive",
+    "floss": "832"
+  },
+  "AA8F56": {
+    "name": "Golden Olive Md",
+    "floss": "831"
+  },
+  "8D784B": {
+    "name": "Golden Olive Dk",
+    "floss": "830"
+  },
+  "7E6B42": {
+    "name": "Golden Olive Vy Dk",
+    "floss": "829"
+  },
+  "DCC4AA": {
+    "name": "Drab Brown V Lt",
+    "floss": "613"
+  },
+  "BC9A78": {
+    "name": "Drab Brown Lt",
+    "floss": "612"
+  },
+  "967656": {
+    "name": "Drab Brown",
+    "floss": "611"
+  },
+  "796047": {
+    "name": "Drab Brown Dk",
+    "floss": "610"
+  },
+  "E7D6C1": {
+    "name": "Yellow Beige Lt",
+    "floss": "3047"
+  },
+  "D8BC9A": {
+    "name": "Yellow Beige Md",
+    "floss": "3046"
+  },
+  "BC966A": {
+    "name": "Yellow Beige Dk",
+    "floss": "3045"
+  },
+  "A77C49": {
+    "name": "Yellow Beige V Dk",
+    "floss": "167"
+  },
+  "FCFCEE": {
+    "name": "Off White",
+    "floss": "746"
+  },
+  "F5ECCB": {
+    "name": "Old Gold Vy Lt",
+    "floss": "677"
+  },
+  "C69F7B": {
+    "name": "Hazelnut Brown Lt",
+    "floss": "422"
+  },
+  "B78B61": {
+    "name": "Hazelnut Brown",
+    "floss": "3828"
+  },
+  "A07042": {
+    "name": "Hazelnut Brown Dk",
+    "floss": "420"
+  },
+  "E4B468": {
+    "name": "Topaz",
+    "floss": "728"
+  },
+  "CE9124": {
+    "name": "Topaz Medium",
+    "floss": "783"
+  },
+  "AE7720": {
+    "name": "Topaz Dark",
+    "floss": "782"
+  },
+  "A26D20": {
+    "name": "Topaz Very Dark",
+    "floss": "781"
+  },
+  "94631A": {
+    "name": "Topaz Ultra Vy Dk",
+    "floss": "780"
+  },
+  "E5CE97": {
+    "name": "Old Gold Lt",
+    "floss": "676"
+  },
+  "D0A53E": {
+    "name": "Old Gold Medium",
+    "floss": "729"
+  },
+  "BC8D0E": {
+    "name": "Old Gold Dark",
+    "floss": "680"
+  },
+  "A98204": {
+    "name": "Old Gold Vy Dark",
+    "floss": "3829"
+  },
+  "F6DC98": {
+    "name": "Straw Light",
+    "floss": "3822"
+  },
+  "F3CE75": {
+    "name": "Straw",
+    "floss": "3821"
+  },
+  "DFB65F": {
+    "name": "Straw Dark",
+    "floss": "3820"
+  },
+  "CD9D37": {
+    "name": "Straw Very Dark",
+    "floss": "3852"
+  },
+  "FFFB8B": {
+    "name": "Lemon Light",
+    "floss": "445"
+  },
+  "FDED54": {
+    "name": "Lemon",
+    "floss": "307"
+  },
+  "FFE300": {
+    "name": "Canary Bright",
+    "floss": "973"
+  },
+  "FFD600": {
+    "name": "Lemon Dark",
+    "floss": "444"
+  },
+  "FDF9CD": {
+    "name": "Golden Yellow Vy Lt",
+    "floss": "3078"
+  },
+  "FFF1AF": {
+    "name": "Topaz Vy Lt",
+    "floss": "727"
+  },
+  "FDD755": {
+    "name": "Topaz Light",
+    "floss": "726"
+  },
+  "FFC840": {
+    "name": "Topaz Med Lt",
+    "floss": "725"
+  },
+  "FFB515": {
+    "name": "Canary Deep",
+    "floss": "972"
+  },
+  "FFE9AD": {
+    "name": "Yellow Pale Light",
+    "floss": "745"
+  },
+  "FFE793": {
+    "name": "Yellow Pale",
+    "floss": "744"
+  },
+  "FED376": {
+    "name": "Yellow Med",
+    "floss": "743"
+  },
+  "FFBF57": {
+    "name": "Tangerine Light",
+    "floss": "742"
+  },
+  "FFA32B": {
+    "name": "Tangerine Med",
+    "floss": "741"
+  },
+  "FF8B00": {
+    "name": "Tangerine",
+    "floss": "740"
+  },
+  "F78B13": {
+    "name": "Pumpkin Light",
+    "floss": "970"
+  },
+  "F67F00": {
+    "name": "Pumpkin",
+    "floss": "971"
+  },
+  "FF7B4D": {
+    "name": "Burnt Orange",
+    "floss": "947"
+  },
+  "EB6307": {
+    "name": "Burnt Orange Med",
+    "floss": "946"
+  },
+  "D15807": {
+    "name": "Burnt Orange Dark",
+    "floss": "900"
+  },
+  "FFDED5": {
+    "name": "Apricot Very Light",
+    "floss": "967"
+  },
+  "FECDC2": {
+    "name": "Apricot Light",
+    "floss": "3824"
+  },
+  "FCAB98": {
+    "name": "Apricot",
+    "floss": "3341"
+  },
+  "FF836F": {
+    "name": "Apricot Med",
+    "floss": "3340"
+  },
+  "FD5D35": {
+    "name": "Burnt Orange Bright",
+    "floss": "608"
+  },
+  "FA3203": {
+    "name": "Orange?Red Bright",
+    "floss": "606"
+  },
+  "FFE2CF": {
+    "name": "Tawny Light",
+    "floss": "951"
+  },
+  "FFD3B5": {
+    "name": "Mahogany Ult Vy Lt",
+    "floss": "3856"
+  },
+  "F7976F": {
+    "name": "Orange Spice Light",
+    "floss": "722"
+  },
+  "F27842": {
+    "name": "Orange Spice Med",
+    "floss": "721"
+  },
+  "E55C1F": {
+    "name": "Orange Spice Dark",
+    "floss": "720"
+  },
+  "FDBD96": {
+    "name": "Pumpkin Pale",
+    "floss": "3825"
+  },
+  "E27323": {
+    "name": "Copper Light",
+    "floss": "922"
+  },
+  "C66218": {
+    "name": "Copper",
+    "floss": "921"
+  },
+  "AC5414": {
+    "name": "Copper Med",
+    "floss": "920"
+  },
+  "A64510": {
+    "name": "Red?Copper",
+    "floss": "919"
+  },
+  "82340A": {
+    "name": "Red?Copper Dark",
+    "floss": "918"
+  },
+  "FFEEE3": {
+    "name": "Tawny Vy Light",
+    "floss": "3770"
+  },
+  "FBD5BB": {
+    "name": "Tawny",
+    "floss": "945"
+  },
+  "F7A777": {
+    "name": "Mahogany Vy Lt",
+    "floss": "402"
+  },
+  "CF7939": {
+    "name": "Mahogany Light",
+    "floss": "3776"
+  },
+  "B35F2B": {
+    "name": "Mahogany Med",
+    "floss": "301"
+  },
+  "8F430F": {
+    "name": "Mahogany Dark",
+    "floss": "400"
+  },
+  "6F2F00": {
+    "name": "Mahogany Vy Dk",
+    "floss": "300"
+  },
+  "FFFDE3": {
+    "name": "Yellow Ultra Pale",
+    "floss": "3823"
+  },
+  "FAD396": {
+    "name": "Autumn Gold Lt",
+    "floss": "3855"
+  },
+  "F2AF68": {
+    "name": "Autumn Gold Med",
+    "floss": "3854"
+  },
+  "F29746": {
+    "name": "Autumn Gold Dk",
+    "floss": "3853"
+  },
+  "F7BB77": {
+    "name": "Golden Brown Pale",
+    "floss": "3827"
+  },
+  "DC9C56": {
+    "name": "Golden Brown Light",
+    "floss": "977"
+  },
+  "C28142": {
+    "name": "Golden Brown Med",
+    "floss": "976"
+  },
+  "AD7239": {
+    "name": "Golden Brown",
+    "floss": "3826"
+  },
+  "914F12": {
+    "name": "Golden Brown Dk",
+    "floss": "975"
+  },
+  "FEE7DA": {
+    "name": "Peach Very Light",
+    "floss": "948"
+  },
+  "F7CBBF": {
+    "name": "Peach Light",
+    "floss": "754"
+  },
+  "F4BBA9": {
+    "name": "Terra Cotta Ult Vy Lt",
+    "floss": "3771"
+  },
+  "EEAA9B": {
+    "name": "Terra Cotta Vy Lt",
+    "floss": "758"
+  },
+  "D98978": {
+    "name": "Terra Cotta Light",
+    "floss": "3778"
+  },
+  "C56A5B": {
+    "name": "Terra Cotta Med",
+    "floss": "356"
+  },
+  "BC5544": {
+    "name": "Terra Cotta",
+    "floss": "3830"
+  },
+  "984436": {
+    "name": "Terra Cotta Dark",
+    "floss": "355"
+  },
+  "863022": {
+    "name": "Terra Cotta Vy Dk",
+    "floss": "3777"
+  },
+  "F8CAC8": {
+    "name": "Rosewood Ult Vy Lt",
+    "floss": "3779"
+  },
+  "BA8B7C": {
+    "name": "Rosewood Light",
+    "floss": "3859"
+  },
+  "964A3F": {
+    "name": "Rosewood Med",
+    "floss": "3858"
+  },
+  "68251A": {
+    "name": "Rosewood Dark",
+    "floss": "3857"
+  },
+  "F3E1D7": {
+    "name": "Desert Sand Vy Lt",
+    "floss": "3774"
+  },
+  "EED3C4": {
+    "name": "Desert Sand Light",
+    "floss": "950"
+  },
+  "C48E70": {
+    "name": "Desert Sand",
+    "floss": "3064"
+  },
+  "BB8161": {
+    "name": "Desert Sand Med",
+    "floss": "407"
+  },
+  "B67552": {
+    "name": "Desert Sand Dark",
+    "floss": "3773"
+  },
+  "A06C50": {
+    "name": "Desert Sand Vy Dk",
+    "floss": "3772"
+  },
+  "875539": {
+    "name": "Desert Sand Ult Vy Dk",
+    "floss": "632"
+  },
+  "D7CECB": {
+    "name": "Shell Gray Light",
+    "floss": "453"
+  },
+  "C0B3AE": {
+    "name": "Shell Gray Med",
+    "floss": "452"
+  },
+  "917B73": {
+    "name": "Shell Gray Dark",
+    "floss": "451"
+  },
+  "A68881": {
+    "name": "Cocoa Light",
+    "floss": "3861"
+  },
+  "7D5D57": {
+    "name": "Cocoa",
+    "floss": "3860"
+  },
+  "624B45": {
+    "name": "Cocoa Dark",
+    "floss": "779"
+  },
+  "FFFBEF": {
+    "name": "Cream",
+    "floss": "712"
+  },
+  "F8E4C8": {
+    "name": "Tan Ult Vy Lt",
+    "floss": "739"
+  },
+  "ECCC9E": {
+    "name": "Tan Very Light",
+    "floss": "738"
+  },
+  "E4BB8E": {
+    "name": "Tan Light",
+    "floss": "437"
+  },
+  "CB9051": {
+    "name": "Tan",
+    "floss": "436"
+  },
+  "B87748": {
+    "name": "Brown Very Light",
+    "floss": "435"
+  },
+  "7A451F": {
+    "name": "Brown Med",
+    "floss": "433"
+  },
+  "653919": {
+    "name": "Coffee Brown Dk",
+    "floss": "801"
+  },
+  "492A13": {
+    "name": "Coffee Brown Vy Dk",
+    "floss": "898"
+  },
+  "361F0E": {
+    "name": "Coffee Brown Ult Dk",
+    "floss": "938"
+  },
+  "1E1108": {
+    "name": "Black Brown",
+    "floss": "3371"
+  },
+  "F2E3CE": {
+    "name": "Beige Brown Ult Vy Lt",
+    "floss": "543"
+  },
+  "CBB69C": {
+    "name": "Mocha Beige Light",
+    "floss": "3864"
+  },
+  "A4835C": {
+    "name": "Mocha Beige Med",
+    "floss": "3863"
+  },
+  "8A6E4E": {
+    "name": "Mocha Beige Dark",
+    "floss": "3862"
+  },
+  "4B3C2A": {
+    "name": "Mocha Brown Vy Dk",
+    "floss": "3031"
+  },
+  "FFFFFF": {
+    "name": "Snow White",
+    "floss": "B5200"
+  },
+  "FCFBF8": {
+    "name": "White",
+    "floss": "White"
+  },
+  "F9F7F1": {
+    "name": "Winter White",
+    "floss": "3865"
+  },
+  "F0EADA": {
+    "name": "Ecru",
+    "floss": "Ecru"
+  },
+  "E7E2D3": {
+    "name": "Beige Gray Light",
+    "floss": "822"
+  },
+  "DDD8CB": {
+    "name": "Beige Gray Med",
+    "floss": "644"
+  },
+  "A49878": {
+    "name": "Beige Gray Dark",
+    "floss": "642"
+  },
+  "857B61": {
+    "name": "Beige Gray Vy Dk",
+    "floss": "640"
+  },
+  "625D50": {
+    "name": "Brown Gray Dark",
+    "floss": "3787"
+  },
+  "4F4B41": {
+    "name": "Brown Gray Vy Dk",
+    "floss": "3021"
+  },
+  "EBEAE7": {
+    "name": "Brown Gray Vy Lt",
+    "floss": "3024"
+  },
+  "B1AA97": {
+    "name": "Brown Gray Light",
+    "floss": "3023"
+  },
+  "8E9078": {
+    "name": "Brown Gray Med",
+    "floss": "3022"
+  },
+  "636458": {
+    "name": "Ash Gray Vy Lt",
+    "floss": "535"
+  },
+  "E3D8CC": {
+    "name": "Mocha Brown Vy Lt",
+    "floss": "3033"
+  },
+  "D2BCA6": {
+    "name": "Mocha Brown Lt",
+    "floss": "3782"
+  },
+  "B39F8B": {
+    "name": "Mocha Brown Med",
+    "floss": "3032"
+  },
+  "7F6A55": {
+    "name": "Beige Gray Ult Dk",
+    "floss": "3790"
+  },
+  "6B5743": {
+    "name": "Mocha Brown Dk",
+    "floss": "3781"
+  },
+  "FAF6F0": {
+    "name": "Mocha Brn Ult Vy Lt",
+    "floss": "3866"
+  },
+  "D1BAA1": {
+    "name": "Beige Brown Vy Lt",
+    "floss": "842"
+  },
+  "B69B7E": {
+    "name": "Beige Brown Lt",
+    "floss": "841"
+  },
+  "9A7C5C": {
+    "name": "Beige Brown Med",
+    "floss": "840"
+  },
+  "675541": {
+    "name": "Beige Brown Dk",
+    "floss": "839"
+  },
+  "594937": {
+    "name": "Beige Brown Vy Dk",
+    "floss": "838"
+  },
+  "E6E8E8": {
+    "name": "Beaver Gray Vy Lt",
+    "floss": "3072"
+  },
+  "BCB4AC": {
+    "name": "Beaver Gray Lt",
+    "floss": "648"
+  },
+  "B0A69C": {
+    "name": "Beaver Gray Med",
+    "floss": "647"
+  },
+  "877D73": {
+    "name": "Beaver Gray Dk",
+    "floss": "646"
+  },
+  "6E655C": {
+    "name": "Beaver Gray Vy Dk",
+    "floss": "645"
+  },
+  "484848": {
+    "name": "Beaver Gray Ult Dk",
+    "floss": "844"
+  },
+  "ECECEC": {
+    "name": "Pearl Gray Vy Lt",
+    "floss": "762"
+  },
+  "D3D3D6": {
+    "name": "Pearl Gray",
+    "floss": "415"
+  },
+  "ABABAB": {
+    "name": "Steel Gray Lt",
+    "floss": "318"
+  },
+  "8C8C8C": {
+    "name": "Steel Gray Dk",
+    "floss": "414"
+  },
+  "D1D1D1": {
+    "name": "Pewter Very Light",
+    "floss": "168"
+  },
+  "848484": {
+    "name": "Pewter Light",
+    "floss": "169"
+  },
+  "6C6C6C": {
+    "name": "Pewter Gray",
+    "floss": "317"
+  },
+  "565656": {
+    "name": "Pewter Gray Dark",
+    "floss": "413"
+  },
+  "424242": {
+    "name": "Pewter Gray Vy Dk",
+    "floss": "3799"
+  }
+}

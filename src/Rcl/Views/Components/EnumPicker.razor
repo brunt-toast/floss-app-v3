@@ -1,0 +1,12 @@
+@using Rcl.Extensions.System
+@typeparam T
+
+<MudSelect T="T" @bind-Value="Value" Label="@Label" Disabled="@Disabled">
+    @foreach (var val in Enum.GetValues<T>().Where(Filter))
+    {
+        <MudSelectItem T="T" Value="val">
+            @val.ToDisplayName()<br/>
+            <span class="text-secondary" style="font-size: .75em;">@val.GetDescription()</span>
+        </MudSelectItem>
+    }
+</MudSelect>

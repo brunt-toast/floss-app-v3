@@ -1,0 +1,542 @@
+{
+  "CD5C5C": {
+    "name": "INDIANRED",
+    "floss": "INDIANRED"
+  },
+  "F08080": {
+    "name": "LIGHTCORAL",
+    "floss": "LIGHTCORAL"
+  },
+  "FA8072": {
+    "name": "SALMON",
+    "floss": "SALMON"
+  },
+  "E9967A": {
+    "name": "DARKSALMON",
+    "floss": "DARKSALMON"
+  },
+  "FFA07A": {
+    "name": "LIGHTSALMON",
+    "floss": "LIGHTSALMON"
+  },
+  "DC143C": {
+    "name": "CRIMSON",
+    "floss": "CRIMSON"
+  },
+  "FF0000": {
+    "name": "RED",
+    "floss": "RED"
+  },
+  "8B0000": {
+    "name": "DARKRED",
+    "floss": "DARKRED"
+  },
+  "FFC0CB": {
+    "name": "PINK",
+    "floss": "PINK"
+  },
+  "FFB6C1": {
+    "name": "LIGHTPINK",
+    "floss": "LIGHTPINK"
+  },
+  "FF69B4": {
+    "name": "HOTPINK",
+    "floss": "HOTPINK"
+  },
+  "FF1493": {
+    "name": "DEEPPINK",
+    "floss": "DEEPPINK"
+  },
+  "C71585": {
+    "name": "MEDIUMVIOLETRED",
+    "floss": "MEDIUMVIOLETRED"
+  },
+  "DB7093": {
+    "name": "PALEVIOLETRED",
+    "floss": "PALEVIOLETRED"
+  },
+  "FF7F50": {
+    "name": "CORAL",
+    "floss": "CORAL"
+  },
+  "FF6347": {
+    "name": "TOMATO",
+    "floss": "TOMATO"
+  },
+  "FF4500": {
+    "name": "ORANGERED",
+    "floss": "ORANGERED"
+  },
+  "FF8C00": {
+    "name": "DARKORANGE",
+    "floss": "DARKORANGE"
+  },
+  "FFA500": {
+    "name": "ORANGE",
+    "floss": "ORANGE"
+  },
+  "FFD700": {
+    "name": "GOLD",
+    "floss": "GOLD"
+  },
+  "FFFF00": {
+    "name": "YELLOW",
+    "floss": "YELLOW"
+  },
+  "FFFFE0": {
+    "name": "LIGHTYELLOW",
+    "floss": "LIGHTYELLOW"
+  },
+  "FFFACD": {
+    "name": "LEMONCHIFFON",
+    "floss": "LEMONCHIFFON"
+  },
+  "FAFAD2": {
+    "name": "LIGHTGOLDENRODYELLOW",
+    "floss": "LIGHTGOLDENRODYELLOW"
+  },
+  "FFEFD5": {
+    "name": "PAPAYAWHIP",
+    "floss": "PAPAYAWHIP"
+  },
+  "FFE4B5": {
+    "name": "MOCCASIN",
+    "floss": "MOCCASIN"
+  },
+  "FFDAB9": {
+    "name": "PEACHPUFF",
+    "floss": "PEACHPUFF"
+  },
+  "EEE8AA": {
+    "name": "PALEGOLDENROD",
+    "floss": "PALEGOLDENROD"
+  },
+  "F0E68C": {
+    "name": "KHAKI",
+    "floss": "KHAKI"
+  },
+  "BDB76B": {
+    "name": "DARKKHAKI",
+    "floss": "DARKKHAKI"
+  },
+  "E6E6FA": {
+    "name": "LAVENDER",
+    "floss": "LAVENDER"
+  },
+  "D8BFD8": {
+    "name": "THISTLE",
+    "floss": "THISTLE"
+  },
+  "DDA0DD": {
+    "name": "PLUM",
+    "floss": "PLUM"
+  },
+  "EE82EE": {
+    "name": "VIOLET",
+    "floss": "VIOLET"
+  },
+  "DA70D6": {
+    "name": "ORCHID",
+    "floss": "ORCHID"
+  },
+  "FF00FF": {
+    "name": "FUCHSIA",
+    "floss": "FUCHSIA"
+  },
+  "BA55D3": {
+    "name": "MEDIUMORCHID",
+    "floss": "MEDIUMORCHID"
+  },
+  "9370DB": {
+    "name": "MEDIUMPURPLE",
+    "floss": "MEDIUMPURPLE"
+  },
+  "663399": {
+    "name": "REBECCAPURPLE",
+    "floss": "REBECCAPURPLE"
+  },
+  "8A2BE2": {
+    "name": "BLUEVIOLET",
+    "floss": "BLUEVIOLET"
+  },
+  "9400D3": {
+    "name": "DARKVIOLET",
+    "floss": "DARKVIOLET"
+  },
+  "9932CC": {
+    "name": "DARKORCHID",
+    "floss": "DARKORCHID"
+  },
+  "8B008B": {
+    "name": "DARKMAGENTA",
+    "floss": "DARKMAGENTA"
+  },
+  "800080": {
+    "name": "PURPLE",
+    "floss": "PURPLE"
+  },
+  "4B0082": {
+    "name": "INDIGO",
+    "floss": "INDIGO"
+  },
+  "6A5ACD": {
+    "name": "SLATEBLUE",
+    "floss": "SLATEBLUE"
+  },
+  "483D8B": {
+    "name": "DARKSLATEBLUE",
+    "floss": "DARKSLATEBLUE"
+  },
+  "7B68EE": {
+    "name": "MEDIUMSLATEBLUE",
+    "floss": "MEDIUMSLATEBLUE"
+  },
+  "ADFF2F": {
+    "name": "GREENYELLOW",
+    "floss": "GREENYELLOW"
+  },
+  "7FFF00": {
+    "name": "CHARTREUSE",
+    "floss": "CHARTREUSE"
+  },
+  "7CFC00": {
+    "name": "LAWNGREEN",
+    "floss": "LAWNGREEN"
+  },
+  "00FF00": {
+    "name": "LIME",
+    "floss": "LIME"
+  },
+  "32CD32": {
+    "name": "LIMEGREEN",
+    "floss": "LIMEGREEN"
+  },
+  "98FB98": {
+    "name": "PALEGREEN",
+    "floss": "PALEGREEN"
+  },
+  "90EE90": {
+    "name": "LIGHTGREEN",
+    "floss": "LIGHTGREEN"
+  },
+  "00FA9A": {
+    "name": "MEDIUMSPRINGGREEN",
+    "floss": "MEDIUMSPRINGGREEN"
+  },
+  "00FF7F": {
+    "name": "SPRINGGREEN",
+    "floss": "SPRINGGREEN"
+  },
+  "3CB371": {
+    "name": "MEDIUMSEAGREEN",
+    "floss": "MEDIUMSEAGREEN"
+  },
+  "2E8B57": {
+    "name": "SEAGREEN",
+    "floss": "SEAGREEN"
+  },
+  "228B22": {
+    "name": "FORESTGREEN",
+    "floss": "FORESTGREEN"
+  },
+  "008000": {
+    "name": "GREEN",
+    "floss": "GREEN"
+  },
+  "006400": {
+    "name": "DARKGREEN",
+    "floss": "DARKGREEN"
+  },
+  "9ACD32": {
+    "name": "YELLOWGREEN",
+    "floss": "YELLOWGREEN"
+  },
+  "6B8E23": {
+    "name": "OLIVEDRAB",
+    "floss": "OLIVEDRAB"
+  },
+  "556B2F": {
+    "name": "DARKOLIVEGREEN",
+    "floss": "DARKOLIVEGREEN"
+  },
+  "66CDAA": {
+    "name": "MEDIUMAQUAMARINE",
+    "floss": "MEDIUMAQUAMARINE"
+  },
+  "8FBC8B": {
+    "name": "DARKSEAGREEN",
+    "floss": "DARKSEAGREEN"
+  },
+  "20B2AA": {
+    "name": "LIGHTSEAGREEN",
+    "floss": "LIGHTSEAGREEN"
+  },
+  "008B8B": {
+    "name": "DARKCYAN",
+    "floss": "DARKCYAN"
+  },
+  "008080": {
+    "name": "TEAL",
+    "floss": "TEAL"
+  },
+  "00FFFF": {
+    "name": "AQUA",
+    "floss": "AQUA"
+  },
+  "E0FFFF": {
+    "name": "LIGHTCYAN",
+    "floss": "LIGHTCYAN"
+  },
+  "AFEEEE": {
+    "name": "PALETURQUOISE",
+    "floss": "PALETURQUOISE"
+  },
+  "7FFFD4": {
+    "name": "AQUAMARINE",
+    "floss": "AQUAMARINE"
+  },
+  "40E0D0": {
+    "name": "TURQUOISE",
+    "floss": "TURQUOISE"
+  },
+  "48D1CC": {
+    "name": "MEDIUMTURQUOISE",
+    "floss": "MEDIUMTURQUOISE"
+  },
+  "00CED1": {
+    "name": "DARKTURQUOISE",
+    "floss": "DARKTURQUOISE"
+  },
+  "5F9EA0": {
+    "name": "CADETBLUE",
+    "floss": "CADETBLUE"
+  },
+  "4682B4": {
+    "name": "STEELBLUE",
+    "floss": "STEELBLUE"
+  },
+  "B0C4DE": {
+    "name": "LIGHTSTEELBLUE",
+    "floss": "LIGHTSTEELBLUE"
+  },
+  "B0E0E6": {
+    "name": "POWDERBLUE",
+    "floss": "POWDERBLUE"
+  },
+  "ADD8E6": {
+    "name": "LIGHTBLUE",
+    "floss": "LIGHTBLUE"
+  },
+  "87CEEB": {
+    "name": "SKYBLUE",
+    "floss": "SKYBLUE"
+  },
+  "87CEFA": {
+    "name": "LIGHTSKYBLUE",
+    "floss": "LIGHTSKYBLUE"
+  },
+  "00BFFF": {
+    "name": "DEEPSKYBLUE",
+    "floss": "DEEPSKYBLUE"
+  },
+  "1E90FF": {
+    "name": "DODGERBLUE",
+    "floss": "DODGERBLUE"
+  },
+  "6495ED": {
+    "name": "CORNFLOWERBLUE",
+    "floss": "CORNFLOWERBLUE"
+  },
+  "4169E1": {
+    "name": "ROYALBLUE",
+    "floss": "ROYALBLUE"
+  },
+  "0000FF": {
+    "name": "BLUE",
+    "floss": "BLUE"
+  },
+  "0000CD": {
+    "name": "MEDIUMBLUE",
+    "floss": "MEDIUMBLUE"
+  },
+  "00008B": {
+    "name": "DARKBLUE",
+    "floss": "DARKBLUE"
+  },
+  "191970": {
+    "name": "MIDNIGHTBLUE",
+    "floss": "MIDNIGHTBLUE"
+  },
+  "FFF8DC": {
+    "name": "CORNSILK",
+    "floss": "CORNSILK"
+  },
+  "FFEBCD": {
+    "name": "BLANCHEDALMOND",
+    "floss": "BLANCHEDALMOND"
+  },
+  "FFE4C4": {
+    "name": "BISQUE",
+    "floss": "BISQUE"
+  },
+  "FFDEAD": {
+    "name": "NAVAJOWHITE",
+    "floss": "NAVAJOWHITE"
+  },
+  "F5DEB3": {
+    "name": "WHEAT",
+    "floss": "WHEAT"
+  },
+  "DEB887": {
+    "name": "BURLYWOOD",
+    "floss": "BURLYWOOD"
+  },
+  "D2B48C": {
+    "name": "TAN",
+    "floss": "TAN"
+  },
+  "BC8F8F": {
+    "name": "ROSYBROWN",
+    "floss": "ROSYBROWN"
+  },
+  "F4A460": {
+    "name": "SANDYBROWN",
+    "floss": "SANDYBROWN"
+  },
+  "DAA520": {
+    "name": "GOLDENROD",
+    "floss": "GOLDENROD"
+  },
+  "B8860B": {
+    "name": "DARKGOLDENROD",
+    "floss": "DARKGOLDENROD"
+  },
+  "CD853F": {
+    "name": "PERU",
+    "floss": "PERU"
+  },
+  "D2691E": {
+    "name": "CHOCOLATE",
+    "floss": "CHOCOLATE"
+  },
+  "8B4513": {
+    "name": "SADDLEBROWN",
+    "floss": "SADDLEBROWN"
+  },
+  "A0522D": {
+    "name": "SIENNA",
+    "floss": "SIENNA"
+  },
+  "A52A2A": {
+    "name": "BROWN",
+    "floss": "BROWN"
+  },
+  "800000": {
+    "name": "MAROON",
+    "floss": "MAROON"
+  },
+  "FFFFFF": {
+    "name": "WHITE",
+    "floss": "WHITE"
+  },
+  "FFFAFA": {
+    "name": "SNOW",
+    "floss": "SNOW"
+  },
+  "F0FFF0": {
+    "name": "HONEYDEW",
+    "floss": "HONEYDEW"
+  },
+  "F5FFFA": {
+    "name": "MINTCREAM",
+    "floss": "MINTCREAM"
+  },
+  "F0FFFF": {
+    "name": "AZURE",
+    "floss": "AZURE"
+  },
+  "F0F8FF": {
+    "name": "ALICEBLUE",
+    "floss": "ALICEBLUE"
+  },
+  "F8F8FF": {
+    "name": "GHOSTWHITE",
+    "floss": "GHOSTWHITE"
+  },
+  "F5F5F5": {
+    "name": "WHITESMOKE",
+    "floss": "WHITESMOKE"
+  },
+  "FFF5EE": {
+    "name": "SEASHELL",
+    "floss": "SEASHELL"
+  },
+  "F5F5DC": {
+    "name": "BEIGE",
+    "floss": "BEIGE"
+  },
+  "FDF5E6": {
+    "name": "OLDLACE",
+    "floss": "OLDLACE"
+  },
+  "FFFFF0": {
+    "name": "IVORY",
+    "floss": "IVORY"
+  },
+  "FAEBD7": {
+    "name": "ANTIQUEWHITE",
+    "floss": "ANTIQUEWHITE"
+  },
+  "FAF0E6": {
+    "name": "LINEN",
+    "floss": "LINEN"
+  },
+  "FFF0F5": {
+    "name": "LAVENDERBLUSH",
+    "floss": "LAVENDERBLUSH"
+  },
+  "FFE4E1": {
+    "name": "MISTYROSE",
+    "floss": "MISTYROSE"
+  },
+  "DCDCDC": {
+    "name": "GAINSBORO",
+    "floss": "GAINSBORO"
+  },
+  "D3D3D3": {
+    "name": "LIGHTGRAY",
+    "floss": "LIGHTGRAY"
+  },
+  "C0C0C0": {
+    "name": "SILVER",
+    "floss": "SILVER"
+  },
+  "A9A9A9": {
+    "name": "DARKGRAY",
+    "floss": "DARKGRAY"
+  },
+  "808080": {
+    "name": "GRAY",
+    "floss": "GRAY"
+  },
+  "696969": {
+    "name": "DIMGRAY",
+    "floss": "DIMGRAY"
+  },
+  "778899": {
+    "name": "LIGHTSLATEGRAY",
+    "floss": "LIGHTSLATEGRAY"
+  },
+  "708090": {
+    "name": "SLATEGRAY",
+    "floss": "SLATEGRAY"
+  },
+  "2F4F4F": {
+    "name": "DARKSLATEGRAY",
+    "floss": "DARKSLATEGRAY"
+  },
+  "000000": {
+    "name": "BLACK",
+    "floss": "BLACK"
+  }
+}

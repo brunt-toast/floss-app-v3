@@ -1,0 +1,225 @@
+@page "/image-workbench"
+@implements IDisposable
+@using App.Enums
+@using Rcl.Resources.Languages
+@using Rcl.Views.Components
+@using Rcl.ViewModels
+@inject IImageWorkbenchViewModel ViewModel
+
+<MudGrid Spacing="2">
+    <MudItem xs="12">
+        <MudPaper Class="pa-3" Elevation="1">
+            @if (!string.IsNullOrWhiteSpace(ViewModel.ResultPreviewDataUrl))
+            {
+                <div class="processed-preview-shell mt-2">
+                    <img src="@ViewModel.ResultPreviewDataUrl" alt="@ImageWorkbenchResources.ProcessedImageAlt" class="processed-preview-image"/>
+                </div>
+                <MudText Typo="Typo.caption">
+                    @if (ViewModel.ResultWidth > 0 && ViewModel.ResultHeight > 0)
+                    {
+                        <span>@ViewModel.ResultWidth x @ViewModel.ResultHeight</span>
+                    }
+                </MudText>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mt-2">
+                    @ImageWorkbenchResources.ProcessedPreviewPlaceholder
+                </MudAlert>
+            }
+        </MudPaper>
+    </MudItem>
+
+    <MudItem xs="12">
+        <MudPaper Class="pa-3" Elevation="1">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.body2" Color="Color.Inherit">
+                    @ImageWorkbenchResources.ScaleLabel
+                </MudText>
+                <MudSlider T="double"
+                           Min="0.01"
+                           Max="1"
+                           Step="0.01"
+                           Immediate="true"
+                           @bind-Value="ViewModel.Scale"
+                           ValueLabel="true"
+                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+
+                <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.TransparencyThresholdLabel</MudText>
+                <MudSlider T="int"
+                           Min="0"
+                           Max="255"
+                           Step="1"
+                           Immediate="true"
+                           Value="@ViewModel.TransparencyThreshold"
+                           ValueChanged="OnTransparencyChanged"
+                           ValueLabel="true"
+                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+
+                <MudGrid Spacing="2">
+                    <MudItem xs="6" md="6">
+                        <EnumPicker T="ImageSharpKnownResamplers"
+                                    Label="@ImageWorkbenchResources.ResamplerLabel"
+                                    Value="@ViewModel.SelectedResampler"
+                                    ValueChanged="OnResamplerChanged"
+                                    Filter="CanUseResampler"
+                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    </MudItem>
+
+                    <MudItem xs="6" md="6">
+                        <EnumPicker T="ImageSharpKnownDitherings"
+                                    Label="@ImageWorkbenchResources.DitheringLabel"
+                                    Value="@ViewModel.SelectedDithering"
+                                    ValueChanged="OnDitheringChanged"
+                                    Filter="CanUseDithering"
+                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    </MudItem>
+
+                    <MudItem xs="6" md="6">
+                        <EnumPicker T="BuiltinColorSets"
+                                    Label="@ImageWorkbenchResources.ColorSetLabel"
+                                    Value="@ViewModel.SelectedColorSet"
+                                    ValueChanged="OnColorSetChanged"
+                                    Filter="CanUseColorSet"
+                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    </MudItem>
+
+                    <MudItem xs="6" md="6">
+                        <EnumPicker T="ColorComparisonAlgorithms"
+                                    Label="@ImageWorkbenchResources.ColorDistanceLabel"
+                                    Value="@ViewModel.SelectedComparisonAlgorithm"
+                                    ValueChanged="OnComparisonAlgorithmChanged"
+                                    Filter="CanUseComparisonAlgorithm"
+                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    </MudItem>
+                </MudGrid>
+
+                <div class="mt-1" style="display:flex;justify-content:flex-end;gap:8px;">
+                    <MudButton Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               Disabled="@ViewModel.IsBusy"
+                               OnClick="LoadFromDeviceAsync">
+                        @ImageWorkbenchResources.LoadButton
+                    </MudButton>
+
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Download"
+                               Disabled="@(!ViewModel.CanSave)"
+                               OnClick="SaveResultAsync">
+                        @ImageWorkbenchResources.SaveButton
+                    </MudButton>
+                </div>
+
+            </MudStack>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@if (ViewModel.IsBusy)
+{
+    <MudProgressLinear Indeterminate="true" Class="mt-3" Color="Color.Primary"/>
+}
+
+<style>
+    .processed-preview-shell {
+        width: 100%;
+        min-height: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--mud-palette-surface);
+        border: 1px dashed var(--mud-palette-lines-default);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .processed-preview-image {
+        width: 100%;
+        height: 320px;
+        object-fit: contain;
+        display: block;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        -ms-interpolation-mode: nearest-neighbor;
+    }
+</style>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    public void Dispose()
+    {
+        ViewModel.PropertyChanged -= OnViewModelPropertyChanged;
+    }
+
+    private async Task LoadFromDeviceAsync()
+    {
+        await ViewModel.LoadFromDeviceAsync();
+    }
+
+    private async Task SaveResultAsync()
+    {
+        await ViewModel.SaveResultAsync();
+    }
+
+    private Task OnTransparencyChanged(int value)
+    {
+        ViewModel.TransparencyThreshold = (byte)Math.Clamp(value, byte.MinValue, byte.MaxValue);
+        return Task.CompletedTask;
+    }
+
+    private Task OnResamplerChanged(ImageSharpKnownResamplers value)
+    {
+        ViewModel.SelectedResampler = value;
+        return Task.CompletedTask;
+    }
+
+    private bool CanUseResampler(ImageSharpKnownResamplers value)
+    {
+        return ViewModel.Resamplers.Contains(value);
+    }
+
+    private Task OnDitheringChanged(ImageSharpKnownDitherings value)
+    {
+        ViewModel.SelectedDithering = value;
+        return Task.CompletedTask;
+    }
+
+    private bool CanUseDithering(ImageSharpKnownDitherings value)
+    {
+        return ViewModel.Ditherings.Contains(value);
+    }
+
+    private Task OnColorSetChanged(BuiltinColorSets value)
+    {
+        ViewModel.SelectedColorSet = value;
+        return Task.CompletedTask;
+    }
+
+    private bool CanUseColorSet(BuiltinColorSets value)
+    {
+        return ViewModel.ColorSets.Contains(value);
+    }
+
+    private Task OnComparisonAlgorithmChanged(ColorComparisonAlgorithms value)
+    {
+        ViewModel.SelectedComparisonAlgorithm = value;
+        return Task.CompletedTask;
+    }
+
+    private bool CanUseComparisonAlgorithm(ColorComparisonAlgorithms value)
+    {
+        return ViewModel.ComparisonAlgorithms.Contains(value);
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        _ = InvokeAsync(StateHasChanged);
+    }
+
+}

@@ -1,0 +1,8 @@
+﻿@page "/not-found"
+@layout MainLayout
+@using Rcl.Resources.Languages
+
+<MudText Typo="Typo.h4" GutterBottom="true">@NotFoundResources.Title</MudText>
+<MudAlert Severity="Severity.Warning" Variant="Variant.Filled">
+	@NotFoundResources.Message
+</MudAlert>

@@ -1,0 +1,24 @@
+using Microsoft.Extensions.DependencyInjection;
+using Rcl.Ioc;
+using Rcl.Tests.Generators.DependencyInjection;
+
+namespace Rcl.Tests.Tests.Ioc;
+
+[TestClass]
+public class RclServiceRegistrarTests
+{
+    [TestMethod]
+    [DynamicData(
+        nameof(ServiceDescriptorsGenerator.GetServiceDescriptors),
+        typeof(ServiceDescriptorsGenerator))]
+    public void RegisterServices_Can_Manufacture_Each_Registered_Service(ServiceDescriptor descriptor)
+    {
+        var services = new ServiceCollection();
+        services.RegisterServices();
+
+        using var provider = services.BuildServiceProvider();
+        var resolved = provider.GetService(descriptor.ServiceType);
+
+        Assert.IsNotNull(resolved);
+    }
+}

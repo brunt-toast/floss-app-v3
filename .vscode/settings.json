@@ -1,0 +1,26 @@
+{
+    "editor.formatOnSave": true,
+    "[xml]": {
+        "editor.formatOnSave": false
+    },
+    "files.associations": {
+        "*.csproj": "xml",
+        ".actrc": "shellscript"
+    },
+    "files.exclude": {
+        "**/.git/": true,
+        "**/bin/": true,
+        "**/obj/": true,
+        "**/*.csproj.user": true,
+        "**/TestResults/": true,
+        "**/.tmp/": true,
+        "**/FodyWeavers.xsd": true,
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.fileNesting.patterns": {
+        "*.razor": "${capture}.razor.cs, ${capture}.razor.css, ${capture}.razor.js, ${capture}.razor.scss",
+        "*.xaml": "${capture}.xaml.cs",
+        "appsettings.json": "appsettings.*.json"
+    },
+}

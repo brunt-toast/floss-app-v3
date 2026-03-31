@@ -1,0 +1,113 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
+
+      - name: Install Android SDK
+        shell: bash
+        run: |
+          set -eu
+          ANDROID_SDK_ROOT="$HOME/android-sdk"
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
+
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
+          curl -fsSL "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -o /tmp/cmdline-tools.zip
+          unzip -q /tmp/cmdline-tools.zip -d /tmp
+          rm -rf "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+          mv /tmp/cmdline-tools "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+
+          echo "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "${ANDROID_SDK_ROOT}/platform-tools" >> "$GITHUB_PATH"
+
+          set +e
+          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null
+          LICENSE_EXIT=$?
+          set -e
+          if [ "$LICENSE_EXIT" -ne 0 ] && [ "$LICENSE_EXIT" -ne 141 ]; then
+            echo "sdkmanager --licenses failed with exit code ${LICENSE_EXIT}"
+            exit "$LICENSE_EXIT"
+          fi
+
+          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0"
+
+      - name: Restore BlazorHybrid project
+        run: dotnet restore src/BlazorHybrid/BlazorHybrid.csproj
+
+      - name: Build Android APK
+        run: >-
+          dotnet publish src/BlazorHybrid/BlazorHybrid.csproj
+          -c Release
+          -f net10.0-android
+          -p:AndroidSdkDirectory=$ANDROID_SDK_ROOT
+          -p:AndroidPackageFormats=apk
+
+      - name: Locate APK
+        id: locate_apk
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK_PATH="$(find src/BlazorHybrid/bin/Release -type f -name '*.apk' | head -n 1)"
+
+          if [[ -z "${APK_PATH}" ]]; then
+            echo "No APK file found under src/BlazorHybrid/bin/Release"
+            exit 1
+          fi
+
+          APK_NAME="$(basename "${APK_PATH}")"
+          echo "Found APK: ${APK_PATH}"
+          echo "path=${APK_PATH}" >> "$GITHUB_OUTPUT"
+          echo "name=${APK_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Copy APK to build folder (act)
+        if: ${{ env.ACT == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          HOST_BUILD_DIR="${GITHUB_WORKSPACE}/build"
+          mkdir -p "${HOST_BUILD_DIR}"
+          cp "${{ steps.locate_apk.outputs.path }}" "${HOST_BUILD_DIR}/${{ steps.locate_apk.outputs.name }}"
+
+          # Keep compatibility with /build inside the runner container for tooling that expects it.
+          mkdir -p /build
+          cp "${{ steps.locate_apk.outputs.path }}" "/build/${{ steps.locate_apk.outputs.name }}"
+
+          echo "APK copied to ${HOST_BUILD_DIR}/${{ steps.locate_apk.outputs.name }}"
+          echo "APK copied to /build/${{ steps.locate_apk.outputs.name }}"
+
+      - name: Upload APK artifact (GitHub)
+        if: ${{ env.ACT != 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: blazorhybrid-android-apk
+          path: ${{ steps.locate_apk.outputs.path }}
+          if-no-files-found: error

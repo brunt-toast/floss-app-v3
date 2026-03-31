@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/test/">
+    <Project Path="test/App.Tests/App.Tests.csproj" />
+    <Project Path="test/Rcl.Tests/Rcl.Tests.csproj" />
+  </Folder>
+  <Project Path="src/App/App.csproj" Id="ef4ea4d7-8264-4322-8416-fc776a773686" />
+  <Project Path="src/BlazorHybrid/BlazorHybrid.csproj" Id="3a3ff16a-d806-408c-90db-23fb1ba1ee7d" />
+  <Project Path="src/Database/Database.csproj" Id="e3d9becf-d51d-4d7c-afec-7ed021d7433d" />
+  <Project Path="src/Rcl/Rcl.csproj" Id="5d1b36b5-abbc-4223-8526-e3357fefb37f" />
+</Solution>
