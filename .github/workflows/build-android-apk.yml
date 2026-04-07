@@ -47,10 +47,12 @@ jobs:
           echo "${ANDROID_SDK_ROOT}/platform-tools" >> "$GITHUB_PATH"
 
           set +e
+          set +o pipefail
           yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null
           LICENSE_EXIT=$?
+          set -o pipefail
           set -e
-          if [ "$LICENSE_EXIT" -ne 0 ] && [ "$LICENSE_EXIT" -ne 141 ]; then
+          if [ "$LICENSE_EXIT" -ne 0 ]; then
             echo "sdkmanager --licenses failed with exit code ${LICENSE_EXIT}"
             exit "$LICENSE_EXIT"
           fi
