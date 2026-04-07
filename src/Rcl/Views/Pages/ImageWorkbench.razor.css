@@ -1,0 +1,62 @@
+.processed-preview-shell {
+  width: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mud-palette-surface);
+  border: 1px dashed var(--mud-palette-lines-default);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.processed-preview-image {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.color-usage-swatch {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+}
+
+.color-usage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.color-usage-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.color-usage-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.color-usage-code {
+  color: var(--mud-palette-text-secondary);
+  white-space: nowrap;
+}
+
+.color-usage-count {
+  margin-left: auto;
+  white-space: nowrap;
+  font-weight: 600;
+}
