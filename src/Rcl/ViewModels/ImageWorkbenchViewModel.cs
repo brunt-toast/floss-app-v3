@@ -1,5 +1,6 @@
 using App.Enums;
 using App.Services.ColorReduction;
+using App.Services.ColorSets;
 using App.Services.ImageResizing;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MudBlazor;
@@ -12,13 +13,21 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Rcl.ViewModels.Interfaces;
 using App.Extensions.System.Threading;
+using DrawingColor = System.Drawing.Color;
 
 namespace Rcl.ViewModels;
+
+public sealed record ImageWorkbenchColorUsageItem(
+    string Name,
+    string Floss,
+    string Hex,
+    int PixelCount);
 
 public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchViewModel
 {
     private readonly IImageResizingService _imageResizingService;
     private readonly IColorReductionService _colorReductionService;
+    private readonly IColorSetService _colorSetService;
     private readonly IImageFileService _imageFileService;
     private readonly ISnackbar _snackbar;
     private readonly SemaphoreSlim _processingGate = new(1, 1);
@@ -39,6 +48,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
 
     public bool IsBusy { get; set; }
     public string ResultPreviewDataUrl { get; private set; } = string.Empty;
+    public IReadOnlyList<ImageWorkbenchColorUsageItem> ColorUsage { get; private set; } = [];
     public int ResultWidth { get; set; }
     public int ResultHeight { get; set; }
 
@@ -63,11 +73,13 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public ImageWorkbenchViewModel(
         IImageResizingService imageResizingService,
         IColorReductionService colorReductionService,
+        IColorSetService colorSetService,
         IImageFileService imageFileService,
         ISnackbar snackbar)
     {
         _imageResizingService = imageResizingService;
         _colorReductionService = colorReductionService;
+        _colorSetService = colorSetService;
         _imageFileService = imageFileService;
         _snackbar = snackbar;
     }
@@ -173,6 +185,8 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             using var reduced =
                 _colorReductionService.ReduceColors(resized, SelectedColorSet, SelectedComparisonAlgorithm);
 
+            ColorUsage = BuildColorUsage(reduced, SelectedColorSet);
+
             await using var outputStream = new MemoryStream();
             await reduced.SaveAsync(outputStream, new PngEncoder());
 
@@ -185,10 +199,75 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
         {
             _resultImageContent = null;
             ResultPreviewDataUrl = string.Empty;
+            ColorUsage = [];
             ResultWidth = 0;
             ResultHeight = 0;
             _snackbar.Add(ex.Message, Severity.Error);
         }
+    }
+
+    private IReadOnlyList<ImageWorkbenchColorUsageItem> BuildColorUsage(Image<Rgba32> reduced,
+        BuiltinColorSets colorSet)
+    {
+        var paletteByRgb = _colorSetService
+            .GetColors(colorSet)
+            .GroupBy(color => ToRgbKey(color.Color))
+            .ToDictionary(group => group.Key, group => group.First());
+
+        var pixelCountsByRgb = new Dictionary<int, int>();
+
+        reduced.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height; y++)
+            {
+                var row = accessor.GetRowSpan(y);
+                for (var x = 0; x < row.Length; x++)
+                {
+                    var pixel = row[x];
+                    if (pixel.A == 0)
+                    {
+                        continue;
+                    }
+
+                    var rgbKey = ToRgbKey(pixel.R, pixel.G, pixel.B);
+                    pixelCountsByRgb[rgbKey] = pixelCountsByRgb.GetValueOrDefault(rgbKey) + 1;
+                }
+            }
+        });
+
+        return pixelCountsByRgb
+            .OrderByDescending(entry => entry.Value)
+            .ThenBy(entry => paletteByRgb.TryGetValue(entry.Key, out var setColor)
+                ? setColor.Name
+                : entry.Key.ToString("X6"))
+            .Select(entry =>
+            {
+                if (paletteByRgb.TryGetValue(entry.Key, out var setColor))
+                {
+                    return new ImageWorkbenchColorUsageItem(
+                        string.IsNullOrWhiteSpace(setColor.Name) ? setColor.Floss : setColor.Name,
+                        setColor.Floss,
+                        $"#{entry.Key:X6}",
+                        entry.Value);
+                }
+
+                return new ImageWorkbenchColorUsageItem(
+                    $"#{entry.Key:X6}",
+                    string.Empty,
+                    $"#{entry.Key:X6}",
+                    entry.Value);
+            })
+            .ToArray();
+    }
+
+    private static int ToRgbKey(DrawingColor color)
+    {
+        return ToRgbKey(color.R, color.G, color.B);
+    }
+
+    private static int ToRgbKey(byte red, byte green, byte blue)
+    {
+        return (red << 16) | (green << 8) | blue;
     }
 
     private static string CreateDataUrl(byte[] content)
@@ -205,6 +284,7 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
     IReadOnlyList<ColorComparisonAlgorithms> ComparisonAlgorithms { get; }
     bool CanSave { get; }
     bool HasImage { get; }
+    IReadOnlyList<ImageWorkbenchColorUsageItem> ColorUsage { get; }
     string ResultPreviewDataUrl { get; }
     int ResultWidth { get; set; }
     int ResultHeight { get; set; }

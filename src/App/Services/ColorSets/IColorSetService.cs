@@ -3,7 +3,7 @@ using App.Types;
 
 namespace App.Services.ColorSets;
 
-internal interface IColorSetService
+public interface IColorSetService
 {
     IEnumerable<SetColor> GetColors(BuiltinColorSets set);
 

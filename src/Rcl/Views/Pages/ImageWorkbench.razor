@@ -114,6 +114,36 @@
             </MudStack>
         </MudPaper>
     </MudItem>
+
+    @if (ViewModel.ColorUsage.Count > 0)
+    {
+        <MudItem xs="12">
+            <MudPaper Class="pa-3" Elevation="1">
+                <MudExpansionPanels>
+                    <MudExpansionPanel Text="@ImageWorkbenchResources.ColorUsagePanelTitle">
+                        <MudText Typo="Typo.body2" Class="mud-secondary-text mb-3">
+                            @GetColorUsageSummary()
+                        </MudText>
+
+                        <div class="color-usage-list">
+                            @foreach (var colorUsage in ViewModel.ColorUsage)
+                            {
+                                <div class="color-usage-row">
+                                    <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
+                                    <span class="color-usage-name">@colorUsage.Name</span>
+                                    @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
+                                    {
+                                        <span class="color-usage-code">(@colorUsage.Floss)</span>
+                                    }
+                                    <span class="color-usage-count">x@(colorUsage.PixelCount.ToString("N0"))</span>
+                                </div>
+                            }
+                        </div>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudPaper>
+        </MudItem>
+    }
 </MudGrid>
 
 @if (ViewModel.IsBusy)
@@ -142,6 +172,47 @@
         image-rendering: pixelated;
         image-rendering: crisp-edges;
         -ms-interpolation-mode: nearest-neighbor;
+    }
+
+    .color-usage-swatch {
+        width: 1rem;
+        height: 1rem;
+        display: inline-block;
+        border-radius: 999px;
+        border: 1px solid rgba(0, 0, 0, 0.18);
+    }
+
+    .color-usage-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .color-usage-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-width: 0;
+        font-size: 0.95rem;
+        line-height: 1.2;
+    }
+
+    .color-usage-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .color-usage-code {
+        color: var(--mud-palette-text-secondary);
+        white-space: nowrap;
+    }
+
+    .color-usage-count {
+        margin-left: auto;
+        white-space: nowrap;
+        font-weight: 600;
     }
 </style>
 
@@ -215,6 +286,15 @@
     private bool CanUseComparisonAlgorithm(ColorComparisonAlgorithms value)
     {
         return ViewModel.ComparisonAlgorithms.Contains(value);
+    }
+
+    private string GetColorUsageSummary()
+    {
+        return string.Format(
+            ImageWorkbenchResources.ColorUsageSummaryFormat,
+            ImageWorkbenchViewModel.GetDisplayName(ViewModel.SelectedColorSet),
+            ViewModel.ColorUsage.Count,
+            ViewModel.ColorUsage.Sum(entry => entry.PixelCount).ToString("N0"));
     }
 
     private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
