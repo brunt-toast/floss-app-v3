@@ -56,6 +56,17 @@
                            ValueLabel="true"
                            Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
 
+                <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.ColorFidelityLabel</MudText>
+                <MudSlider T="int"
+                           Min="1"
+                           Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
+                           Step="1"
+                           Immediate="true"
+                           Value="@GetSelectedColorFidelityValue()"
+                           ValueChanged="OnColorFidelityChanged"
+                           ValueLabel="true"
+                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
+
                 <MudGrid Spacing="2">
                     <MudItem xs="6" md="6">
                         <EnumPicker T="ImageSharpKnownResamplers"
@@ -272,6 +283,12 @@
         return Task.CompletedTask;
     }
 
+    private Task OnColorFidelityChanged(int value)
+    {
+        ViewModel.SelectedColorFidelity = value;
+        return Task.CompletedTask;
+    }
+
     private bool CanUseColorSet(BuiltinColorSets value)
     {
         return ViewModel.ColorSets.Contains(value);
@@ -295,6 +312,11 @@
             ImageWorkbenchViewModel.GetDisplayName(ViewModel.SelectedColorSet),
             ViewModel.ColorUsage.Count,
             ViewModel.ColorUsage.Sum(entry => entry.PixelCount).ToString("N0"));
+    }
+
+    private int GetSelectedColorFidelityValue()
+    {
+        return Math.Max(1, ViewModel.SelectedColorFidelity);
     }
 
     private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

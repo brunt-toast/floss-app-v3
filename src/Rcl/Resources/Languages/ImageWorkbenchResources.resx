@@ -33,6 +33,12 @@
   <data name="ColorSetLabel" xml:space="preserve">
     <value>Color set</value>
   </data>
+  <data name="ColorFidelityLabel" xml:space="preserve">
+    <value>Max colour fidelity</value>
+  </data>
+  <data name="ColorFidelitySummaryFormat" xml:space="preserve">
+    <value>Using up to {0} of {1} available colours</value>
+  </data>
   <data name="ColorDistanceLabel" xml:space="preserve">
     <value>Color distance</value>
   </data>

@@ -20,10 +20,11 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
         _colorMatchingService = colorMatchingService;
     }
 
-    public Image<Rgba32> ReduceColors(
+    public ColorReductionResult ReduceColors(
         Image<Rgba32> source,
         BuiltinColorSets set,
-        ColorComparisonAlgorithms comparisonAlgorithm)
+        ColorComparisonAlgorithms comparisonAlgorithm,
+        int? maxColors = null)
     {
         ArgumentNullException.ThrowIfNull(source);
 
@@ -37,6 +38,20 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
         {
             throw new InvalidOperationException($"Color set '{set}' contains no colors.");
         }
+
+        var paletteOrder = palette
+            .Select((color, index) => new { RgbKey = ToRgbKey(color), Index = index })
+            .ToDictionary(entry => entry.RgbKey, entry => entry.Index);
+
+        var unrestrictedUsage = BuildPaletteUsage(source, palette, comparisonAlgorithm);
+        var availableColorCount = Math.Max(1, unrestrictedUsage.Count);
+
+        var selectedPalette = SelectPalette(
+            palette,
+            unrestrictedUsage,
+            paletteOrder,
+            maxColors,
+            availableColorCount);
 
         var reduced = source.Clone();
         var nearestByRgb = new Dictionary<int, DrawingColor>();
@@ -54,7 +69,7 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
                     if (!nearestByRgb.TryGetValue(rgbKey, out var nearest))
                     {
                         var sourceColor = DrawingColor.FromArgb(pixel.R, pixel.G, pixel.B);
-                        nearest = FindClosestColor(sourceColor, palette, comparisonAlgorithm);
+                        nearest = FindClosestColor(sourceColor, selectedPalette, comparisonAlgorithm);
                         nearestByRgb[rgbKey] = nearest;
                     }
 
@@ -63,7 +78,65 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
             }
         });
 
-        return reduced;
+        return new ColorReductionResult(reduced, availableColorCount);
+    }
+
+    private Dictionary<int, int> BuildPaletteUsage(
+        Image<Rgba32> source,
+        IReadOnlyList<DrawingColor> palette,
+        ColorComparisonAlgorithms comparisonAlgorithm)
+    {
+        var nearestByRgb = new Dictionary<int, DrawingColor>();
+        var usageByPaletteRgb = new Dictionary<int, int>();
+
+        source.ProcessPixelRows(accessor =>
+        {
+            for (var y = 0; y < accessor.Height; y++)
+            {
+                var row = accessor.GetRowSpan(y);
+                for (var x = 0; x < row.Length; x++)
+                {
+                    var pixel = row[x];
+                    if (pixel.A == 0)
+                    {
+                        continue;
+                    }
+
+                    var sourceRgb = ToRgbKey(pixel.R, pixel.G, pixel.B);
+                    if (!nearestByRgb.TryGetValue(sourceRgb, out var nearest))
+                    {
+                        var sourceColor = DrawingColor.FromArgb(pixel.R, pixel.G, pixel.B);
+                        nearest = FindClosestColor(sourceColor, palette, comparisonAlgorithm);
+                        nearestByRgb[sourceRgb] = nearest;
+                    }
+
+                    var paletteRgb = ToRgbKey(nearest);
+                    usageByPaletteRgb[paletteRgb] = usageByPaletteRgb.GetValueOrDefault(paletteRgb) + 1;
+                }
+            }
+        });
+
+        return usageByPaletteRgb;
+    }
+
+    private static IReadOnlyList<DrawingColor> SelectPalette(
+        IReadOnlyList<DrawingColor> palette,
+        IReadOnlyDictionary<int, int> unrestrictedUsage,
+        IReadOnlyDictionary<int, int> paletteOrder,
+        int? maxColors,
+        int availableColorCount)
+    {
+        if (!maxColors.HasValue || maxColors.Value >= availableColorCount)
+        {
+            return palette;
+        }
+
+        return unrestrictedUsage
+            .OrderByDescending(entry => entry.Value)
+            .ThenBy(entry => paletteOrder[entry.Key])
+            .Take(Math.Max(1, maxColors.Value))
+            .Select(entry => palette[paletteOrder[entry.Key]])
+            .ToArray();
     }
 
     private DrawingColor FindClosestColor(
@@ -74,5 +147,15 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
         return _colorMatchingService
             .GetMostSimilarColors(source, palette, comparisonAlgorithm)
             .First();
+    }
+
+    private static int ToRgbKey(DrawingColor color)
+    {
+        return ToRgbKey(color.R, color.G, color.B);
+    }
+
+    private static int ToRgbKey(byte red, byte green, byte blue)
+    {
+        return (red << 16) | (green << 8) | blue;
     }
 }
