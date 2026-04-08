@@ -1,7 +1,9 @@
-﻿<MudNavMenu Dense="true" Class="pa-2">
-    <MudText Typo="Typo.subtitle2" Class="mud-secondary-text px-4 py-2">Navigation</MudText>
+﻿@using Rcl.Resources.Languages
 
-    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="/image-workbench" Icon="@Icons.Material.Filled.AutoFixHigh">Image Workbench</MudNavLink>
-    <MudNavLink Href="/settings" Icon="@Icons.Material.Filled.Settings">Settings</MudNavLink>
+<MudNavMenu Dense="true" Class="pa-2">
+    <MudText Typo="Typo.subtitle2" Class="mud-secondary-text px-4 py-2">@NavigationResources.Heading</MudText>
+
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@NavigationResources.HomeLink</MudNavLink>
+    <MudNavLink Href="/image-workbench" Icon="@Icons.Material.Filled.AutoFixHigh">@NavigationResources.ImageWorkbenchLink</MudNavLink>
+    <MudNavLink Href="/settings" Icon="@Icons.Material.Filled.Settings">@NavigationResources.SettingsLink</MudNavLink>
 </MudNavMenu>

@@ -1,9 +1,10 @@
 ﻿@inherits LayoutComponentBase
+@using Rcl.Resources.Languages
 
 <MudLayout>
     <MudAppBar Elevation="1" Class="top-app-bar">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer"/>
-        <MudText Typo="Typo.h6">Floss App</MudText>
+        <MudText Typo="Typo.h6">@NavigationResources.AppTitle</MudText>
         <MudSpacer/>
         <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.button" Underline="Underline.None">MudBlazor</MudLink>
     </MudAppBar>

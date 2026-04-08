@@ -1,9 +1,11 @@
+@using Rcl.Resources.Languages
+
 <MudDialog>
     <DialogContent>
         <MudText Typo="Typo.body1">@Message</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Text" OnClick="Cancel">Cancel</MudButton>
+        <MudButton Variant="Variant.Text" OnClick="Cancel">@ConfirmationDialogResources.CancelButton</MudButton>
         <MudButton Color="Color.Error" Variant="Variant.Filled" OnClick="Confirm">@ConfirmText</MudButton>
     </DialogActions>
 </MudDialog>
@@ -13,7 +15,7 @@
 
     [Parameter] public string Message { get; set; } = string.Empty;
 
-    [Parameter] public string ConfirmText { get; set; } = "Confirm";
+    [Parameter] public string ConfirmText { get; set; } = ConfirmationDialogResources.ConfirmButton;
 
     private void Cancel()
     {

@@ -1,0 +1,42 @@
+@page "/settings/about"
+@using System.Reflection
+@using Rcl.Resources.Languages
+
+<MudPaper Class="pa-6 d-flex flex-column gap-4" Elevation="1">
+    <MudText Typo="Typo.h4">@AboutResources.Title</MudText>
+
+    <MudPaper Class="pa-4 mud-border mud-border-primary mud-elevation-0">
+        <MudStack Spacing="2">
+            <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.body1">@AboutResources.AppVersionLabel</MudText>
+                <MudText Typo="Typo.body1">@AppVersion</MudText>
+            </MudStack>
+
+            <MudDivider/>
+
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.body1">@AboutResources.LicenseLabel</MudText>
+                <MudText Typo="Typo.body2" Class="mud-secondary-text">@AboutResources.LicenseStatement</MudText>
+            </MudStack>
+
+            <MudDivider/>
+
+            <MudStack Spacing="1">
+                <MudText Typo="Typo.body1">@AboutResources.GitHubLabel</MudText>
+                <MudLink Href="https://github.com/brunt-toast/floss-app-v3" Target="_blank" Typo="Typo.body2" Underline="Underline.Always">
+                    brunt-toast/floss-app-v3
+                </MudLink>
+            </MudStack>
+        </MudStack>
+    </MudPaper>
+</MudPaper>
+
+@code {
+
+    private static string AppVersion =>
+        Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+        ?? Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3)
+        ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString(3)
+        ?? AboutResources.UnknownVersion;
+
+}

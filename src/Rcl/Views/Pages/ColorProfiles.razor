@@ -1,7 +1,7 @@
 @page "/settings/color-profiles"
 @using App.Services.ColorProfiles
 @using App.Types
-@using MudBlazor
+@using Rcl.Resources.Languages
 @using Rcl.Services
 @using Rcl.Views.Components
 @inject IColorProfileService ColorProfileService
@@ -10,17 +10,17 @@
 @inject ISnackbar Snackbar
 
 <MudPaper Class="pa-6 d-flex flex-column gap-4" Elevation="1">
-    <MudText Typo="Typo.h4">Color Profiles</MudText>
+    <MudText Typo="Typo.h4">@ColorProfilesResources.Title</MudText>
 
     <MudText Typo="Typo.body2" Class="mud-secondary-text">
-        Show or hide color profiles. Hidden profiles do not appear in selection menus.
+        @ColorProfilesResources.Description
     </MudText>
 
     <MudPaper Class="overflow-hidden mud-border mud-border-primary mud-elevation-0">
         @if (_profiles.Count == 0 && !_isBusy)
         {
             <div class="pa-4">
-                <MudText Typo="Typo.body2">No color profiles found.</MudText>
+                <MudText Typo="Typo.body2">@ColorProfilesResources.EmptyState</MudText>
             </div>
         }
         else
@@ -56,7 +56,7 @@
 
     <MudStack Row="true" Justify="Justify.FlexEnd">
         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.UploadFile" OnClick="ImportProfileAsync" Disabled="@_isBusy">
-            Import Profile
+            @ColorProfilesResources.ImportButton
         </MudButton>
     </MudStack>
 
@@ -126,7 +126,7 @@
 
             await ColorProfileService.ImportProfileJsonAsync(pickedProfile.Content);
             _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
-            Snackbar.Add("Profile imported.", Severity.Success);
+            Snackbar.Add(ColorProfilesResources.ImportSuccess, Severity.Success);
         }
         catch (Exception ex)
         {
@@ -142,11 +142,11 @@
     {
         var parameters = new DialogParameters
         {
-            { "Message", $"Delete '{profile.Name}'?" },
-            { "ConfirmText", "Delete" }
+            { "Message", string.Format(ColorProfilesResources.DeleteMessageFormat, profile.Name) },
+            { "ConfirmText", ColorProfilesResources.DeleteConfirmText }
         };
 
-        var dialog = await DialogService.ShowAsync<ConfirmationDialog>("Delete Profile", parameters);
+        var dialog = await DialogService.ShowAsync<ConfirmationDialog>(ColorProfilesResources.DeleteDialogTitle, parameters);
         var result = await dialog.Result;
 
         if (result?.Canceled != false)
@@ -160,7 +160,7 @@
         {
             await ColorProfileService.DeleteProfileAsync(profile.Key);
             _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
-            Snackbar.Add("Profile deleted.", Severity.Success);
+            Snackbar.Add(ColorProfilesResources.DeleteSuccess, Severity.Success);
         }
         catch (Exception ex)
         {
@@ -187,7 +187,7 @@
                 : $"{safeName}.json";
 
             await ProfileFileService.SaveProfileAsync(fileName, json);
-            Snackbar.Add("Profile exported.", Severity.Success);
+            Snackbar.Add(ColorProfilesResources.ExportSuccess, Severity.Success);
         }
         catch (Exception ex)
         {
