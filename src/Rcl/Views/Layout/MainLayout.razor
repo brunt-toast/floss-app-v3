@@ -2,14 +2,14 @@
 @using Rcl.Resources.Languages
 
 <MudLayout>
-    <MudAppBar Elevation="1" Class="top-app-bar">
+    <MudAppBar Elevation="0" Class="top-app-bar top-app-bar-flat">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="ToggleDrawer"/>
         <MudText Typo="Typo.h6">@NavigationResources.AppTitle</MudText>
         <MudSpacer/>
         <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.button" Underline="Underline.None">MudBlazor</MudLink>
     </MudAppBar>
 
-    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Responsive" Elevation="1">
+    <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Variant="DrawerVariant.Responsive" Elevation="0" Class="app-drawer-flat">
         <NavMenu/>
     </MudDrawer>
 

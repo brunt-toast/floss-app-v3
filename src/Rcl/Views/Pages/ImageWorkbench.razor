@@ -5,7 +5,7 @@
 
 <MudGrid Spacing="2">
     <MudItem xs="12">
-        <MudPaper Class="pa-3" Elevation="1">
+        <div class="workbench-section pa-3">
             @if (!string.IsNullOrWhiteSpace(ViewModel.ResultPreviewDataUrl))
             {
                 <div class="processed-preview-shell mt-2">
@@ -24,11 +24,11 @@
                     @ImageWorkbenchResources.ProcessedPreviewPlaceholder
                 </MudAlert>
             }
-        </MudPaper>
+        </div>
     </MudItem>
 
     <MudItem xs="12">
-        <MudPaper Class="pa-3" Elevation="1">
+        <div class="workbench-section pa-3">
             <MudStack Spacing="2">
                 <MudText Typo="Typo.body2" Color="Color.Inherit">
                     @ImageWorkbenchResources.ScaleLabel
@@ -106,10 +106,12 @@
                     </MudItem>
                 </MudGrid>
 
-                <div class="mt-1" style="display:flex;justify-content:flex-end;gap:8px;">
+                <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="1" Class="workbench-actions mt-1">
                     <MudButton Variant="Variant.Outlined"
                                StartIcon="@Icons.Material.Filled.FolderOpen"
                                Disabled="@ViewModel.IsBusy"
+                               Size="Size.Medium"
+                               Class="workbench-action-button"
                                OnClick="LoadFromDeviceAsync">
                         @ImageWorkbenchResources.LoadButton
                     </MudButton>
@@ -118,19 +120,21 @@
                                Variant="Variant.Filled"
                                StartIcon="@Icons.Material.Filled.Download"
                                Disabled="@(!ViewModel.CanSave)"
+                               Size="Size.Medium"
+                               Class="workbench-action-button"
                                OnClick="SaveResultAsync">
                         @ImageWorkbenchResources.SaveButton
                     </MudButton>
-                </div>
+                </MudStack>
 
             </MudStack>
-        </MudPaper>
+        </div>
     </MudItem>
 
     @if (ViewModel.ColorUsage.Count > 0)
     {
         <MudItem xs="12">
-            <MudPaper Class="pa-3" Elevation="1">
+            <div class="workbench-section pa-3">
                 <MudExpansionPanels>
                     <MudExpansionPanel Text="@ImageWorkbenchResources.ColorUsagePanelTitle">
                         <MudText Typo="Typo.body2" Class="mud-secondary-text mb-3">
@@ -153,7 +157,7 @@
                         </div>
                     </MudExpansionPanel>
                 </MudExpansionPanels>
-            </MudPaper>
+            </div>
         </MudItem>
     }
 </MudGrid>

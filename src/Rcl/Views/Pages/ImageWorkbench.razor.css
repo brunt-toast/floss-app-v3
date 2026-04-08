@@ -1,3 +1,17 @@
+.workbench-section {
+  border: 1px solid var(--mud-palette-lines-default);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--mud-palette-surface) 92%, transparent);
+}
+
+.workbench-actions {
+  gap: 0.5rem;
+}
+
+.workbench-action-button {
+  min-width: 6.5rem;
+}
+
 .processed-preview-shell {
   width: 100%;
   min-height: 320px;

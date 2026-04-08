@@ -2,10 +2,10 @@
 @using System.Reflection
 @using Rcl.Resources.Languages
 
-<MudPaper Class="pa-6 d-flex flex-column gap-4" Elevation="1">
+<MudStack Class="pa-6 about-shell" Spacing="3">
     <MudText Typo="Typo.h4">@AboutResources.Title</MudText>
 
-    <MudPaper Class="pa-4 mud-border mud-border-primary mud-elevation-0">
+    <MudStack Class="pa-4 mud-border about-details" Spacing="2">
         <MudStack Spacing="2">
             <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
                 <MudText Typo="Typo.body1">@AboutResources.AppVersionLabel</MudText>
@@ -28,8 +28,8 @@
                 </MudLink>
             </MudStack>
         </MudStack>
-    </MudPaper>
-</MudPaper>
+    </MudStack>
+</MudStack>
 
 @code {
 

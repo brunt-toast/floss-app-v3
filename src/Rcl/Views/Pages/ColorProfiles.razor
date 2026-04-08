@@ -9,14 +9,14 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 
-<MudPaper Class="pa-6 d-flex flex-column gap-4" Elevation="1">
+<MudStack Class="pa-6 profiles-shell" Spacing="3">
     <MudText Typo="Typo.h4">@ColorProfilesResources.Title</MudText>
 
     <MudText Typo="Typo.body2" Class="mud-secondary-text">
         @ColorProfilesResources.Description
     </MudText>
 
-    <MudPaper Class="overflow-hidden mud-border mud-border-primary mud-elevation-0">
+    <div class="overflow-hidden mud-border profiles-list">
         @if (_profiles.Count == 0 && !_isBusy)
         {
             <div class="pa-4">
@@ -27,22 +27,25 @@
         {
             @foreach (var profile in _profiles)
             {
-                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="px-4 py-2">
-                    <MudText Typo="Typo.body1">@profile.Name</MudText>
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="px-3 py-2 profile-row">
+                    <MudText Typo="Typo.body1" Class="profile-name">@profile.Name</MudText>
 
-                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0" Class="profile-actions">
                         <MudIconButton Icon="@(profile.IsVisible ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff)"
                                        Color="@(profile.IsVisible ? Color.Primary : Color.Default)"
                                        OnClick="@(() => SetVisibilityAsync(profile.Key, !profile.IsVisible))"
-                                       Disabled="@_isBusy"/>
+                                       Disabled="@_isBusy"
+                                       Size="Size.Small"/>
                         <MudIconButton Icon="@Icons.Material.Filled.Download"
                                        OnClick="@(() => ExportProfileAsync(profile))"
-                                       Disabled="@_isBusy"/>
+                                       Disabled="@_isBusy"
+                                       Size="Size.Small"/>
                         <MudIconButton Icon="@Icons.Material.Filled.Delete"
                                        Color="Color.Error"
                                        OnClick="@(() => DeleteProfileAsync(profile))"
                                        Disabled="@(_isBusy || profile.IsBuiltin)"
-                                       Class="ms-1"/>
+                                       Class="ms-1"
+                                       Size="Size.Small"/>
                     </MudStack>
                 </MudStack>
 
@@ -52,10 +55,10 @@
                 }
             }
         }
-    </MudPaper>
+    </div>
 
-    <MudStack Row="true" Justify="Justify.FlexEnd">
-        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.UploadFile" OnClick="ImportProfileAsync" Disabled="@_isBusy">
+    <MudStack Row="true" Justify="Justify.FlexEnd" Class="profile-import-row">
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.UploadFile" OnClick="ImportProfileAsync" Disabled="@_isBusy" Class="profile-import-button">
             @ColorProfilesResources.ImportButton
         </MudButton>
     </MudStack>
@@ -64,7 +67,7 @@
     {
         <MudProgressLinear Indeterminate="true" Color="Color.Primary"/>
     }
-</MudPaper>
+</MudStack>
 
 @code {
     private List<ColorSetProfileOption> _profiles = [];
