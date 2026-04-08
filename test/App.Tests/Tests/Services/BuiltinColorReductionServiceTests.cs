@@ -33,9 +33,9 @@ public class BuiltinColorReductionServiceTests
             .Select(c => (c.Color.R, c.Color.G, c.Color.B))
             .ToHashSet();
 
-        Assert.Contains((reduced[0, 0].R, reduced[0, 0].G, reduced[0, 0].B), allowed);
-        Assert.Contains((reduced[1, 0].R, reduced[1, 0].G, reduced[1, 0].B), allowed);
-        Assert.Contains((reduced[2, 0].R, reduced[2, 0].G, reduced[2, 0].B), allowed);
+        Assert.Contains((reduced.Image[0, 0].R, reduced.Image[0, 0].G, reduced.Image[0, 0].B), allowed);
+        Assert.Contains((reduced.Image[1, 0].R, reduced.Image[1, 0].G, reduced.Image[1, 0].B), allowed);
+        Assert.Contains((reduced.Image[2, 0].R, reduced.Image[2, 0].G, reduced.Image[2, 0].B), allowed);
     }
 
     [TestMethod]
@@ -49,8 +49,8 @@ public class BuiltinColorReductionServiceTests
 
         using var reduced = service.ReduceColors(source, BuiltinColorSets.Html, ColorComparisonAlgorithms.Ciede2000);
 
-        Assert.AreEqual((byte)7, reduced[0, 0].A);
-        Assert.AreEqual((byte)201, reduced[1, 0].A);
+        Assert.AreEqual((byte)7, reduced.Image[0, 0].A);
+        Assert.AreEqual((byte)201, reduced.Image[1, 0].A);
     }
 
     [TestMethod]
@@ -64,6 +64,6 @@ public class BuiltinColorReductionServiceTests
         using var reduced = service.ReduceColors(source, BuiltinColorSets.Html, ColorComparisonAlgorithms.Ciede2000);
 
         Assert.AreEqual(new Rgba32(1, 2, 3, 4), source[0, 0]);
-        Assert.AreNotEqual(source[0, 0], reduced[0, 0]);
+        Assert.AreNotEqual(source[0, 0], reduced.Image[0, 0]);
     }
 }

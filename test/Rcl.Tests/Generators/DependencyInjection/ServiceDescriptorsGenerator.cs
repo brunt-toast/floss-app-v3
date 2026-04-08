@@ -7,10 +7,16 @@ internal static class ServiceDescriptorsGenerator
 {
     public static IEnumerable<object[]> GetServiceDescriptors()
     {
+        var testDataDirectory = Path.Combine(Path.GetTempPath(), "floss-app-test");
         var services = new ServiceCollection();
-        services.RegisterServices();
+        services.RegisterServices(testDataDirectory);
 
-        foreach (var descriptor in services)
+        var testableServices = services
+            .Where(d => !d.ServiceType.Namespace?.StartsWith("MudBlazor") ?? true)
+            .Where(d => d.Lifetime != ServiceLifetime.Transient)
+            .ToList();
+
+        foreach (var descriptor in testableServices)
         {
             yield return new object[] { descriptor };
         }

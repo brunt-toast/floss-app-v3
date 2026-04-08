@@ -7,9 +7,9 @@ namespace BlazorHybrid.Ioc;
 
 public static class BlazorHybridServiceRegistrar
 {
-    public static void RegisterServices(this IServiceCollection sc)
+    public static void RegisterServices(this IServiceCollection services)
     {
-        RclServiceRegistrar.RegisterServices(sc);
-        sc.AddSingleton<IImageFileService, MauiImageFileService>();
+        RclServiceRegistrar.RegisterServices(services, FileSystem.AppDataDirectory);
+        services.AddSingleton<IImageFileService, MauiImageFileService>();
     }
 }

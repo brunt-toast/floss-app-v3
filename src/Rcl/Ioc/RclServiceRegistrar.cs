@@ -8,10 +8,10 @@ namespace Rcl.Ioc;
 
 public static class RclServiceRegistrar
 {
-    public static void RegisterServices(this IServiceCollection sc)
+    public static void RegisterServices(this IServiceCollection services, string appDataDirectory)
     {
-        AppServiceRegistrar.RegisterServices(sc);
-        sc.AddTransient<IImageWorkbenchViewModel, ImageWorkbenchViewModel>();
-        sc.TryAddSingleton<IImageFileService, UnsupportedImageFileService>();
+        AppServiceRegistrar.RegisterServices(services, appDataDirectory);
+        services.AddTransient<IImageWorkbenchViewModel, ImageWorkbenchViewModel>();
+        services.TryAddSingleton<IImageFileService, UnsupportedImageFileService>();
     }
 }

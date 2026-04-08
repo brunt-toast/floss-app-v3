@@ -10,30 +10,30 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		#if ANDROID
+#if ANDROID
 		return CreateAndroidApp();
-		#elif WINDOWS
+#elif WINDOWS
 		return CreateWindowsApp();
-		#else
+#else
 		throw new PlatformNotSupportedException("Unsupported platform for BlazorHybrid.");
-		#endif
+#endif
 	}
 
-	#if ANDROID
+#if ANDROID
 	[SupportedOSPlatform("android24.0")]
 	private static MauiApp CreateAndroidApp()
 	{
 		return CreateConfiguredApp(false);
 	}
-	#endif
+#endif
 
-	#if WINDOWS
+#if WINDOWS
 	[SupportedOSPlatform("windows10.0.17763")]
 	private static MauiApp CreateWindowsApp()
 	{
 		return CreateConfiguredApp(true);
 	}
-	#endif
+#endif
 
 	private static MauiApp CreateConfiguredApp(bool addWebViewDevTools)
 	{
@@ -41,10 +41,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-			});
+			.ConfigureFonts(fonts => { fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"); });
 
 		builder.Services.AddMauiBlazorWebView();
 		BlazorHybridServiceRegistrar.RegisterServices(builder.Services);
@@ -55,6 +52,7 @@ public static class MauiProgram
 		{
 			builder.Services.AddBlazorWebViewDeveloperTools();
 		}
+
 		builder.Logging.AddDebug();
 #endif
 
