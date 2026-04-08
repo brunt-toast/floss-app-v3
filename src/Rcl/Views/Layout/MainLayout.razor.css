@@ -1,3 +1,15 @@
 .mud-main-content {
   min-height: calc(100vh - var(--mud-appbar-height));
 }
+
+.top-app-bar {
+  padding-top: 20px;
+}
+
+.top-app-bar-flat {
+  border-bottom: 1px solid var(--mud-palette-lines-default);
+}
+
+.app-drawer-flat {
+  border-right: 1px solid var(--mud-palette-lines-default);
+}

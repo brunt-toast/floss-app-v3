@@ -1,0 +1,205 @@
+@page "/settings/color-profiles"
+@using App.Services.ColorProfiles
+@using App.Types
+@using Rcl.Resources.Languages
+@using Rcl.Services
+@using Rcl.Views.Components
+@inject IColorProfileService ColorProfileService
+@inject IProfileFileService ProfileFileService
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+
+<MudStack Class="pa-6 profiles-shell" Spacing="3">
+    <MudText Typo="Typo.h4">@ColorProfilesResources.Title</MudText>
+
+    <MudText Typo="Typo.body2" Class="mud-secondary-text">
+        @ColorProfilesResources.Description
+    </MudText>
+
+    <div class="overflow-hidden mud-border profiles-list">
+        @if (_profiles.Count == 0 && !_isBusy)
+        {
+            <div class="pa-4">
+                <MudText Typo="Typo.body2">@ColorProfilesResources.EmptyState</MudText>
+            </div>
+        }
+        else
+        {
+            @foreach (var profile in _profiles)
+            {
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Class="px-3 py-2 profile-row">
+                    <MudText Typo="Typo.body1" Class="profile-name">@profile.Name</MudText>
+
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="0" Class="profile-actions">
+                        <MudIconButton Icon="@(profile.IsVisible ? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff)"
+                                       Color="@(profile.IsVisible ? Color.Primary : Color.Default)"
+                                       OnClick="@(() => SetVisibilityAsync(profile.Key, !profile.IsVisible))"
+                                       Disabled="@_isBusy"
+                                       Size="Size.Small"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Download"
+                                       OnClick="@(() => ExportProfileAsync(profile))"
+                                       Disabled="@_isBusy"
+                                       Size="Size.Small"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete"
+                                       Color="Color.Error"
+                                       OnClick="@(() => DeleteProfileAsync(profile))"
+                                       Disabled="@(_isBusy || profile.IsBuiltin)"
+                                       Class="ms-1"
+                                       Size="Size.Small"/>
+                    </MudStack>
+                </MudStack>
+
+                @if (!ReferenceEquals(profile, _profiles[^1]))
+                {
+                    <MudDivider/>
+                }
+            }
+        }
+    </div>
+
+    <MudStack Row="true" Justify="Justify.FlexEnd" Class="profile-import-row">
+        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.UploadFile" OnClick="ImportProfileAsync" Disabled="@_isBusy" Class="profile-import-button">
+            @ColorProfilesResources.ImportButton
+        </MudButton>
+    </MudStack>
+
+    @if (_isBusy)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary"/>
+    }
+</MudStack>
+
+@code {
+    private List<ColorSetProfileOption> _profiles = [];
+    private bool _isBusy;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProfilesAsync();
+    }
+
+    private async Task LoadProfilesAsync()
+    {
+        _isBusy = true;
+
+        try
+        {
+            _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task SetVisibilityAsync(string profileKey, bool isVisible)
+    {
+        _isBusy = true;
+
+        try
+        {
+            await ColorProfileService.SetVisibilityAsync(profileKey, isVisible);
+            _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task ImportProfileAsync()
+    {
+        _isBusy = true;
+
+        try
+        {
+            var pickedProfile = await ProfileFileService.PickProfileAsync();
+            if (pickedProfile is null)
+            {
+                return;
+            }
+
+            await ColorProfileService.ImportProfileJsonAsync(pickedProfile.Content);
+            _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
+            Snackbar.Add(ColorProfilesResources.ImportSuccess, Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task DeleteProfileAsync(ColorSetProfileOption profile)
+    {
+        var parameters = new DialogParameters
+        {
+            { "Message", string.Format(ColorProfilesResources.DeleteMessageFormat, profile.Name) },
+            { "ConfirmText", ColorProfilesResources.DeleteConfirmText }
+        };
+
+        var dialog = await DialogService.ShowAsync<ConfirmationDialog>(ColorProfilesResources.DeleteDialogTitle, parameters);
+        var result = await dialog.Result;
+
+        if (result?.Canceled != false)
+        {
+            return;
+        }
+
+        _isBusy = true;
+
+        try
+        {
+            await ColorProfileService.DeleteProfileAsync(profile.Key);
+            _profiles = (await ColorProfileService.GetProfilesAsync()).ToList();
+            Snackbar.Add(ColorProfilesResources.DeleteSuccess, Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+    private async Task ExportProfileAsync(ColorSetProfileOption profile)
+    {
+        _isBusy = true;
+
+        try
+        {
+            var json = await ColorProfileService.ExportProfileJsonAsync(profile.Key);
+            var safeName = string.Join('-', profile.Name.Split(Path.GetInvalidFileNameChars(), StringSplitOptions.RemoveEmptyEntries))
+                .Replace(' ', '-')
+                .ToLowerInvariant();
+            var fileName = string.IsNullOrWhiteSpace(safeName)
+                ? "colour-profile.json"
+                : $"{safeName}.json";
+
+            await ProfileFileService.SaveProfileAsync(fileName, json);
+            Snackbar.Add(ColorProfilesResources.ExportSuccess, Severity.Success);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            _isBusy = false;
+        }
+    }
+
+}

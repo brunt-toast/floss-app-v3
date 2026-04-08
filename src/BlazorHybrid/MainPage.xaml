@@ -5,7 +5,7 @@
              xmlns:components="clr-namespace:Rcl.Views;assembly=Rcl"
              x:Class="BlazorHybrid.MainPage">
 
-    <BlazorWebView x:Name="BlazorWebView" HostPage="wwwroot/index.html">
+    <BlazorWebView HostPage="wwwroot/index.html">
         <BlazorWebView.RootComponents>
             <RootComponent Selector="#app" ComponentType="{x:Type components:Routes}" />
         </BlazorWebView.RootComponents>

@@ -1,0 +1,33 @@
+.profiles-shell {
+  max-width: 48rem;
+}
+
+.profiles-list {
+  border-radius: 8px;
+}
+
+.profile-row {
+  min-height: 3rem;
+}
+
+.profile-name {
+  min-width: 0;
+  flex: 1;
+}
+
+.profile-actions {
+  gap: 0.125rem;
+}
+
+.profile-actions :deep(.mud-icon-button) {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.profile-import-row {
+  margin-top: -0.25rem;
+}
+
+.profile-import-button {
+  min-width: 10rem;
+}

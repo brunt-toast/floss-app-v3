@@ -1,0 +1,34 @@
+@page "/settings"
+@using Rcl.Resources.Languages
+
+<MudStack Class="pa-6 settings-shell" Spacing="3">
+    <MudText Typo="Typo.h4">@SettingsResources.Title</MudText>
+
+    <MudText Typo="Typo.body2" Class="mud-secondary-text">
+        @SettingsResources.Description
+    </MudText>
+
+    <MudStack Class="mud-border px-3 settings-links" Spacing="0">
+        <MudButton Href="/settings/color-profiles"
+                   Variant="Variant.Text"
+                   FullWidth="true"
+                   Class="settings-link">
+            <div class="settings-link-content">
+                <MudIcon Icon="@Icons.Material.Filled.Palette" Class="me-2"/>
+                <span>@SettingsResources.ColorProfilesLink</span>
+            </div>
+        </MudButton>
+
+        <MudDivider/>
+
+        <MudButton Href="/settings/about"
+                   Variant="Variant.Text"
+                   FullWidth="true"
+                   Class="settings-link">
+            <div class="settings-link-content">
+                <MudIcon Icon="@Icons.Material.Filled.Info" Class="me-2"/>
+                <span>@SettingsResources.AboutLink</span>
+            </div>
+        </MudButton>
+    </MudStack>
+</MudStack>

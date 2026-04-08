@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Color Profiles</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Show or hide color profiles. Hidden profiles do not appear in selection menus.</value>
+  </data>
+  <data name="EmptyState" xml:space="preserve">
+    <value>No color profiles found.</value>
+  </data>
+  <data name="ImportButton" xml:space="preserve">
+    <value>Import Profile</value>
+  </data>
+  <data name="ImportSuccess" xml:space="preserve">
+    <value>Profile imported.</value>
+  </data>
+  <data name="DeleteMessageFormat" xml:space="preserve">
+    <value>Delete '{0}'?</value>
+  </data>
+  <data name="DeleteConfirmText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteDialogTitle" xml:space="preserve">
+    <value>Delete Profile</value>
+  </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>Profile deleted.</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>Profile exported.</value>
+  </data>
+</root>

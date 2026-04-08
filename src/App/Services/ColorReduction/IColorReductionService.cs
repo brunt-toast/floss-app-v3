@@ -1,13 +1,32 @@
 using App.Enums;
+using App.Types;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
 namespace App.Services.ColorReduction;
 
+public sealed class ColorReductionResult(Image<Rgba32> image, int availableColorCount) : IDisposable
+{
+    public Image<Rgba32> Image { get; } = image;
+    public int AvailableColorCount { get; } = availableColorCount;
+
+    public void Dispose()
+    {
+        Image.Dispose();
+    }
+}
+
 public interface IColorReductionService
 {
-    Image<Rgba32> ReduceColors(
+    ColorReductionResult ReduceColors(
         Image<Rgba32> source,
         BuiltinColorSets set,
-        ColorComparisonAlgorithms comparisonAlgorithm);
+        ColorComparisonAlgorithms comparisonAlgorithm,
+        int? maxColors = null);
+
+    ColorReductionResult ReduceColors(
+        Image<Rgba32> source,
+        IReadOnlyCollection<SetColor> colors,
+        ColorComparisonAlgorithms comparisonAlgorithm,
+        int? maxColors = null);
 }

@@ -33,8 +33,32 @@
   <data name="ColorSetLabel" xml:space="preserve">
     <value>Color set</value>
   </data>
+  <data name="ColorFidelityLabel" xml:space="preserve">
+    <value>Max colour fidelity</value>
+  </data>
+  <data name="ColorFidelitySummaryFormat" xml:space="preserve">
+    <value>Using up to {0} of {1} available colours</value>
+  </data>
   <data name="ColorDistanceLabel" xml:space="preserve">
     <value>Color distance</value>
+  </data>
+  <data name="ColorUsagePanelTitle" xml:space="preserve">
+    <value>Colour usage</value>
+  </data>
+  <data name="ColorUsageSummaryFormat" xml:space="preserve">
+    <value>{0}: {1} colours, {2} visible pixels</value>
+  </data>
+  <data name="ColorUsageNameHeader" xml:space="preserve">
+    <value>Colour</value>
+  </data>
+  <data name="ColorUsageFlossHeader" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="ColorUsageHexHeader" xml:space="preserve">
+    <value>Hex</value>
+  </data>
+  <data name="ColorUsagePixelsHeader" xml:space="preserve">
+    <value>Pixels</value>
   </data>
   <data name="LoadButton" xml:space="preserve">
     <value>Load</value>
