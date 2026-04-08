@@ -13,6 +13,8 @@ public sealed class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
         optionsBuilder.UseSqlite(connectionString,
             sqliteOptions => sqliteOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name));
 
-        return new AppDbContext(optionsBuilder.Options);
+        var ret = new AppDbContext(optionsBuilder.Options);
+        ret.Database.EnsureCreated();
+        return ret;
     }
 }

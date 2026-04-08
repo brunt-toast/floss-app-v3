@@ -1,4 +1,5 @@
 using App.Enums;
+using App.Types;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 
@@ -20,6 +21,12 @@ public interface IColorReductionService
     ColorReductionResult ReduceColors(
         Image<Rgba32> source,
         BuiltinColorSets set,
+        ColorComparisonAlgorithms comparisonAlgorithm,
+        int? maxColors = null);
+
+    ColorReductionResult ReduceColors(
+        Image<Rgba32> source,
+        IReadOnlyCollection<SetColor> colors,
         ColorComparisonAlgorithms comparisonAlgorithm,
         int? maxColors = null);
 }

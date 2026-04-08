@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Rcl.Services;
 using Rcl.Ioc;
 using BlazorHybrid.Services;
@@ -11,5 +10,6 @@ public static class BlazorHybridServiceRegistrar
     {
         RclServiceRegistrar.RegisterServices(services, FileSystem.AppDataDirectory);
         services.AddSingleton<IImageFileService, MauiImageFileService>();
+        services.AddSingleton<IProfileFileService, MauiProfileFileService>();
     }
 }

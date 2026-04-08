@@ -84,12 +84,16 @@
                     </MudItem>
 
                     <MudItem xs="6" md="6">
-                        <EnumPicker T="BuiltinColorSets"
-                                    Label="@ImageWorkbenchResources.ColorSetLabel"
-                                    Value="@ViewModel.SelectedColorSet"
-                                    ValueChanged="OnColorSetChanged"
-                                    Filter="CanUseColorSet"
-                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                        <MudSelect T="string"
+                                   Label="@ImageWorkbenchResources.ColorSetLabel"
+                                   Value="@ViewModel.SelectedColorSetKey"
+                                   ValueChanged="OnColorSetChanged"
+                                   Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.ColorSets.Count == 0)">
+                            @foreach (var profile in ViewModel.ColorSets)
+                            {
+                                <MudSelectItem T="string" Value="@profile.Key">@profile.Name</MudSelectItem>
+                            }
+                        </MudSelect>
                     </MudItem>
 
                     <MudItem xs="6" md="6">

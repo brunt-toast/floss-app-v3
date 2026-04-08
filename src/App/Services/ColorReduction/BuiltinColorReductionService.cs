@@ -1,6 +1,7 @@
 using App.Enums;
 using App.Services.ColorMatching;
 using App.Services.ColorSets;
+using App.Types;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using DrawingColor = System.Drawing.Color;
@@ -26,17 +27,27 @@ internal sealed class BuiltinColorReductionService : IColorReductionService
         ColorComparisonAlgorithms comparisonAlgorithm,
         int? maxColors = null)
     {
-        ArgumentNullException.ThrowIfNull(source);
+        var colors = _colorSetService.GetColors(set).ToArray();
+        return ReduceColors(source, colors, comparisonAlgorithm, maxColors);
+    }
 
-        var palette = _colorSetService
-            .GetColors(set)
+    public ColorReductionResult ReduceColors(
+        Image<Rgba32> source,
+        IReadOnlyCollection<SetColor> colors,
+        ColorComparisonAlgorithms comparisonAlgorithm,
+        int? maxColors = null)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(colors);
+
+        var palette = colors
             .Select(color => color.Color)
             .Distinct()
             .ToArray();
 
         if (palette.Length == 0)
         {
-            throw new InvalidOperationException($"Color set '{set}' contains no colors.");
+            throw new InvalidOperationException("Color set contains no colors.");
         }
 
         var paletteOrder = palette

@@ -1,7 +1,8 @@
 using App.Enums;
+using App.Services.ColorProfiles;
 using App.Services.ColorReduction;
-using App.Services.ColorSets;
 using App.Services.ImageResizing;
+using App.Types;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MudBlazor;
 using PropertyChanged;
@@ -27,7 +28,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
 {
     private readonly IImageResizingService _imageResizingService;
     private readonly IColorReductionService _colorReductionService;
-    private readonly IColorSetService _colorSetService;
+    private readonly IColorProfileService _colorProfileService;
     private readonly IImageFileService _imageFileService;
     private readonly ISnackbar _snackbar;
     private readonly SemaphoreSlim _processingGate = new(1, 1);
@@ -39,7 +40,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
 
     public IReadOnlyList<ImageSharpKnownResamplers> Resamplers { get; } = Enum.GetValues<ImageSharpKnownResamplers>();
     public IReadOnlyList<ImageSharpKnownDitherings> Ditherings { get; } = Enum.GetValues<ImageSharpKnownDitherings>();
-    public IReadOnlyList<BuiltinColorSets> ColorSets { get; } = Enum.GetValues<BuiltinColorSets>();
+    public IReadOnlyList<ColorSetProfileOption> ColorSets { get; private set; } = [];
 
     public IReadOnlyList<ColorComparisonAlgorithms> ComparisonAlgorithms { get; } =
         Enum.GetValues<ColorComparisonAlgorithms>();
@@ -67,7 +68,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public ImageSharpKnownDitherings SelectedDithering { get; set; } = ImageSharpKnownDitherings.Sierra3;
 
     [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
-    public BuiltinColorSets SelectedColorSet { get; set; } = BuiltinColorSets.Dmc;
+    public string SelectedColorSetKey { get; set; } = "builtin:Dmc";
 
     [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
     public int SelectedColorFidelity { get; set; }
@@ -78,15 +79,31 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public ImageWorkbenchViewModel(
         IImageResizingService imageResizingService,
         IColorReductionService colorReductionService,
-        IColorSetService colorSetService,
+        IColorProfileService colorProfileService,
         IImageFileService imageFileService,
         ISnackbar snackbar)
     {
         _imageResizingService = imageResizingService;
         _colorReductionService = colorReductionService;
-        _colorSetService = colorSetService;
+        _colorProfileService = colorProfileService;
         _imageFileService = imageFileService;
         _snackbar = snackbar;
+    }
+
+    public async Task InitializeAsync()
+    {
+        ColorSets = await _colorProfileService.GetVisibleProfilesAsync();
+
+        if (ColorSets.Count == 0)
+        {
+            SelectedColorSetKey = string.Empty;
+            return;
+        }
+
+        if (ColorSets.All(set => !string.Equals(set.Key, SelectedColorSetKey, StringComparison.Ordinal)))
+        {
+            SelectedColorSetKey = ColorSets[0].Key;
+        }
     }
 
     private async Task LoadUploadedImageAsync(byte[] content, string fileName)
@@ -189,10 +206,12 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             using var resized = _imageResizingService.ResizeWidth(source, targetSize, SelectedResampler,
                 SelectedDithering, TransparencyThreshold);
 
+            var selectedColors = await _colorProfileService.GetColorsAsync(SelectedColorSetKey);
+
             using var reductionResult =
                 _colorReductionService.ReduceColors(
                     resized,
-                    SelectedColorSet,
+                    selectedColors,
                     SelectedComparisonAlgorithm,
                     requestedColorFidelity);
 
@@ -215,14 +234,14 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
                 {
                     adjustedReductionResult = _colorReductionService.ReduceColors(
                         resized,
-                        SelectedColorSet,
+                        selectedColors,
                         SelectedComparisonAlgorithm,
                         effectiveColorFidelity);
                 }
 
                 var reduced = adjustedReductionResult?.Image ?? reductionResult.Image;
 
-                ColorUsage = BuildColorUsage(reduced, SelectedColorSet);
+                ColorUsage = BuildColorUsage(reduced, selectedColors);
 
                 await using var outputStream = new MemoryStream();
                 await reduced.SaveAsync(outputStream, new PngEncoder());
@@ -262,11 +281,11 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
         }
     }
 
-    private IReadOnlyList<ImageWorkbenchColorUsageItem> BuildColorUsage(Image<Rgba32> reduced,
-        BuiltinColorSets colorSet)
+    private static IReadOnlyList<ImageWorkbenchColorUsageItem> BuildColorUsage(
+        Image<Rgba32> reduced,
+        IReadOnlyCollection<SetColor> colors)
     {
-        var paletteByRgb = _colorSetService
-            .GetColors(colorSet)
+        var paletteByRgb = colors
             .GroupBy(color => ToRgbKey(color.Color))
             .ToDictionary(group => group.Key, group => group.First());
 
@@ -336,7 +355,7 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
 {
     IReadOnlyList<ImageSharpKnownResamplers> Resamplers { get; }
     IReadOnlyList<ImageSharpKnownDitherings> Ditherings { get; }
-    IReadOnlyList<BuiltinColorSets> ColorSets { get; }
+    IReadOnlyList<ColorSetProfileOption> ColorSets { get; }
     IReadOnlyList<ColorComparisonAlgorithms> ComparisonAlgorithms { get; }
     bool CanSave { get; }
     bool HasImage { get; }
@@ -349,9 +368,10 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
     byte TransparencyThreshold { get; set; }
     ImageSharpKnownResamplers SelectedResampler { get; set; }
     ImageSharpKnownDitherings SelectedDithering { get; set; }
-    BuiltinColorSets SelectedColorSet { get; set; }
+    string SelectedColorSetKey { get; set; }
     int SelectedColorFidelity { get; set; }
     ColorComparisonAlgorithms SelectedComparisonAlgorithm { get; set; }
+    Task InitializeAsync();
     Task LoadFromDeviceAsync();
     Task SaveResultAsync();
 }

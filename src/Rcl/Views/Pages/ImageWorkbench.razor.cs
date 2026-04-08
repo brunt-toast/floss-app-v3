@@ -10,8 +10,9 @@ public partial class ImageWorkbench : IDisposable
 {
     [Inject] public IImageWorkbenchViewModel ViewModel { get; set; } = default!;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        await ViewModel.InitializeAsync();
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }
 
@@ -58,9 +59,9 @@ public partial class ImageWorkbench : IDisposable
         return ViewModel.Ditherings.Contains(value);
     }
 
-    private Task OnColorSetChanged(BuiltinColorSets value)
+    private Task OnColorSetChanged(string? value)
     {
-        ViewModel.SelectedColorSet = value;
+        ViewModel.SelectedColorSetKey = value ?? string.Empty;
         return Task.CompletedTask;
     }
 
@@ -68,11 +69,6 @@ public partial class ImageWorkbench : IDisposable
     {
         ViewModel.SelectedColorFidelity = value;
         return Task.CompletedTask;
-    }
-
-    private bool CanUseColorSet(BuiltinColorSets value)
-    {
-        return ViewModel.ColorSets.Contains(value);
     }
 
     private Task OnComparisonAlgorithmChanged(ColorComparisonAlgorithms value)
@@ -88,9 +84,14 @@ public partial class ImageWorkbench : IDisposable
 
     private string GetColorUsageSummary()
     {
+        var selectedProfileName = ViewModel.ColorSets
+            .FirstOrDefault(profile => string.Equals(profile.Key, ViewModel.SelectedColorSetKey, StringComparison.Ordinal))
+            ?.Name
+            ?? ViewModel.SelectedColorSetKey;
+
         return string.Format(
             ImageWorkbenchResources.ColorUsageSummaryFormat,
-            ImageWorkbenchViewModel.GetDisplayName(ViewModel.SelectedColorSet),
+            selectedProfileName,
             ViewModel.ColorUsage.Count,
             ViewModel.ColorUsage.Sum(entry => entry.PixelCount).ToString("N0"));
     }

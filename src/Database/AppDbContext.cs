@@ -28,6 +28,8 @@ public sealed class AppDbContext : DbContext
     /// </summary>
     public DbSet<ColorSetRow> ColorSetRows { get; set; } = null!;
 
+    public DbSet<HiddenBuiltinColorSet> HiddenBuiltinColorSets { get; set; } = null!;
+
     /// <summary>
     /// Configures the EF Core model when it is created.
     /// </summary>
