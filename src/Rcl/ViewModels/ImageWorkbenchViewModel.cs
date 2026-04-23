@@ -55,6 +55,8 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public int MaximumColorFidelity { get; private set; } = 1;
     public int ResultWidth { get; set; }
     public int ResultHeight { get; set; }
+    public double StitchLength { get; set; } = 1;
+    public double SpoolLength { get; set; } = 1;
 
     [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
     public double Scale { get; set; } = 1;
@@ -372,6 +374,11 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
         return (red << 16) | (green << 8) | blue;
     }
 
+    internal static int CalculateSpoolsForColor(int pixelCount, double stitchLength, double spoolLength)
+    {
+        return Math.Max(1, (int)Math.Ceiling(pixelCount * stitchLength / spoolLength));
+    }
+
     private static string CreateDataUrl(byte[] content)
     {
         return $"data:image/png;base64,{Convert.ToBase64String(content)}";
@@ -391,6 +398,8 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
     string ResultPreviewDataUrl { get; }
     int ResultWidth { get; set; }
     int ResultHeight { get; set; }
+    double StitchLength { get; set; }
+    double SpoolLength { get; set; }
     double Scale { get; set; }
     byte TransparencyThreshold { get; set; }
     ImageSharpKnownResamplers SelectedResampler { get; set; }
