@@ -103,6 +103,15 @@ public partial class ImageWorkbench : IDisposable
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        _ = InvokeAsync(StateHasChanged);
+        if (_renderPending)
+            return;
+        _renderPending = true;
+        _ = InvokeAsync(() =>
+        {
+            _renderPending = false;
+            StateHasChanged();
+        });
     }
+
+    private bool _renderPending;
 }
