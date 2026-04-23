@@ -8,6 +8,13 @@
         "dotnet-cake"
       ],
       "rollForward": false
+    },
+    "jetbrains.resharper.globaltools": {
+      "version": "2025.2.1",
+      "commands": [
+        "jb"
+      ],
+      "rollForward": false
     }
   }
 }

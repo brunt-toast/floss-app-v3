@@ -11,10 +11,16 @@ Android app for filtering images to custom colour spaces.
 
 ## 🚀 Get Started
 
+To enable hooks, run `dotnet tool restore` and `git config core.hooksPath '$GIT_DIR/../hooks'`. 
+
+To restore tools, run `dotnet tool restore`. 
+
+## ▶️ Run 
+
 First run: 
 
 ```bash
-dotnet tool restore && dotnet cake --target RunGui
+dotnet cake --target RunGui
 ```
 
 Subsequent runs (runs target FastRunGui): 
