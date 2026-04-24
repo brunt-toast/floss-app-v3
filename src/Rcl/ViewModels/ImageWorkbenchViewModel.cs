@@ -37,6 +37,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     private byte[]? _resultImageContent;
     private string _sourceFileName = string.Empty;
     private bool _suppressRealtimeProcessing;
+    private CancellationTokenSource? _pipelineCts;
 
     public IReadOnlyList<ImageSharpKnownResamplers> Resamplers { get; } = Enum.GetValues<ImageSharpKnownResamplers>();
     public IReadOnlyList<ImageSharpKnownDitherings> Ditherings { get; } = Enum.GetValues<ImageSharpKnownDitherings>();
@@ -54,6 +55,8 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public int MaximumColorFidelity { get; private set; } = 1;
     public int ResultWidth { get; set; }
     public int ResultHeight { get; set; }
+    public double StitchLength { get; set; } = 1;
+    public double SpoolLength { get; set; } = 1;
 
     [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
     public double Scale { get; set; } = 1;
@@ -110,10 +113,15 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     {
         ArgumentNullException.ThrowIfNull(content);
 
+        var cts = new CancellationTokenSource();
+        var previous = Interlocked.Exchange(ref _pipelineCts, cts);
+        previous?.Cancel();
+        previous?.Dispose();
+
         _sourceFileName = fileName;
         _sourceImageContent = content;
 
-        await ProcessPipelineAsync();
+        await ProcessPipelineAsync(cts.Token);
     }
 
     public static string GetDisplayName(Enum value)
@@ -176,27 +184,40 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     private void TriggerRealtimeProcessing()
     {
         if (!HasImage || _suppressRealtimeProcessing)
-        {
             return;
-        }
 
-        _ = ProcessPipelineAsync();
+        var cts = new CancellationTokenSource();
+        var previous = Interlocked.Exchange(ref _pipelineCts, cts);
+        previous?.Cancel();
+        previous?.Dispose();
+
+        _ = TriggerDebouncedAsync(cts.Token);
     }
 
-    private async Task ProcessPipelineAsync()
+    private async Task TriggerDebouncedAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await Task.Delay(300, cancellationToken);
+            await ProcessPipelineAsync(cancellationToken);
+        }
+        catch (OperationCanceledException) { }
+    }
+
+    private async Task ProcessPipelineAsync(CancellationToken cancellationToken = default)
     {
         if (_sourceImageContent is null)
         {
             return;
         }
 
-        using var _ = await _processingGate.WaitForDisposableAsync();
+        using var _ = await _processingGate.WaitForDisposableAsync(cancellationToken);
         using var _2 = IBusy.UseBusy(this);
 
         try
         {
             await using var sourceStream = new MemoryStream(_sourceImageContent, writable: false);
-            using var source = await Image.LoadAsync<Rgba32>(sourceStream);
+            using var source = await Image.LoadAsync<Rgba32>(sourceStream, cancellationToken);
 
             var clampedScale = Math.Clamp(Scale, 0.01, 1.0);
             var targetSize = Math.Max(1, (int)Math.Round(source.Width * clampedScale));
@@ -207,6 +228,8 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
                 SelectedDithering, TransparencyThreshold);
 
             var selectedColors = await _colorProfileService.GetColorsAsync(SelectedColorSetKey);
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             using var reductionResult =
                 _colorReductionService.ReduceColors(
@@ -232,6 +255,7 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             {
                 if (requestedColorFidelity.HasValue && requestedColorFidelity.Value < effectiveColorFidelity)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     adjustedReductionResult = _colorReductionService.ReduceColors(
                         resized,
                         selectedColors,
@@ -243,8 +267,10 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
 
                 ColorUsage = BuildColorUsage(reduced, selectedColors);
 
+                cancellationToken.ThrowIfCancellationRequested();
+
                 await using var outputStream = new MemoryStream();
-                await reduced.SaveAsync(outputStream, new PngEncoder());
+                await reduced.SaveAsync(outputStream, new PngEncoder(), cancellationToken);
 
                 _resultImageContent = outputStream.ToArray();
                 ResultPreviewDataUrl = CreateDataUrl(_resultImageContent);
@@ -255,6 +281,9 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             {
                 adjustedReductionResult?.Dispose();
             }
+        }
+        catch (OperationCanceledException)
+        {
         }
         catch (Exception ex)
         {
@@ -345,6 +374,11 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
         return (red << 16) | (green << 8) | blue;
     }
 
+    internal static int CalculateSpoolsForColor(int pixelCount, double stitchLength, double spoolLength)
+    {
+        return Math.Max(1, (int)Math.Ceiling(pixelCount * stitchLength / spoolLength));
+    }
+
     private static string CreateDataUrl(byte[] content)
     {
         return $"data:image/png;base64,{Convert.ToBase64String(content)}";
@@ -364,6 +398,8 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
     string ResultPreviewDataUrl { get; }
     int ResultWidth { get; set; }
     int ResultHeight { get; set; }
+    double StitchLength { get; set; }
+    double SpoolLength { get; set; }
     double Scale { get; set; }
     byte TransparencyThreshold { get; set; }
     ImageSharpKnownResamplers SelectedResampler { get; set; }

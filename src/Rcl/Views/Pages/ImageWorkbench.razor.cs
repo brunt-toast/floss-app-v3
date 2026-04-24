@@ -89,11 +89,15 @@ public partial class ImageWorkbench : IDisposable
             ?.Name
             ?? ViewModel.SelectedColorSetKey;
 
+        var totalSpools = ViewModel.StitchLength > 0 && ViewModel.SpoolLength > 0
+            ? ViewModel.ColorUsage.Sum(entry => ImageWorkbenchViewModel.CalculateSpoolsForColor(entry.PixelCount, ViewModel.StitchLength, ViewModel.SpoolLength)).ToString("N0")
+            : ImageWorkbenchResources.EmptyValue;
+
         return string.Format(
             ImageWorkbenchResources.ColorUsageSummaryFormat,
             selectedProfileName,
             ViewModel.ColorUsage.Count,
-            ViewModel.ColorUsage.Sum(entry => entry.PixelCount).ToString("N0"));
+            totalSpools);
     }
 
     private int GetSelectedColorFidelityValue()
@@ -101,8 +105,25 @@ public partial class ImageWorkbench : IDisposable
         return Math.Max(1, ViewModel.SelectedColorFidelity);
     }
 
+    private string GetSpoolsToBuyText(int pixelCount)
+    {
+        if (ViewModel.StitchLength <= 0 || ViewModel.SpoolLength <= 0)
+            return ImageWorkbenchResources.EmptyValue;
+
+        return ImageWorkbenchViewModel.CalculateSpoolsForColor(pixelCount, ViewModel.StitchLength, ViewModel.SpoolLength).ToString("N0");
+    }
+
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        _ = InvokeAsync(StateHasChanged);
+        if (_renderPending)
+            return;
+        _renderPending = true;
+        _ = InvokeAsync(() =>
+        {
+            _renderPending = false;
+            StateHasChanged();
+        });
     }
+
+    private bool _renderPending;
 }

@@ -7,12 +7,20 @@
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-## Get Started
+Android app for filtering images to custom colour spaces. 
+
+## 🚀 Get Started
+
+To enable hooks, run `dotnet tool restore` and `git config core.hooksPath '$GIT_DIR/../hooks'`. 
+
+To restore tools, run `dotnet tool restore`. 
+
+## ▶️ Run 
 
 First run: 
 
 ```bash
-dotnet tool restore && dotnet cake --target RunGui
+dotnet cake --target RunGui
 ```
 
 Subsequent runs (runs target FastRunGui): 
@@ -20,7 +28,7 @@ Subsequent runs (runs target FastRunGui):
 dotnet cake
 ```
 
-## Test
+## 🧪 Test
 
 First run: 
 ```bash
@@ -32,7 +40,7 @@ Subsequent runs:
 dotnet cake --target FastRunTests
 ```
 
-## Licensing 
+## ⚖️ Licensing 
 
 This project is released under the MIT license. 
 

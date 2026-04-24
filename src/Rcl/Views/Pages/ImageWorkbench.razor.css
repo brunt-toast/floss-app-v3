@@ -42,35 +42,61 @@
   border: 1px solid rgba(0, 0, 0, 0.18);
 }
 
-.color-usage-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+.color-usage-table-shell {
+  overflow-x: auto;
 }
 
-.color-usage-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 0;
+.color-usage-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 0.95rem;
-  line-height: 1.2;
+  table-layout: fixed;
+}
+
+.color-usage-table th,
+.color-usage-table td {
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--mud-palette-lines-default);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.color-usage-table th {
+  color: var(--mud-palette-text-secondary);
+  font-weight: 600;
 }
 
 .color-usage-name {
-  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: 0;
 }
 
 .color-usage-code {
   color: var(--mud-palette-text-secondary);
-  white-space: nowrap;
 }
 
 .color-usage-count {
-  margin-left: auto;
-  white-space: nowrap;
   font-weight: 600;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.color-usage-annotation {
+  font-weight: 400;
+  color: var(--mud-palette-text-secondary);
+  font-size: 0.85em;
+}
+
+@media (max-width: 599px) {
+  .color-usage-table {
+    font-size: 0.88rem;
+  }
+
+  .color-usage-table th,
+  .color-usage-table td {
+    padding: 0.35rem 0.4rem;
+  }
 }

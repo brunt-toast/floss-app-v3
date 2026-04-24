@@ -1,0 +1,34 @@
+#!/bin/bash
+
+main() {
+    readarray -t untracked_files < <(git ls-files --others --exclude-standard)
+    readarray -t unstaged_files < <(git status -s | awk '/MM / { print $2 }')
+    readarray -t staged_files < <(git diff --name-only --cached)
+
+    for staged_file in "${staged_files[@]}"; do 
+        if [[ ${unstaged_files} =~ (^|[[:space:]])${staged_file}($|[[:space:]]) ]]; then 
+            echo "${staged_file} has some unstaged changes. It will be committed as-is.";
+            staged_files=( "${staged_files[@]/$staged_file}" )
+        elif [ ! -f "${staged_file}" ]; then
+            echo "${staged_file} no longer exists. It will not be formatted."
+            staged_files=( "${staged_files[@]/$staged_file}" )
+        else
+            echo "${staged_file} staged."
+        fi 
+    done 
+
+    separated=$(IFS=";"; echo "${staged_files[*]}")
+
+    if [ $(echo "${separated}" | awk -F';' '{ print NF }') == 0 ]; then 
+        echo "Nothing to do."
+        exit 0
+    fi
+
+    dotnet.exe tool run jb cleanupcode "$(find . -type f -name '*.sln' | head -n 1)" --profile=BinaryCSharp --include="${separated}" 2>/dev/null || echo "The cleanup command failed." 
+
+    for staged_file in "${staged_files[@]}"; do 
+        [ -f "${staged_file}" ] && git add "${staged_file}"
+    done
+}
+
+main >/dev/null && exit 0 || exit 0

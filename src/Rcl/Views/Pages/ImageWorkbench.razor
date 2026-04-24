@@ -141,19 +141,62 @@
                             @GetColorUsageSummary()
                         </MudText>
 
-                        <div class="color-usage-list">
-                            @foreach (var colorUsage in ViewModel.ColorUsage)
-                            {
-                                <div class="color-usage-row">
-                                    <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
-                                    <span class="color-usage-name">@colorUsage.Name</span>
-                                    @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
-                                    {
-                                        <span class="color-usage-code">(@colorUsage.Floss)</span>
-                                    }
-                                    <span class="color-usage-count">x@(colorUsage.PixelCount.ToString("N0"))</span>
-                                </div>
-                            }
+                        <MudGrid Spacing="2" Class="mb-2">
+                            <MudItem xs="6">
+                                <MudNumericField T="double"
+                                                 Label="@ImageWorkbenchResources.StitchLengthLabel"
+                                                 Variant="Variant.Outlined"
+                                                 Immediate="true"
+                                                 Min="0"
+                                                 Step="0.01"
+                                                 @bind-Value="ViewModel.StitchLength"/>
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudNumericField T="double"
+                                                 Label="@ImageWorkbenchResources.SpoolLengthLabel"
+                                                 Variant="Variant.Outlined"
+                                                 Immediate="true"
+                                                 Min="0"
+                                                 Step="0.01"
+                                                 @bind-Value="ViewModel.SpoolLength"/>
+                            </MudItem>
+                        </MudGrid>
+
+                        <div class="color-usage-table-shell">
+                            <table class="color-usage-table">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>@ImageWorkbenchResources.ColorUsageNameHeader</th>
+                                    <th>@ImageWorkbenchResources.ColorUsageFlossHeader</th>
+                                    <th>@ImageWorkbenchResources.SpoolsToBuyHeader</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var colorUsage in ViewModel.ColorUsage)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
+                                        </td>
+                                        <td class="color-usage-name">@colorUsage.Name</td>
+                                        <td class="color-usage-code">
+                                            @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
+                                            {
+                                                @colorUsage.Floss
+                                            }
+                                            else
+                                            {
+                                                @ImageWorkbenchResources.EmptyValue
+                                            }
+                                        </td>
+                                        <td class="color-usage-count">
+                                            @GetSpoolsToBuyText(colorUsage.PixelCount) <span class="color-usage-annotation">(@colorUsage.PixelCount.ToString("N0"))</span>
+                                        </td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
                         </div>
                     </MudExpansionPanel>
                 </MudExpansionPanels>
