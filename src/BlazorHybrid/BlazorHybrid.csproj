@@ -23,14 +23,14 @@
         <MauiXamlInflator>SourceGen</MauiXamlInflator>
 
         <!-- Display name -->
-        <ApplicationTitle>BlazorHybrid</ApplicationTitle>
+        <ApplicationTitle>FlossApp</ApplicationTitle>
 
         <!-- App Identifier -->
         <ApplicationId>dev.joshbrunton.floss</ApplicationId>
 
         <!-- Versions -->
         <ApplicationDisplayVersion>$(Version)</ApplicationDisplayVersion>
-        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationVersion>3</ApplicationVersion>
 
         <!-- To develop, package, and publish an app to the Microsoft Store, see:
         https://aka.ms/MauiTemplateUnpackaged -->
