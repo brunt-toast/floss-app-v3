@@ -3,7 +3,7 @@
 }
 
 .top-app-bar {
-  padding-top: 20px;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
 }
 
 .top-app-bar-flat {
