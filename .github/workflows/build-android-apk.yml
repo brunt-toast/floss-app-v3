@@ -73,22 +73,26 @@ jobs:
           -p:AndroidSdkDirectory=$ANDROID_SDK_ROOT
           -p:AndroidPackageFormats=apk
 
-      - name: Locate APK
-        id: locate_apk
+      - name: Locate APKs
+        id: locate_apks
         shell: bash
         run: |
           set -euo pipefail
-          APK_PATH="$(find src/BlazorHybrid/bin/Release -type f -name '*.apk' | head -n 1)"
+          mapfile -t APK_PATHS < <(find src/BlazorHybrid/bin/Release -type f -name '*.apk' | sort)
 
-          if [[ -z "${APK_PATH}" ]]; then
-            echo "No APK file found under src/BlazorHybrid/bin/Release"
+          if [[ "${#APK_PATHS[@]}" -eq 0 ]]; then
+            echo "No APK files found under src/BlazorHybrid/bin/Release"
             exit 1
           fi
 
-          APK_NAME="$(basename "${APK_PATH}")"
-          echo "Found APK: ${APK_PATH}"
-          echo "path=${APK_PATH}" >> "$GITHUB_OUTPUT"
-          echo "name=${APK_NAME}" >> "$GITHUB_OUTPUT"
+          printf "Found APKs:\n"
+          printf " - %s\n" "${APK_PATHS[@]}"
+
+          {
+            echo "paths<<EOF"
+            printf "%s\n" "${APK_PATHS[@]}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Copy APK to build folder (act)
         if: ${{ env.ACT == 'true' }}
@@ -97,19 +101,26 @@ jobs:
           set -euo pipefail
           HOST_BUILD_DIR="${GITHUB_WORKSPACE}/build"
           mkdir -p "${HOST_BUILD_DIR}"
-          cp "${{ steps.locate_apk.outputs.path }}" "${HOST_BUILD_DIR}/${{ steps.locate_apk.outputs.name }}"
+          while IFS= read -r apk; do
+            [[ -n "${apk}" ]] || continue
+            apk_name="$(basename "${apk}")"
+            cp "${apk}" "${HOST_BUILD_DIR}/${apk_name}"
+          done <<< "${{ steps.locate_apks.outputs.paths }}"
 
           # Keep compatibility with /build inside the runner container for tooling that expects it.
           mkdir -p /build
-          cp "${{ steps.locate_apk.outputs.path }}" "/build/${{ steps.locate_apk.outputs.name }}"
-
-          echo "APK copied to ${HOST_BUILD_DIR}/${{ steps.locate_apk.outputs.name }}"
-          echo "APK copied to /build/${{ steps.locate_apk.outputs.name }}"
+          while IFS= read -r apk; do
+            [[ -n "${apk}" ]] || continue
+            apk_name="$(basename "${apk}")"
+            cp "${apk}" "/build/${apk_name}"
+            echo "APK copied to ${HOST_BUILD_DIR}/${apk_name}"
+            echo "APK copied to /build/${apk_name}"
+          done <<< "${{ steps.locate_apks.outputs.paths }}"
 
       - name: Upload APK artifact (GitHub)
         if: ${{ env.ACT != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: blazorhybrid-android-apk
-          path: ${{ steps.locate_apk.outputs.path }}
+          path: ${{ steps.locate_apks.outputs.paths }}
           if-no-files-found: error
