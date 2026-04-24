@@ -237,7 +237,18 @@
                                     <td>
                                         <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
                                     </td>
-                                    <td class="color-usage-name">@colorUsage.Name</td>
+                                    <td class="color-usage-name">
+                                        @if (!string.IsNullOrWhiteSpace(colorUsage.Name))
+                                        {
+                                            <MudTooltip Text="@colorUsage.Name" Placement="Placement.Top">
+                                                <span class="color-usage-name-text">@colorUsage.Name</span>
+                                            </MudTooltip>
+                                        }
+                                        else
+                                        {
+                                            <span class="color-usage-name-text">@ImageWorkbenchResources.EmptyValue</span>
+                                        }
+                                    </td>
                                     <td class="color-usage-code">
                                         @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
                                         {
@@ -249,7 +260,7 @@
                                         }
                                     </td>
                                     <td class="color-usage-count">
-                                        @GetSpoolsToBuyText(colorUsage.PixelCount) <span class="color-usage-annotation">(@colorUsage.PixelCount.ToString("N0"))</span>
+                                        @GetSpoolsToBuyText(colorUsage.PixelCount) <span class="color-usage-annotation">(@colorUsage.PixelCount.ToString("N0")st)</span>
                                     </td>
                                 </tr>
                             }

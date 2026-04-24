@@ -147,6 +147,15 @@
   min-width: 0;
 }
 
+.color-usage-name-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
 .color-usage-code {
   color: var(--mud-palette-text-secondary);
 }
