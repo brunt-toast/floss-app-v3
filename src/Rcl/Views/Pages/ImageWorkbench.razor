@@ -33,79 +33,94 @@
             <MudText Typo="Typo.body2" Color="Color.Inherit">
                 @ImageWorkbenchResources.ScaleLabel
             </MudText>
-            <div class="slider-with-value">
-                <MudNumericField T="double"
-                                 Class="slider-value-input"
-                                 Variant="Variant.Outlined"
-                                 Margin="Margin.Dense"
-                                 Min="0.01"
-                                 Max="1"
-                                 Step="0.01"
-                                 Immediate="true"
-                                 Value="@ViewModel.Scale"
-                                 ValueChanged="OnScaleChanged"
-                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-                <MudSlider T="double"
-                           Class="slider-with-value-track"
-                           Min="0.01"
-                           Max="1"
-                           Step="0.01"
-                           Immediate="true"
-                           Value="@ViewModel.Scale"
-                           ValueChanged="OnScaleChanged"
-                           ValueLabel="true"
-                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-            </div>
+            <MudStack Row="true" AlignItems="AlignItems.Stretch" Class="slider-with-value">
+                <div class="slider-value-cell">
+                    <MudNumericField T="double"
+                                     Class="slider-value-input"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     Min="0.01"
+                                     Max="1"
+                                     Step="0.01"
+                                     Immediate="true"
+                                     Value="@ViewModel.Scale"
+                                     ValueChanged="OnScaleChanged"
+                                     Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                </div>
+                <MudStack Class="slider-track-cell" Spacing="0" Style="flex: 1 1 auto; min-width: 0; width: 100%;">
+                    <MudSpacer/>
+                    <MudSlider T="double"
+                               Class="slider-with-value-track"
+                               Min="0.01"
+                               Max="1"
+                               Step="0.01"
+                               Immediate="true"
+                               Value="@ViewModel.Scale"
+                               ValueChanged="OnScaleChanged"
+                               Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    <MudSpacer/>
+                </MudStack>
+            </MudStack>
 
             <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.TransparencyThresholdLabel</MudText>
-            <div class="slider-with-value">
-                <MudNumericField T="int"
-                                 Class="slider-value-input"
-                                 Variant="Variant.Outlined"
-                                 Margin="Margin.Dense"
-                                 Min="0"
-                                 Max="255"
-                                 Step="1"
-                                 Immediate="true"
-                                 Value="@ViewModel.TransparencyThreshold"
-                                 ValueChanged="OnTransparencyChanged"
-                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-                <MudSlider T="int"
-                           Class="slider-with-value-track"
-                           Min="0"
-                           Max="255"
-                           Step="1"
-                           Immediate="true"
-                           Value="@ViewModel.TransparencyThreshold"
-                           ValueChanged="OnTransparencyChanged"
-                           ValueLabel="true"
-                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-            </div>
+            <MudStack Row="true" AlignItems="AlignItems.Stretch" Class="slider-with-value">
+                <div class="slider-value-cell">
+                    <MudNumericField T="int"
+                                     Class="slider-value-input"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     Min="0"
+                                     Max="255"
+                                     Step="1"
+                                     Immediate="true"
+                                     Value="@ViewModel.TransparencyThreshold"
+                                     ValueChanged="OnTransparencyChanged"
+                                     Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                </div>
+                <MudStack Class="slider-track-cell" Spacing="0" Style="flex: 1 1 auto; min-width: 0; width: 100%;">
+                    <MudSpacer/>
+                    <MudSlider T="int"
+                               Class="slider-with-value-track"
+                               Min="0"
+                               Max="255"
+                               Step="1"
+                               Immediate="true"
+                               Value="@ViewModel.TransparencyThreshold"
+                               ValueChanged="OnTransparencyChanged"
+                               Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                    <MudSpacer/>
+                </MudStack>
+            </MudStack>
 
             <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.ColorFidelityLabel</MudText>
-            <div class="slider-with-value">
-                <MudNumericField T="int"
-                                 Class="slider-value-input"
-                                 Variant="Variant.Outlined"
-                                 Margin="Margin.Dense"
-                                 Min="1"
-                                 Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
-                                 Step="1"
-                                 Immediate="true"
-                                 Value="@GetSelectedColorFidelityValue()"
-                                 ValueChanged="OnColorFidelityChanged"
-                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
-                <MudSlider T="int"
-                           Class="slider-with-value-track"
-                           Min="1"
-                           Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
-                           Step="1"
-                           Immediate="true"
-                           Value="@GetSelectedColorFidelityValue()"
-                           ValueChanged="OnColorFidelityChanged"
-                           ValueLabel="true"
-                           Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
-            </div>
+            <MudStack Row="true" AlignItems="AlignItems.Stretch" Class="slider-with-value">
+                <div class="slider-value-cell">
+                    <MudNumericField T="int"
+                                     Class="slider-value-input"
+                                     Variant="Variant.Outlined"
+                                     Margin="Margin.Dense"
+                                     Min="1"
+                                     Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
+                                     Step="1"
+                                     Immediate="true"
+                                     Value="@GetSelectedColorFidelityValue()"
+                                     ValueChanged="OnColorFidelityChanged"
+                                     Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
+                </div>
+                <MudStack Class="slider-track-cell" Spacing="0" Style="flex: 1 1 auto; min-width: 0; width: 100%;">
+                    <MudSpacer/>
+                    <MudSlider T="int"
+                               Class="slider-with-value-track"
+                               Min="1"
+                               Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
+                               Step="1"
+                               Immediate="true"
+                               Value="@GetSelectedColorFidelityValue()"
+                               ValueChanged="OnColorFidelityChanged"
+                               Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
+                    <MudSpacer/>
+                </MudStack>
+            </MudStack>
 
             <MudGrid Spacing="2">
                 <MudItem xs="6" md="6">
