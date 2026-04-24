@@ -4,46 +4,74 @@
 @using Rcl.Views.Components
 
 <MudGrid Spacing="2">
-    <MudItem xs="12">
-        <div class="workbench-section pa-3">
-            @if (!string.IsNullOrWhiteSpace(ViewModel.ResultPreviewDataUrl))
-            {
-                <div class="processed-preview-shell mt-2">
-                    <img src="@ViewModel.ResultPreviewDataUrl" alt="@ImageWorkbenchResources.ProcessedImageAlt" class="processed-preview-image"/>
-                </div>
-                <MudText Typo="Typo.caption">
-                    @if (ViewModel.ResultWidth > 0 && ViewModel.ResultHeight > 0)
-                    {
-                        <span>@ViewModel.ResultWidth x @ViewModel.ResultHeight</span>
-                    }
-                </MudText>
-            }
-            else
-            {
-                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mt-2">
-                    @ImageWorkbenchResources.ProcessedPreviewPlaceholder
-                </MudAlert>
-            }
-        </div>
-    </MudItem>
+<MudItem xs="12">
+    <div class="workbench-section pa-3">
+        @if (!string.IsNullOrWhiteSpace(ViewModel.ResultPreviewDataUrl))
+        {
+            <div class="processed-preview-shell mt-2">
+                <img src="@ViewModel.ResultPreviewDataUrl" alt="@ImageWorkbenchResources.ProcessedImageAlt" class="processed-preview-image"/>
+            </div>
+            <MudText Typo="Typo.caption">
+                @if (ViewModel.ResultWidth > 0 && ViewModel.ResultHeight > 0)
+                {
+                    <span>@ViewModel.ResultWidth x @ViewModel.ResultHeight</span>
+                }
+            </MudText>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mt-2">
+                @ImageWorkbenchResources.ProcessedPreviewPlaceholder
+            </MudAlert>
+        }
+    </div>
+</MudItem>
 
-    <MudItem xs="12">
-        <div class="workbench-section pa-3">
-            <MudStack Spacing="2">
-                <MudText Typo="Typo.body2" Color="Color.Inherit">
-                    @ImageWorkbenchResources.ScaleLabel
-                </MudText>
+<MudItem xs="12">
+    <div class="workbench-section pa-3">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Inherit">
+                @ImageWorkbenchResources.ScaleLabel
+            </MudText>
+            <div class="slider-with-value">
+                <MudNumericField T="double"
+                                 Class="slider-value-input"
+                                 Variant="Variant.Outlined"
+                                 Margin="Margin.Dense"
+                                 Min="0.01"
+                                 Max="1"
+                                 Step="0.01"
+                                 Immediate="true"
+                                 Value="@ViewModel.Scale"
+                                 ValueChanged="OnScaleChanged"
+                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
                 <MudSlider T="double"
+                           Class="slider-with-value-track"
                            Min="0.01"
                            Max="1"
                            Step="0.01"
                            Immediate="true"
-                           @bind-Value="ViewModel.Scale"
+                           Value="@ViewModel.Scale"
+                           ValueChanged="OnScaleChanged"
                            ValueLabel="true"
                            Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+            </div>
 
-                <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.TransparencyThresholdLabel</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.TransparencyThresholdLabel</MudText>
+            <div class="slider-with-value">
+                <MudNumericField T="int"
+                                 Class="slider-value-input"
+                                 Variant="Variant.Outlined"
+                                 Margin="Margin.Dense"
+                                 Min="0"
+                                 Max="255"
+                                 Step="1"
+                                 Immediate="true"
+                                 Value="@ViewModel.TransparencyThreshold"
+                                 ValueChanged="OnTransparencyChanged"
+                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
                 <MudSlider T="int"
+                           Class="slider-with-value-track"
                            Min="0"
                            Max="255"
                            Step="1"
@@ -52,9 +80,23 @@
                            ValueChanged="OnTransparencyChanged"
                            ValueLabel="true"
                            Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+            </div>
 
-                <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.ColorFidelityLabel</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Inherit">@ImageWorkbenchResources.ColorFidelityLabel</MudText>
+            <div class="slider-with-value">
+                <MudNumericField T="int"
+                                 Class="slider-value-input"
+                                 Variant="Variant.Outlined"
+                                 Margin="Margin.Dense"
+                                 Min="1"
+                                 Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
+                                 Step="1"
+                                 Immediate="true"
+                                 Value="@GetSelectedColorFidelityValue()"
+                                 ValueChanged="OnColorFidelityChanged"
+                                 Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
                 <MudSlider T="int"
+                           Class="slider-with-value-track"
                            Min="1"
                            Max="@Math.Max(1, ViewModel.MaximumColorFidelity)"
                            Step="1"
@@ -63,146 +105,147 @@
                            ValueChanged="OnColorFidelityChanged"
                            ValueLabel="true"
                            Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.MaximumColorFidelity <= 1)"/>
+            </div>
 
-                <MudGrid Spacing="2">
-                    <MudItem xs="6" md="6">
-                        <EnumPicker T="ImageSharpKnownResamplers"
-                                    Label="@ImageWorkbenchResources.ResamplerLabel"
-                                    Value="@ViewModel.SelectedResampler"
-                                    ValueChanged="OnResamplerChanged"
-                                    Filter="CanUseResampler"
-                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-                    </MudItem>
+            <MudGrid Spacing="2">
+                <MudItem xs="6" md="6">
+                    <EnumPicker T="ImageSharpKnownResamplers"
+                                Label="@ImageWorkbenchResources.ResamplerLabel"
+                                Value="@ViewModel.SelectedResampler"
+                                ValueChanged="OnResamplerChanged"
+                                Filter="CanUseResampler"
+                                Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                </MudItem>
 
-                    <MudItem xs="6" md="6">
-                        <EnumPicker T="ImageSharpKnownDitherings"
-                                    Label="@ImageWorkbenchResources.DitheringLabel"
-                                    Value="@ViewModel.SelectedDithering"
-                                    ValueChanged="OnDitheringChanged"
-                                    Filter="CanUseDithering"
-                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-                    </MudItem>
+                <MudItem xs="6" md="6">
+                    <EnumPicker T="ImageSharpKnownDitherings"
+                                Label="@ImageWorkbenchResources.DitheringLabel"
+                                Value="@ViewModel.SelectedDithering"
+                                ValueChanged="OnDitheringChanged"
+                                Filter="CanUseDithering"
+                                Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                </MudItem>
 
-                    <MudItem xs="6" md="6">
-                        <MudSelect T="string"
-                                   Label="@ImageWorkbenchResources.ColorSetLabel"
-                                   Value="@ViewModel.SelectedColorSetKey"
-                                   ValueChanged="OnColorSetChanged"
-                                   Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.ColorSets.Count == 0)">
-                            @foreach (var profile in ViewModel.ColorSets)
-                            {
-                                <MudSelectItem T="string" Value="@profile.Key">@profile.Name</MudSelectItem>
-                            }
-                        </MudSelect>
-                    </MudItem>
+                <MudItem xs="6" md="6">
+                    <MudSelect T="string"
+                               Label="@ImageWorkbenchResources.ColorSetLabel"
+                               Value="@ViewModel.SelectedColorSetKey"
+                               ValueChanged="OnColorSetChanged"
+                               Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy || ViewModel.ColorSets.Count == 0)">
+                        @foreach (var profile in ViewModel.ColorSets)
+                        {
+                            <MudSelectItem T="string" Value="@profile.Key">@profile.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
 
-                    <MudItem xs="6" md="6">
-                        <EnumPicker T="ColorComparisonAlgorithms"
-                                    Label="@ImageWorkbenchResources.ColorDistanceLabel"
-                                    Value="@ViewModel.SelectedComparisonAlgorithm"
-                                    ValueChanged="OnComparisonAlgorithmChanged"
-                                    Filter="CanUseComparisonAlgorithm"
-                                    Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
-                    </MudItem>
-                </MudGrid>
+                <MudItem xs="6" md="6">
+                    <EnumPicker T="ColorComparisonAlgorithms"
+                                Label="@ImageWorkbenchResources.ColorDistanceLabel"
+                                Value="@ViewModel.SelectedComparisonAlgorithm"
+                                ValueChanged="OnComparisonAlgorithmChanged"
+                                Filter="CanUseComparisonAlgorithm"
+                                Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)"/>
+                </MudItem>
+            </MudGrid>
 
-                <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="1" Class="workbench-actions mt-1">
-                    <MudButton Variant="Variant.Outlined"
-                               StartIcon="@Icons.Material.Filled.FolderOpen"
-                               Disabled="@ViewModel.IsBusy"
-                               Size="Size.Medium"
-                               Class="workbench-action-button"
-                               OnClick="LoadFromDeviceAsync">
-                        @ImageWorkbenchResources.LoadButton
-                    </MudButton>
+            <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="1" Class="workbench-actions mt-1">
+                <MudButton Variant="Variant.Outlined"
+                           StartIcon="@Icons.Material.Filled.FolderOpen"
+                           Disabled="@ViewModel.IsBusy"
+                           Size="Size.Medium"
+                           Class="workbench-action-button"
+                           OnClick="LoadFromDeviceAsync">
+                    @ImageWorkbenchResources.LoadButton
+                </MudButton>
 
-                    <MudButton Color="Color.Primary"
-                               Variant="Variant.Filled"
-                               StartIcon="@Icons.Material.Filled.Download"
-                               Disabled="@(!ViewModel.CanSave)"
-                               Size="Size.Medium"
-                               Class="workbench-action-button"
-                               OnClick="SaveResultAsync">
-                        @ImageWorkbenchResources.SaveButton
-                    </MudButton>
-                </MudStack>
-
+                <MudButton Color="Color.Primary"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Download"
+                           Disabled="@(!ViewModel.CanSave)"
+                           Size="Size.Medium"
+                           Class="workbench-action-button"
+                           OnClick="SaveResultAsync">
+                    @ImageWorkbenchResources.SaveButton
+                </MudButton>
             </MudStack>
+
+        </MudStack>
+    </div>
+</MudItem>
+
+@if (ViewModel.ColorUsage.Count > 0)
+{
+    <MudItem xs="12">
+        <div class="workbench-section pa-3">
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="@ImageWorkbenchResources.ColorUsagePanelTitle">
+                    <MudText Typo="Typo.body2" Class="mud-secondary-text mb-3">
+                        @GetColorUsageSummary()
+                    </MudText>
+
+                    <MudGrid Spacing="2" Class="mb-2">
+                        <MudItem xs="6">
+                            <MudNumericField T="double"
+                                             Label="@ImageWorkbenchResources.StitchLengthLabel"
+                                             Variant="Variant.Outlined"
+                                             Immediate="true"
+                                             Min="0"
+                                             Step="0.01"
+                                             @bind-Value="ViewModel.StitchLength"/>
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudNumericField T="double"
+                                             Label="@ImageWorkbenchResources.SpoolLengthLabel"
+                                             Variant="Variant.Outlined"
+                                             Immediate="true"
+                                             Min="0"
+                                             Step="0.01"
+                                             @bind-Value="ViewModel.SpoolLength"/>
+                        </MudItem>
+                    </MudGrid>
+
+                    <div class="color-usage-table-shell">
+                        <table class="color-usage-table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>@ImageWorkbenchResources.ColorUsageNameHeader</th>
+                                <th>@ImageWorkbenchResources.ColorUsageFlossHeader</th>
+                                <th>@ImageWorkbenchResources.SpoolsToBuyHeader</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var colorUsage in ViewModel.ColorUsage)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
+                                    </td>
+                                    <td class="color-usage-name">@colorUsage.Name</td>
+                                    <td class="color-usage-code">
+                                        @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
+                                        {
+                                            @colorUsage.Floss
+                                        }
+                                        else
+                                        {
+                                            @ImageWorkbenchResources.EmptyValue
+                                        }
+                                    </td>
+                                    <td class="color-usage-count">
+                                        @GetSpoolsToBuyText(colorUsage.PixelCount) <span class="color-usage-annotation">(@colorUsage.PixelCount.ToString("N0"))</span>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
         </div>
     </MudItem>
-
-    @if (ViewModel.ColorUsage.Count > 0)
-    {
-        <MudItem xs="12">
-            <div class="workbench-section pa-3">
-                <MudExpansionPanels>
-                    <MudExpansionPanel Text="@ImageWorkbenchResources.ColorUsagePanelTitle">
-                        <MudText Typo="Typo.body2" Class="mud-secondary-text mb-3">
-                            @GetColorUsageSummary()
-                        </MudText>
-
-                        <MudGrid Spacing="2" Class="mb-2">
-                            <MudItem xs="6">
-                                <MudNumericField T="double"
-                                                 Label="@ImageWorkbenchResources.StitchLengthLabel"
-                                                 Variant="Variant.Outlined"
-                                                 Immediate="true"
-                                                 Min="0"
-                                                 Step="0.01"
-                                                 @bind-Value="ViewModel.StitchLength"/>
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudNumericField T="double"
-                                                 Label="@ImageWorkbenchResources.SpoolLengthLabel"
-                                                 Variant="Variant.Outlined"
-                                                 Immediate="true"
-                                                 Min="0"
-                                                 Step="0.01"
-                                                 @bind-Value="ViewModel.SpoolLength"/>
-                            </MudItem>
-                        </MudGrid>
-
-                        <div class="color-usage-table-shell">
-                            <table class="color-usage-table">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>@ImageWorkbenchResources.ColorUsageNameHeader</th>
-                                    <th>@ImageWorkbenchResources.ColorUsageFlossHeader</th>
-                                    <th>@ImageWorkbenchResources.SpoolsToBuyHeader</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach (var colorUsage in ViewModel.ColorUsage)
-                                {
-                                    <tr>
-                                        <td>
-                                            <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
-                                        </td>
-                                        <td class="color-usage-name">@colorUsage.Name</td>
-                                        <td class="color-usage-code">
-                                            @if (!string.IsNullOrWhiteSpace(colorUsage.Floss))
-                                            {
-                                                @colorUsage.Floss
-                                            }
-                                            else
-                                            {
-                                                @ImageWorkbenchResources.EmptyValue
-                                            }
-                                        </td>
-                                        <td class="color-usage-count">
-                                            @GetSpoolsToBuyText(colorUsage.PixelCount) <span class="color-usage-annotation">(@colorUsage.PixelCount.ToString("N0"))</span>
-                                        </td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                    </MudExpansionPanel>
-                </MudExpansionPanels>
-            </div>
-        </MudItem>
-    }
+}
 </MudGrid>
 
 @if (ViewModel.IsBusy)

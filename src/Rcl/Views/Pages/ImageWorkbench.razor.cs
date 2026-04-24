@@ -31,6 +31,12 @@ public partial class ImageWorkbench : IDisposable
         await ViewModel.SaveResultAsync();
     }
 
+    private Task OnScaleChanged(double value)
+    {
+        ViewModel.Scale = Math.Clamp(value, 0.01, 1.0);
+        return Task.CompletedTask;
+    }
+
     private Task OnTransparencyChanged(int value)
     {
         ViewModel.TransparencyThreshold = (byte)Math.Clamp(value, byte.MinValue, byte.MaxValue);
@@ -67,7 +73,8 @@ public partial class ImageWorkbench : IDisposable
 
     private Task OnColorFidelityChanged(int value)
     {
-        ViewModel.SelectedColorFidelity = value;
+        var max = Math.Max(1, ViewModel.MaximumColorFidelity);
+        ViewModel.SelectedColorFidelity = Math.Clamp(value, 1, max);
         return Task.CompletedTask;
     }
 
