@@ -1,0 +1,238 @@
+name: Nightly Dev Release
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nightly-dev-release
+  cancel-in-progress: false
+
+jobs:
+  nightly-dev-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout dev
+        if: ${{ env.ACT != 'true' }}
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+
+      - name: Use bound workspace for act
+        if: ${{ env.ACT == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git checkout --quiet dev
+          git reset --quiet --hard "origin/dev"
+
+      - name: Determine nightly metadata
+        id: metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          version="$(grep -oPm1 '(?<=<Version>)[^<]+' Directory.Build.props)"
+          date_utc="$(date -u +%Y-%m-%d)"
+          date_stamp="$(date -u +%Y%m%d)"
+          current_sha="$(git rev-parse HEAD)"
+          short_sha="$(git rev-parse --short HEAD)"
+          tag_name="nightly-v${version}-${date_stamp}-${short_sha}"
+          release_name="Nightly ${date_utc} v${version}"
+
+          {
+            echo "version=${version}"
+            echo "date_utc=${date_utc}"
+            echo "date_stamp=${date_stamp}"
+            echo "current_sha=${current_sha}"
+            echo "short_sha=${short_sha}"
+            echo "tag_name=${tag_name}"
+            echo "release_name=${release_name}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check for new commits since last nightly
+        id: changes
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${ACT:-false}" == "true" ]]; then
+            echo "Running under act; skipping GitHub release lookup."
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          releases_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=100")"
+          last_tag="$(jq -r '[.[] | select(.prerelease and (.tag_name | startswith("nightly-v")))] | sort_by(.created_at) | last | .tag_name // ""' <<< "${releases_json}")"
+
+          if [[ -z "${last_tag}" ]]; then
+            echo "No prior nightly pre-release found."
+            echo "should_build=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          last_sha="$(git rev-list -n 1 "${last_tag}")"
+          current_sha="${{ steps.metadata.outputs.current_sha }}"
+
+          if [[ "${last_sha}" == "${current_sha}" ]]; then
+            echo "Latest nightly ${last_tag} already targets ${current_sha}."
+            echo "should_build=false" >> "$GITHUB_OUTPUT"
+            echo "last_tag=${last_tag}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          commit_count="$(git rev-list --count "${last_sha}..${current_sha}")"
+
+          if [[ "${commit_count}" -eq 0 ]]; then
+            echo "No commits ahead of ${last_tag} on dev."
+            echo "should_build=false" >> "$GITHUB_OUTPUT"
+            echo "last_tag=${last_tag}" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Found ${commit_count} commit(s) ahead of ${last_tag}."
+          echo "should_build=true" >> "$GITHUB_OUTPUT"
+          echo "last_tag=${last_tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Java
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup .NET SDK
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI Android workload
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        run: dotnet workload install maui-android
+
+      - name: Install Android SDK
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        shell: bash
+        run: |
+          set -eu
+          ANDROID_SDK_ROOT="$HOME/android-sdk"
+          echo "ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=${ANDROID_SDK_ROOT}" >> "$GITHUB_ENV"
+
+          mkdir -p "${ANDROID_SDK_ROOT}/cmdline-tools"
+          curl -fsSL "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -o /tmp/cmdline-tools.zip
+          unzip -q /tmp/cmdline-tools.zip -d /tmp
+          rm -rf "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+          mv /tmp/cmdline-tools "${ANDROID_SDK_ROOT}/cmdline-tools/latest"
+
+          echo "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "${ANDROID_SDK_ROOT}/platform-tools" >> "$GITHUB_PATH"
+
+          set +e
+          set +o pipefail
+          yes | "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" --licenses >/dev/null
+          license_exit=$?
+          set -o pipefail
+          set -e
+          if [[ "${license_exit}" -ne 0 ]]; then
+            echo "sdkmanager --licenses failed with exit code ${license_exit}"
+            exit "${license_exit}"
+          fi
+
+          "${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager" \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0"
+
+      - name: Restore BlazorHybrid project
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        run: dotnet restore src/BlazorHybrid/BlazorHybrid.csproj
+
+      - name: Build Android APK
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        run: >-
+          dotnet publish src/BlazorHybrid/BlazorHybrid.csproj
+          -c Release
+          -f net10.0-android
+          -p:AndroidSdkDirectory=$ANDROID_SDK_ROOT
+          -p:AndroidPackageFormats=apk
+
+      - name: Prepare release assets
+        if: ${{ steps.changes.outputs.should_build == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p artifacts
+          mapfile -t apk_paths < <(find src/BlazorHybrid/bin/Release -type f -name '*.apk' | sort)
+
+          if [[ "${#apk_paths[@]}" -eq 0 ]]; then
+            echo "No APK files found under src/BlazorHybrid/bin/Release"
+            exit 1
+          fi
+
+          version="${{ steps.metadata.outputs.version }}"
+          date_stamp="${{ steps.metadata.outputs.date_stamp }}"
+
+          for apk in "${apk_paths[@]}"; do
+            base_name="$(basename "${apk}" .apk)"
+            cp "${apk}" "artifacts/${base_name}-v${version}-nightly-${date_stamp}.apk"
+          done
+
+      - name: Create GitHub pre-release
+        if: ${{ steps.changes.outputs.should_build == 'true' && env.ACT != 'true' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          release_notes_file="$(mktemp)"
+          cat <<EOF > "${release_notes_file}"
+          Nightly build for dev.
+
+          Version: ${{ steps.metadata.outputs.version }}
+          Date: ${{ steps.metadata.outputs.date_utc }}
+          Commit: ${{ steps.metadata.outputs.current_sha }}
+          Branch: dev
+          EOF
+
+          shopt -s nullglob
+          asset_paths=(artifacts/*.apk)
+
+          if [[ "${#asset_paths[@]}" -eq 0 ]]; then
+            echo "No release assets found in artifacts."
+            exit 1
+          fi
+
+          gh release create "${{ steps.metadata.outputs.tag_name }}" \
+            "${asset_paths[@]}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --target "${{ steps.metadata.outputs.current_sha }}" \
+            --title "${{ steps.metadata.outputs.release_name }}" \
+            --notes-file "${release_notes_file}" \
+            --prerelease
+
+      - name: Skip summary
+        if: ${{ steps.changes.outputs.should_build != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "No new commits on dev since the last nightly pre-release."
+
+      - name: Act summary
+        if: ${{ steps.changes.outputs.should_build == 'true' && env.ACT == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf "Validated nightly build path under act.\n"
+          find artifacts -maxdepth 1 -type f -name '*.apk' | sort
