@@ -7,7 +7,10 @@
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
-Android app for filtering images to custom colour spaces.
+Android app for filtering images to custom colour spaces. Great for making cross-stitch patterns and other fibre arts.
+
+<img src="./docs/img/README/scaling.png" style="width: 49%; display: inline;" />
+<img src="./docs/img/README/color-usage.png" style="width: 49%; display: inline;" />
 
 ## 🚀 Get Started
 
