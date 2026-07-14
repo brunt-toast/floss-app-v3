@@ -41,7 +41,6 @@
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 
         <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
-        <AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86_64;x86</AndroidSupportedAbis>
     </PropertyGroup>
 
     <ItemGroup>
