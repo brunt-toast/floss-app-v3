@@ -43,7 +43,7 @@ jobs:
           date_stamp="$(date -u +%Y%m%d)"
           current_sha="$(git rev-parse HEAD)"
           short_sha="$(git rev-parse --short HEAD)"
-          tag_name="nightly-v${version}-${date_stamp}-${short_sha}"
+          tag_name="nightly/v${version}/${date_stamp}/${short_sha}"
           release_name="Nightly ${date_utc} v${version}"
 
           {
