@@ -71,7 +71,7 @@ jobs:
           fi
 
           releases_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases?per_page=100")"
-          last_tag="$(jq -r '[.[] | select(.prerelease and (.tag_name | startswith("nightly-v")))] | sort_by(.created_at) | last | .tag_name // ""' <<< "${releases_json}")"
+          last_tag="$(jq -r '[.[] | select(.prerelease and (.tag_name | startswith("nightly/v")))] | sort_by(.created_at) | last | .tag_name // ""' <<< "${releases_json}")"
 
           if [[ -z "${last_tag}" ]]; then
             echo "No prior nightly pre-release found."
