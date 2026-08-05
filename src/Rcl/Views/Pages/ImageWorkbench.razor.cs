@@ -1,6 +1,8 @@
 using App.Enums;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using Rcl.Resources.Languages;
+using Rcl.Views.Components;
 using Rcl.ViewModels;
 using System.ComponentModel;
 
@@ -9,6 +11,7 @@ namespace Rcl.Views.Pages;
 public partial class ImageWorkbench : IDisposable
 {
     [Inject] public IImageWorkbenchViewModel ViewModel { get; set; } = default!;
+    [Inject] public IDialogService DialogService { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -91,20 +94,23 @@ public partial class ImageWorkbench : IDisposable
 
     private string GetColorUsageSummary()
     {
-        var selectedProfileName = ViewModel.ColorSets
-            .FirstOrDefault(profile => string.Equals(profile.Key, ViewModel.SelectedColorSetKey, StringComparison.Ordinal))
-            ?.Name
-            ?? ViewModel.SelectedColorSetKey;
-
         var totalSpools = ViewModel.StitchLength > 0 && ViewModel.SpoolLength > 0
             ? ViewModel.ColorUsage.Sum(entry => ImageWorkbenchViewModel.CalculateSpoolsForColor(entry.PixelCount, ViewModel.StitchLength, ViewModel.SpoolLength)).ToString("N0")
             : ImageWorkbenchResources.EmptyValue;
 
         return string.Format(
             ImageWorkbenchResources.ColorUsageSummaryFormat,
-            selectedProfileName,
+            GetSelectedProfileName(),
             ViewModel.ColorUsage.Count,
             totalSpools);
+    }
+
+    private string GetSelectedProfileName()
+    {
+        return ViewModel.ColorSets
+            .FirstOrDefault(profile => string.Equals(profile.Key, ViewModel.SelectedColorSetKey, StringComparison.Ordinal))
+            ?.Name
+            ?? ViewModel.SelectedColorSetKey;
     }
 
     private int GetSelectedColorFidelityValue()
@@ -118,6 +124,22 @@ public partial class ImageWorkbench : IDisposable
             return ImageWorkbenchResources.EmptyValue;
 
         return ImageWorkbenchViewModel.CalculateSpoolsForColor(pixelCount, ViewModel.StitchLength, ViewModel.SpoolLength).ToString("N0");
+    }
+
+    private async Task ShowColorDetailsAsync(ImageWorkbenchColorUsageItem colorUsage)
+    {
+        var parameters = new DialogParameters
+        {
+            { nameof(ColorDetailDialog.ColorUsage), colorUsage },
+            { nameof(ColorDetailDialog.SchemeName), GetSelectedProfileName() }
+        };
+        var options = new DialogOptions
+        {
+            MaxWidth = MaxWidth.ExtraSmall,
+            FullWidth = true
+        };
+
+        await DialogService.ShowAsync<ColorDetailDialog>(ColorDetailDialogResources.Title, parameters, options);
     }
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)

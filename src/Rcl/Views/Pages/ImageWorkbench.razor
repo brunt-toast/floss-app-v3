@@ -247,7 +247,7 @@
                                 <tbody>
                                     @foreach (var colorUsage in ViewModel.ColorUsage)
                                     {
-                                        <tr>
+                                        <tr class="color-usage-row" @onclick="@(() => ShowColorDetailsAsync(colorUsage))">
                                             <td>
                                                 <span class="color-usage-swatch" style="background-color:@colorUsage.Hex;"></span>
                                             </td>

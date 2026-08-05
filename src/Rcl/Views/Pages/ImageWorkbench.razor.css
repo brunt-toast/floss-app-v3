@@ -140,6 +140,15 @@
   font-weight: 600;
 }
 
+.color-usage-row {
+  cursor: pointer;
+}
+
+.color-usage-row:hover,
+.color-usage-row:focus-within {
+  background: color-mix(in srgb, var(--mud-palette-primary) 9%, transparent);
+}
+
 .color-usage-name {
   overflow: hidden;
   text-overflow: ellipsis;

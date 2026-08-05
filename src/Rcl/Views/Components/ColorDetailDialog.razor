@@ -1,0 +1,130 @@
+@using Rcl.Resources.Languages
+@using Rcl.ViewModels
+
+<MudDialog>
+    <DialogContent>
+        <MudStack Spacing="2">
+            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2" Class="color-detail-heading">
+                <span class="color-detail-swatch" style="background-color:@ColorUsage.Hex;"></span>
+                <MudStack Spacing="0" Class="color-detail-title">
+                    <MudText Typo="Typo.h6">@ColorUsage.Name</MudText>
+                    <MudText Typo="Typo.body2" Class="mud-secondary-text">@SchemeName</MudText>
+                </MudStack>
+            </MudStack>
+
+            <table class="color-detail-table">
+                <tbody>
+                    <tr>
+                        <th>@ColorDetailDialogResources.HexLabel</th>
+                        <td>@ColorUsage.Hex</td>
+                    </tr>
+                    <tr>
+                        <th>@ColorDetailDialogResources.RgbLabel</th>
+                        <td>@GetRgbText(ColorUsage.Hex)</td>
+                    </tr>
+                    <tr>
+                        <th>@ColorDetailDialogResources.HslLabel</th>
+                        <td>@GetHslText(ColorUsage.Hex)</td>
+                    </tr>
+                    <tr>
+                        <th>@ColorDetailDialogResources.CmykLabel</th>
+                        <td>@GetCmykText(ColorUsage.Hex)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="Close">@ColorDetailDialogResources.CloseButton</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] private IMudDialogInstance Dialog { get; set; } = default!;
+
+    [Parameter] public ImageWorkbenchColorUsageItem ColorUsage { get; set; } = new(string.Empty, string.Empty, "#000000", 0);
+
+    [Parameter] public string SchemeName { get; set; } = string.Empty;
+
+    private void Close()
+    {
+        Dialog.Close();
+    }
+
+    private static string GetRgbText(string hex)
+    {
+        var (red, green, blue) = ParseHex(hex);
+        return $"{red}, {green}, {blue}";
+    }
+
+    private static string GetHslText(string hex)
+    {
+        var (red, green, blue) = ParseHex(hex);
+        var redRatio = red / 255d;
+        var greenRatio = green / 255d;
+        var blueRatio = blue / 255d;
+        var max = Math.Max(redRatio, Math.Max(greenRatio, blueRatio));
+        var min = Math.Min(redRatio, Math.Min(greenRatio, blueRatio));
+        var lightness = (max + min) / 2d;
+        var delta = max - min;
+
+        if (delta == 0)
+        {
+            return $"0deg, 0%, {FormatPercent(lightness)}%";
+        }
+
+        var saturation = lightness > 0.5
+            ? delta / (2d - max - min)
+            : delta / (max + min);
+
+        double hue;
+        if (max == redRatio)
+        {
+            hue = (greenRatio - blueRatio) / delta + (greenRatio < blueRatio ? 6d : 0d);
+        }
+        else if (max == greenRatio)
+        {
+            hue = (blueRatio - redRatio) / delta + 2d;
+        }
+        else
+        {
+            hue = (redRatio - greenRatio) / delta + 4d;
+        }
+
+        return $"{Math.Round(hue * 60d):0}deg, {FormatPercent(saturation)}%, {FormatPercent(lightness)}%";
+    }
+
+    private static string GetCmykText(string hex)
+    {
+        var (red, green, blue) = ParseHex(hex);
+        var redRatio = red / 255d;
+        var greenRatio = green / 255d;
+        var blueRatio = blue / 255d;
+        var black = 1d - Math.Max(redRatio, Math.Max(greenRatio, blueRatio));
+
+        if (black >= 1d)
+        {
+            return "0%, 0%, 0%, 100%";
+        }
+
+        var cyan = (1d - redRatio - black) / (1d - black);
+        var magenta = (1d - greenRatio - black) / (1d - black);
+        var yellow = (1d - blueRatio - black) / (1d - black);
+
+        return $"{FormatPercent(cyan)}%, {FormatPercent(magenta)}%, {FormatPercent(yellow)}%, {FormatPercent(black)}%";
+    }
+
+    private static (byte Red, byte Green, byte Blue) ParseHex(string hex)
+    {
+        var normalized = hex.TrimStart('#');
+        return (
+            Convert.ToByte(normalized[..2], 16),
+            Convert.ToByte(normalized[2..4], 16),
+            Convert.ToByte(normalized[4..6], 16));
+    }
+
+    private static string FormatPercent(double value)
+    {
+        return Math.Round(value * 100d).ToString("0");
+    }
+}
