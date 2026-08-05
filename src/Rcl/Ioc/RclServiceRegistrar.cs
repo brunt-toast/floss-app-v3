@@ -12,6 +12,7 @@ public static class RclServiceRegistrar
     {
         AppServiceRegistrar.RegisterServices(services, appDataDirectory);
         services.AddTransient<IImageWorkbenchViewModel, ImageWorkbenchViewModel>();
+        services.AddTransient<IFramingViewModel, FramingViewModel>();
         services.TryAddSingleton<IImageFileService, UnsupportedImageFileService>();
         services.TryAddSingleton<IProfileFileService, UnsupportedProfileFileService>();
     }

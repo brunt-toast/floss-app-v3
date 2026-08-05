@@ -12,22 +12,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Heading" xml:space="preserve">
-    <value>Navigation</value>
+  <data name="FramedImageAlt" xml:space="preserve">
+    <value>Framed image</value>
   </data>
-  <data name="HomeLink" xml:space="preserve">
-    <value>Home</value>
+  <data name="PreviewPlaceholder" xml:space="preserve">
+    <value>The framed preview appears here.</value>
   </data>
-  <data name="ImageWorkbenchLink" xml:space="preserve">
-    <value>Image Workbench</value>
+  <data name="ScaleLabel" xml:space="preserve">
+    <value>Scale</value>
   </data>
-  <data name="FramingLink" xml:space="preserve">
-    <value>Framing</value>
+  <data name="LoadButton" xml:space="preserve">
+    <value>Load</value>
   </data>
-  <data name="SettingsLink" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>Floss App</value>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>
