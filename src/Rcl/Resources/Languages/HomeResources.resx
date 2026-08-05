@@ -129,4 +129,7 @@
   <data name="OpenFramingMessage" xml:space="preserve">
     <value>Open framing tool</value>
   </data>
+  <data name="OpenScaleMessage" xml:space="preserve">
+    <value>Open scale tool</value>
+  </data>
 </root>

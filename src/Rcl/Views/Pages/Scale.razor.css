@@ -1,0 +1,39 @@
+.scale-section {
+  border: 1px solid var(--mud-palette-lines-default);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--mud-palette-surface) 92%, transparent);
+}
+
+.scale-actions {
+  gap: 0.5rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.scale-action-button {
+  min-width: 6.5rem;
+}
+
+.scale-hoop-message {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.scale-sample-panel {
+  width: 2in;
+  height: 2in;
+  max-width: 100%;
+  overflow: auto;
+  background: var(--mud-palette-surface);
+  border: 1px dashed var(--mud-palette-lines-default);
+  border-radius: 8px;
+}
+
+.scale-sample-image {
+  max-width: none;
+  max-height: none;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
