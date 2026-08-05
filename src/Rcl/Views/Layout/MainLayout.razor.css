@@ -2,8 +2,12 @@
   min-height: calc(100vh - var(--mud-appbar-height));
 }
 
+.layout-main-content {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+}
+
 .top-app-bar {
-  padding-top: 20px;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
 }
 
 .top-app-bar-flat {

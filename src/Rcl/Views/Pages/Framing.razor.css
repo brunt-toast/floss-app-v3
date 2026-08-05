@@ -1,0 +1,88 @@
+.framing-section {
+  border: 1px solid var(--mud-palette-lines-default);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--mud-palette-surface) 92%, transparent);
+}
+
+.framing-preview-shell {
+  width: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mud-palette-surface);
+  border: 1px dashed var(--mud-palette-lines-default);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.framing-preview-image {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.framing-slider {
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.framing-slider-value,
+.framing-slider-track {
+  display: flex;
+  align-items: stretch;
+}
+
+.framing-slider-value {
+  flex: 0 0 7rem;
+  min-width: 7rem;
+  max-width: 7rem;
+}
+
+.framing-slider-track {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  height: 1.7rem;
+}
+
+.framing-slider-track ::deep(.mud-slider),
+.framing-slider-track ::deep(.mud-slider-container) {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 auto;
+}
+
+.framing-slider-track-input {
+  width: 100% !important;
+}
+
+.framing-slider ::deep(.framing-slider-input) {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.framing-actions {
+  gap: 0.5rem;
+}
+
+.framing-action-button {
+  min-width: 6.5rem;
+}
+
+@media (max-width: 599px) {
+  .framing-slider-value {
+    flex-basis: 6.25rem;
+    min-width: 6.25rem;
+    max-width: 6.25rem;
+  }
+}

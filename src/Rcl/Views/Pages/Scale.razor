@@ -1,0 +1,65 @@
+@page "/scale"
+@using Rcl.Resources.Languages
+@using Rcl.ViewModels
+
+<MudGrid Spacing="2">
+    <MudItem xs="12">
+        <div class="scale-section pa-3">
+            <MudStack Spacing="2" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.body2" Color="Color.Inherit">@ScaleResources.SamplePanelTitle</MudText>
+                <div class="scale-sample-panel">
+                    @if (ViewModel.HasImage)
+                    {
+                        <img src="@ViewModel.PreviewDataUrl"
+                             alt="@ScaleResources.SampleImageAlt"
+                             class="scale-sample-image"
+                             style="@GetSampleImageStyle()" />
+                    }
+                </div>
+            </MudStack>
+        </div>
+    </MudItem>
+
+    <MudItem xs="12">
+        <div class="scale-section pa-3">
+            <MudStack Spacing="2">
+                <MudNumericField T="int"
+                                 Label="@ScaleResources.StitchCountLabel"
+                                 Variant="Variant.Outlined"
+                                 Margin="Margin.Dense"
+                                 Min="1"
+                                 Step="1"
+                                 Immediate="true"
+                                 Value="@ViewModel.StitchCount"
+                                 ValueChanged="OnStitchCountChanged" />
+
+                <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.SpaceBetween" Spacing="2" Class="scale-actions">
+                    <div class="scale-hoop-message">
+                        @if (ViewModel.HasImage)
+                        {
+                            <MudText Typo="Typo.h6">@GetMinimumHoopSizeText()</MudText>
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.body2" Class="mud-secondary-text">@ScaleResources.Placeholder</MudText>
+                        }
+                    </div>
+
+                    <MudButton Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               Disabled="@(!ViewModel.CanLoad)"
+                               Size="Size.Medium"
+                               Class="scale-action-button"
+                               OnClick="LoadFromDeviceAsync">
+                        @ScaleResources.LoadButton
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </div>
+    </MudItem>
+</MudGrid>
+
+@if (ViewModel.IsBusy)
+{
+    <MudProgressLinear Indeterminate="true" Class="mt-3" Color="Color.Primary" />
+}

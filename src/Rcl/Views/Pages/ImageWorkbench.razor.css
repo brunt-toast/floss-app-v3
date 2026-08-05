@@ -12,6 +12,80 @@
   min-width: 6.5rem;
 }
 
+.slider-with-value {
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.slider-value-cell,
+.slider-track-cell {
+  display: flex;
+  align-items: stretch;
+}
+
+.slider-value-cell {
+  flex: 0 0 7rem;
+  min-width: 7rem;
+  max-width: 7rem;
+}
+
+.slider-track-cell {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+  height: 1.7rem;
+}
+
+.slider-track-cell ::deep(.mud-slider) {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 auto;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.slider-track-cell ::deep(.mud-slider-container) {
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
+.slider-with-value-track {
+  width: 100% !important;
+}
+
+.slider-with-value ::deep(.slider-value-input) {
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.slider-with-value ::deep(.slider-value-input .mud-input-control) {
+  margin: 0;
+}
+
+.slider-with-value ::deep(.slider-value-input .mud-input-control),
+.slider-with-value
+  ::deep(.slider-value-input .mud-input-control-input-container),
+.slider-with-value ::deep(.slider-value-input .mud-input.mud-input-text) {
+  width: 100% !important;
+}
+
+.slider-with-value
+  ::deep(.slider-value-input .mud-input > input.mud-input-root),
+.slider-with-value ::deep(.slider-value-input .mud-input-slot.mud-input-root) {
+  padding-top: 0.12rem !important;
+  padding-bottom: 0.12rem !important;
+  line-height: 1.1 !important;
+}
+
+.slider-with-value ::deep(.slider-value-input .mud-input-slot) {
+  min-height: 1.7rem !important;
+}
+
 .processed-preview-shell {
   width: 100%;
   min-height: 320px;
@@ -73,6 +147,15 @@
   min-width: 0;
 }
 
+.color-usage-name-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
 .color-usage-code {
   color: var(--mud-palette-text-secondary);
 }
@@ -91,6 +174,12 @@
 }
 
 @media (max-width: 599px) {
+  .slider-value-cell {
+    flex-basis: 6.25rem;
+    min-width: 6.25rem;
+    max-width: 6.25rem;
+  }
+
   .color-usage-table {
     font-size: 0.88rem;
   }

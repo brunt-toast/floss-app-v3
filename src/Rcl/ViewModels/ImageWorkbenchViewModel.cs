@@ -11,7 +11,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Rcl.ViewModels.Interfaces;
 using App.Extensions.System.Threading;
 using DrawingColor = System.Drawing.Color;
@@ -49,15 +48,24 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     public bool CanSave => !IsBusy && _resultImageContent is not null;
     public bool HasImage => _sourceImageContent is not null;
 
+    public int SourceWidth { get; private set; }
+    public int SourceHeight { get; private set; }
     public bool IsBusy { get; set; }
     public string ResultPreviewDataUrl { get; private set; } = string.Empty;
     public IReadOnlyList<ImageWorkbenchColorUsageItem> ColorUsage { get; private set; } = [];
     public int MaximumColorFidelity { get; private set; } = 1;
-    public int ResultWidth { get; set; }
-    public int ResultHeight { get; set; }
     public double StitchLength { get; set; } = 1;
     public double SpoolLength { get; set; } = 1;
 
+    [OnChangedMethod(nameof(OnDesiredWidthChanged))]
+    [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
+    public int DesiredWidth { get; set; }
+
+    [OnChangedMethod(nameof(OnDesiredHeightChanged))]
+    [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
+    public int DesiredHeight { get; set; }
+
+    [OnChangedMethod(nameof(OnScaleChanged))]
     [OnChangedMethod(nameof(TriggerRealtimeProcessing))]
     public double Scale { get; set; } = 1;
 
@@ -122,16 +130,6 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
         _sourceImageContent = content;
 
         await ProcessPipelineAsync(cts.Token);
-    }
-
-    public static string GetDisplayName(Enum value)
-    {
-        var memberInfo = value.GetType().GetMember(value.ToString()).FirstOrDefault();
-        var displayAttribute = memberInfo?.GetCustomAttributes(typeof(DisplayAttribute), false)
-            .Cast<DisplayAttribute>()
-            .FirstOrDefault();
-
-        return displayAttribute?.Name ?? value.ToString();
     }
 
     public async Task LoadFromDeviceAsync()
@@ -219,8 +217,11 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             await using var sourceStream = new MemoryStream(_sourceImageContent, writable: false);
             using var source = await Image.LoadAsync<Rgba32>(sourceStream, cancellationToken);
 
-            var clampedScale = Math.Clamp(Scale, 0.01, 1.0);
-            var targetSize = Math.Max(1, (int)Math.Round(source.Width * clampedScale));
+            SourceWidth = source.Width;
+            SourceHeight = source.Height;
+            SynchronizeResizeInputs(Scale);
+
+            var targetSize = Math.Max(1, (int)Math.Round(source.Width * Scale));
             var previousMaximumColorFidelity = MaximumColorFidelity;
             int? requestedColorFidelity = SelectedColorFidelity > 0 ? SelectedColorFidelity : null;
 
@@ -274,8 +275,6 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
 
                 _resultImageContent = outputStream.ToArray();
                 ResultPreviewDataUrl = CreateDataUrl(_resultImageContent);
-                ResultWidth = reduced.Width;
-                ResultHeight = reduced.Height;
             }
             finally
             {
@@ -291,8 +290,6 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
             ResultPreviewDataUrl = string.Empty;
             ColorUsage = [];
             MaximumColorFidelity = 1;
-            ResultWidth = 0;
-            ResultHeight = 0;
             _snackbar.Add(ex.Message, Severity.Error);
         }
     }
@@ -383,6 +380,58 @@ public sealed class ImageWorkbenchViewModel : ObservableObject, IImageWorkbenchV
     {
         return $"data:image/png;base64,{Convert.ToBase64String(content)}";
     }
+
+    private void OnDesiredWidthChanged()
+    {
+        SynchronizeResizeInputs((double)DesiredWidth / SourceWidth);
+    }
+
+    private void OnDesiredHeightChanged()
+    {
+        SynchronizeResizeInputs((double)DesiredHeight / SourceHeight);
+    }
+
+    private void OnScaleChanged()
+    {
+        SynchronizeResizeInputs(Scale);
+    }
+
+    private readonly LockedFunc _widthSyncContext = new();
+    private void SynchronizeResizeInputs(double scale)
+    {
+        var synchronizedWidth = Math.Max(1, (int)Math.Round(SourceWidth * scale));
+        var synchronizedHeight = Math.Max(1, (int)Math.Round(SourceHeight * scale));
+
+        _widthSyncContext.Invoke(() =>
+        {
+            Scale = scale;
+            DesiredWidth = synchronizedWidth;
+            DesiredHeight = synchronizedHeight;
+        });
+    }
+}
+
+class LockedFunc
+{
+    private bool _active;
+
+    public void Invoke(Action action)
+    {
+        if (_active)
+        {
+            return;
+        }
+
+        _active = true;
+        try
+        {
+            action.Invoke();
+        }
+        finally
+        {
+            _active = false;
+        }
+    }
 }
 
 public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
@@ -396,8 +445,10 @@ public interface IImageWorkbenchViewModel : INotifyPropertyChanged, IBusy
     IReadOnlyList<ImageWorkbenchColorUsageItem> ColorUsage { get; }
     int MaximumColorFidelity { get; }
     string ResultPreviewDataUrl { get; }
-    int ResultWidth { get; set; }
-    int ResultHeight { get; set; }
+    int SourceWidth { get; }
+    int SourceHeight { get; }
+    int DesiredWidth { get; set; }
+    int DesiredHeight { get; set; }
     double StitchLength { get; set; }
     double SpoolLength { get; set; }
     double Scale { get; set; }

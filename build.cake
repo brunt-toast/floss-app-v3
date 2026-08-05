@@ -65,4 +65,28 @@ Task("RunTests")
     .IsDependentOn("FastRunTests")
     .Does(() => { });
 
+Task("GenerateCoverage")
+    .IsDependentOn("RunTests")
+    .Does(() =>
+    {
+        ReportGenerator(new GlobPattern("**/coverage.cobertura.xml"), Directory("./coveragereport"), new ReportGeneratorSettings
+        {
+            ReportTypes = [ReportGeneratorReportType.Html],
+        });
+    });
+
+Task("Benchmark")
+    .IsDependentOn("InstallSdk")
+    .Does(() =>
+    {
+        var projects = GetFiles("bench/**/*.csproj");
+        foreach (var proj in projects)
+        {
+            StartProcess("dotnet", new ProcessSettings
+            {
+                Arguments = $"run {proj} -c Release -- --filter \"{benchmarkFilter}\"",
+            });
+        }
+    });
+
 RunTarget(target);

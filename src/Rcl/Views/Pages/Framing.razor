@@ -1,0 +1,85 @@
+@page "/framing"
+@using Rcl.Resources.Languages
+@using Rcl.ViewModels
+
+<MudGrid Spacing="2">
+    <MudItem xs="12">
+        <div class="framing-section pa-3">
+            @if (!string.IsNullOrWhiteSpace(ViewModel.PreviewDataUrl))
+            {
+                <div class="framing-preview-shell mt-2">
+                    <img src="@ViewModel.PreviewDataUrl" alt="@FramingResources.FramedImageAlt" class="framing-preview-image" />
+                </div>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Dense="true" Class="mt-2">
+                    @FramingResources.PreviewPlaceholder
+                </MudAlert>
+            }
+        </div>
+    </MudItem>
+
+    <MudItem xs="12">
+        <div class="framing-section pa-3">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.body2" Color="Color.Inherit">@FramingResources.ScaleLabel</MudText>
+                <MudStack Row="true" AlignItems="AlignItems.Stretch" Class="framing-slider">
+                    <div class="framing-slider-value">
+                        <MudNumericField T="double"
+                                         Class="framing-slider-input"
+                                         Variant="Variant.Outlined"
+                                         Margin="Margin.Dense"
+                                         Min="@FramingViewModel.MinimumScale"
+                                         Max="@FramingViewModel.MaximumScale"
+                                         Step="0.01"
+                                         Format="N2"
+                                         Immediate="true"
+                                         Value="@ViewModel.Scale"
+                                         ValueChanged="OnScaleChanged"
+                                         Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)" />
+                    </div>
+                    <MudStack Class="framing-slider-track" Spacing="0" Style="flex: 1 1 auto; min-width: 0; width: 100%;">
+                        <MudSpacer />
+                        <MudSlider T="double"
+                                   Class="framing-slider-track-input"
+                                   Min="@FramingViewModel.MinimumScale"
+                                   Max="@FramingViewModel.MaximumScale"
+                                   Step="0.01"
+                                   Immediate="true"
+                                   Value="@ViewModel.Scale"
+                                   ValueChanged="OnScaleChanged"
+                                   Disabled="@(!ViewModel.HasImage || ViewModel.IsBusy)" />
+                        <MudSpacer />
+                    </MudStack>
+                </MudStack>
+
+                <MudStack Row="true" Justify="Justify.FlexEnd" Spacing="1" Class="framing-actions mt-1">
+                    <MudButton Variant="Variant.Outlined"
+                               StartIcon="@Icons.Material.Filled.FolderOpen"
+                               Disabled="@ViewModel.IsBusy"
+                               Size="Size.Medium"
+                               Class="framing-action-button"
+                               OnClick="LoadFromDeviceAsync">
+                        @FramingResources.LoadButton
+                    </MudButton>
+
+                    <MudButton Color="Color.Primary"
+                               Variant="Variant.Filled"
+                               StartIcon="@Icons.Material.Filled.Download"
+                               Disabled="@(!ViewModel.CanSave)"
+                               Size="Size.Medium"
+                               Class="framing-action-button"
+                               OnClick="SaveResultAsync">
+                        @FramingResources.SaveButton
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </div>
+    </MudItem>
+</MudGrid>
+
+@if (ViewModel.IsBusy)
+{
+    <MudProgressLinear Indeterminate="true" Class="mt-3" Color="Color.Primary" />
+}
