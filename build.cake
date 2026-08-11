@@ -1,5 +1,6 @@
 var target = Argument("target", "FastRunGui");
 var configuration = Argument("configuration", "Release");
+var benchmarkFilter = Argument("benchmarkFilter", "*");
 
 Task("InstallSdk").Does(() =>
 {
